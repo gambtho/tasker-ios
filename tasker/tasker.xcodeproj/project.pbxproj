@@ -1,0 +1,282 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E288E947158021FA00EEB0F8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E288E946158021FA00EEB0F8 /* UIKit.framework */; };
+		E288E949158021FA00EEB0F8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E288E948158021FA00EEB0F8 /* Foundation.framework */; };
+		E288E94B158021FA00EEB0F8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E288E94A158021FA00EEB0F8 /* CoreGraphics.framework */; };
+		E288E951158021FA00EEB0F8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E288E94F158021FA00EEB0F8 /* InfoPlist.strings */; };
+		E288E953158021FA00EEB0F8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E288E952158021FA00EEB0F8 /* main.m */; };
+		E288E957158021FA00EEB0F8 /* TaskerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E288E956158021FA00EEB0F8 /* TaskerAppDelegate.m */; };
+		E288E95A158021FA00EEB0F8 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E288E958158021FA00EEB0F8 /* MainStoryboard.storyboard */; };
+		E288E95D158021FA00EEB0F8 /* TaskerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E288E95C158021FA00EEB0F8 /* TaskerViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E288E942158021FA00EEB0F8 /* tasker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tasker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E288E946158021FA00EEB0F8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		E288E948158021FA00EEB0F8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E288E94A158021FA00EEB0F8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		E288E94E158021FA00EEB0F8 /* tasker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "tasker-Info.plist"; sourceTree = "<group>"; };
+		E288E950158021FA00EEB0F8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E288E952158021FA00EEB0F8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E288E954158021FA00EEB0F8 /* tasker-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tasker-Prefix.pch"; sourceTree = "<group>"; };
+		E288E955158021FA00EEB0F8 /* TaskerAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaskerAppDelegate.h; sourceTree = "<group>"; };
+		E288E956158021FA00EEB0F8 /* TaskerAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaskerAppDelegate.m; sourceTree = "<group>"; };
+		E288E959158021FA00EEB0F8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		E288E95B158021FA00EEB0F8 /* TaskerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaskerViewController.h; sourceTree = "<group>"; };
+		E288E95C158021FA00EEB0F8 /* TaskerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaskerViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E288E93F158021FA00EEB0F8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E288E947158021FA00EEB0F8 /* UIKit.framework in Frameworks */,
+				E288E949158021FA00EEB0F8 /* Foundation.framework in Frameworks */,
+				E288E94B158021FA00EEB0F8 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E288E937158021F900EEB0F8 = {
+			isa = PBXGroup;
+			children = (
+				E288E94C158021FA00EEB0F8 /* tasker */,
+				E288E945158021FA00EEB0F8 /* Frameworks */,
+				E288E943158021FA00EEB0F8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E288E943158021FA00EEB0F8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E288E942158021FA00EEB0F8 /* tasker.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E288E945158021FA00EEB0F8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E288E946158021FA00EEB0F8 /* UIKit.framework */,
+				E288E948158021FA00EEB0F8 /* Foundation.framework */,
+				E288E94A158021FA00EEB0F8 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E288E94C158021FA00EEB0F8 /* tasker */ = {
+			isa = PBXGroup;
+			children = (
+				E288E955158021FA00EEB0F8 /* TaskerAppDelegate.h */,
+				E288E956158021FA00EEB0F8 /* TaskerAppDelegate.m */,
+				E288E958158021FA00EEB0F8 /* MainStoryboard.storyboard */,
+				E288E95B158021FA00EEB0F8 /* TaskerViewController.h */,
+				E288E95C158021FA00EEB0F8 /* TaskerViewController.m */,
+				E288E94D158021FA00EEB0F8 /* Supporting Files */,
+			);
+			path = tasker;
+			sourceTree = "<group>";
+		};
+		E288E94D158021FA00EEB0F8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E288E94E158021FA00EEB0F8 /* tasker-Info.plist */,
+				E288E94F158021FA00EEB0F8 /* InfoPlist.strings */,
+				E288E952158021FA00EEB0F8 /* main.m */,
+				E288E954158021FA00EEB0F8 /* tasker-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E288E941158021FA00EEB0F8 /* tasker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E288E960158021FA00EEB0F8 /* Build configuration list for PBXNativeTarget "tasker" */;
+			buildPhases = (
+				E288E93E158021FA00EEB0F8 /* Sources */,
+				E288E93F158021FA00EEB0F8 /* Frameworks */,
+				E288E940158021FA00EEB0F8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tasker;
+			productName = tasker;
+			productReference = E288E942158021FA00EEB0F8 /* tasker.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E288E939158021F900EEB0F8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = Tasker;
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = E288E93C158021F900EEB0F8 /* Build configuration list for PBXProject "tasker" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E288E937158021F900EEB0F8;
+			productRefGroup = E288E943158021FA00EEB0F8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E288E941158021FA00EEB0F8 /* tasker */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E288E940158021FA00EEB0F8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E288E951158021FA00EEB0F8 /* InfoPlist.strings in Resources */,
+				E288E95A158021FA00EEB0F8 /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E288E93E158021FA00EEB0F8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E288E953158021FA00EEB0F8 /* main.m in Sources */,
+				E288E957158021FA00EEB0F8 /* TaskerAppDelegate.m in Sources */,
+				E288E95D158021FA00EEB0F8 /* TaskerViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E288E94F158021FA00EEB0F8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E288E950158021FA00EEB0F8 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E288E958158021FA00EEB0F8 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E288E959158021FA00EEB0F8 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E288E95E158021FA00EEB0F8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E288E95F158021FA00EEB0F8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E288E961158021FA00EEB0F8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tasker/tasker-Prefix.pch";
+				INFOPLIST_FILE = "tasker/tasker-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		E288E962158021FA00EEB0F8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tasker/tasker-Prefix.pch";
+				INFOPLIST_FILE = "tasker/tasker-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E288E93C158021F900EEB0F8 /* Build configuration list for PBXProject "tasker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E288E95E158021FA00EEB0F8 /* Debug */,
+				E288E95F158021FA00EEB0F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E288E960158021FA00EEB0F8 /* Build configuration list for PBXNativeTarget "tasker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E288E961158021FA00EEB0F8 /* Debug */,
+				E288E962158021FA00EEB0F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E288E939158021F900EEB0F8 /* Project object */;
+}
