@@ -1,18 +1,18 @@
 //
-//  TaskerViewController.m
+//  SecondViewController.m
 //  tasker
 //
-//  Created by Thomas Gamble on 6/6/12.
+//  Created by Thomas Gamble on 6/11/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "TaskerViewController.h"
+#import "SecondViewController.h"
 
-@interface TaskerViewController ()
+@interface SecondViewController ()
 
 @end
 
-@implementation TaskerViewController
+@implementation SecondViewController
 
 - (void)viewDidLoad
 {

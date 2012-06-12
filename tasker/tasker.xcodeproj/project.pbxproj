@@ -7,98 +7,110 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E288E947158021FA00EEB0F8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E288E946158021FA00EEB0F8 /* UIKit.framework */; };
-		E288E949158021FA00EEB0F8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E288E948158021FA00EEB0F8 /* Foundation.framework */; };
-		E288E94B158021FA00EEB0F8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E288E94A158021FA00EEB0F8 /* CoreGraphics.framework */; };
-		E288E951158021FA00EEB0F8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E288E94F158021FA00EEB0F8 /* InfoPlist.strings */; };
-		E288E953158021FA00EEB0F8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E288E952158021FA00EEB0F8 /* main.m */; };
-		E288E957158021FA00EEB0F8 /* TaskerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E288E956158021FA00EEB0F8 /* TaskerAppDelegate.m */; };
-		E288E95A158021FA00EEB0F8 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E288E958158021FA00EEB0F8 /* MainStoryboard.storyboard */; };
-		E288E95D158021FA00EEB0F8 /* TaskerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E288E95C158021FA00EEB0F8 /* TaskerViewController.m */; };
-		E2DC7E1815859914006D4239 /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DC7E1715859914006D4239 /* DataModel.m */; };
+		E2DEFDC11586DA2800D3D572 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2DEFDC01586DA2800D3D572 /* UIKit.framework */; };
+		E2DEFDC31586DA2800D3D572 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2DEFDC21586DA2800D3D572 /* Foundation.framework */; };
+		E2DEFDC51586DA2800D3D572 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2DEFDC41586DA2800D3D572 /* CoreGraphics.framework */; };
+		E2DEFDCB1586DA2800D3D572 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2DEFDC91586DA2800D3D572 /* InfoPlist.strings */; };
+		E2DEFDCD1586DA2800D3D572 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DEFDCC1586DA2800D3D572 /* main.m */; };
+		E2DEFDD11586DA2800D3D572 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DEFDD01586DA2800D3D572 /* AppDelegate.m */; };
+		E2DEFDD41586DA2800D3D572 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2DEFDD21586DA2800D3D572 /* MainStoryboard.storyboard */; };
+		E2DEFDD71586DA2800D3D572 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DEFDD61586DA2800D3D572 /* FirstViewController.m */; };
+		E2DEFDD91586DA2800D3D572 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = E2DEFDD81586DA2800D3D572 /* first.png */; };
+		E2DEFDDB1586DA2800D3D572 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E2DEFDDA1586DA2800D3D572 /* first@2x.png */; };
+		E2DEFDDE1586DA2800D3D572 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DEFDDD1586DA2800D3D572 /* SecondViewController.m */; };
+		E2DEFDE01586DA2800D3D572 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = E2DEFDDF1586DA2800D3D572 /* second.png */; };
+		E2DEFDE21586DA2800D3D572 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E2DEFDE11586DA2800D3D572 /* second@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E288E942158021FA00EEB0F8 /* tasker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tasker.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E288E946158021FA00EEB0F8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		E288E948158021FA00EEB0F8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		E288E94A158021FA00EEB0F8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		E288E94E158021FA00EEB0F8 /* tasker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "tasker-Info.plist"; sourceTree = "<group>"; };
-		E288E950158021FA00EEB0F8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		E288E952158021FA00EEB0F8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		E288E954158021FA00EEB0F8 /* tasker-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tasker-Prefix.pch"; sourceTree = "<group>"; };
-		E288E955158021FA00EEB0F8 /* TaskerAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaskerAppDelegate.h; sourceTree = "<group>"; };
-		E288E956158021FA00EEB0F8 /* TaskerAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaskerAppDelegate.m; sourceTree = "<group>"; };
-		E288E959158021FA00EEB0F8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		E288E95B158021FA00EEB0F8 /* TaskerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaskerViewController.h; sourceTree = "<group>"; };
-		E288E95C158021FA00EEB0F8 /* TaskerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaskerViewController.m; sourceTree = "<group>"; };
-		E2DC7E1615859914006D4239 /* DataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModel.h; sourceTree = "<group>"; };
-		E2DC7E1715859914006D4239 /* DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataModel.m; sourceTree = "<group>"; };
+		E2DEFDBC1586DA2800D3D572 /* tasker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tasker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2DEFDC01586DA2800D3D572 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		E2DEFDC21586DA2800D3D572 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E2DEFDC41586DA2800D3D572 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		E2DEFDC81586DA2800D3D572 /* tasker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "tasker-Info.plist"; sourceTree = "<group>"; };
+		E2DEFDCA1586DA2800D3D572 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E2DEFDCC1586DA2800D3D572 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E2DEFDCE1586DA2800D3D572 /* tasker-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tasker-Prefix.pch"; sourceTree = "<group>"; };
+		E2DEFDCF1586DA2800D3D572 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E2DEFDD01586DA2800D3D572 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E2DEFDD31586DA2800D3D572 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		E2DEFDD51586DA2800D3D572 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		E2DEFDD61586DA2800D3D572 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		E2DEFDD81586DA2800D3D572 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
+		E2DEFDDA1586DA2800D3D572 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
+		E2DEFDDC1586DA2800D3D572 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		E2DEFDDD1586DA2800D3D572 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		E2DEFDDF1586DA2800D3D572 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
+		E2DEFDE11586DA2800D3D572 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		E288E93F158021FA00EEB0F8 /* Frameworks */ = {
+		E2DEFDB91586DA2800D3D572 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E288E947158021FA00EEB0F8 /* UIKit.framework in Frameworks */,
-				E288E949158021FA00EEB0F8 /* Foundation.framework in Frameworks */,
-				E288E94B158021FA00EEB0F8 /* CoreGraphics.framework in Frameworks */,
+				E2DEFDC11586DA2800D3D572 /* UIKit.framework in Frameworks */,
+				E2DEFDC31586DA2800D3D572 /* Foundation.framework in Frameworks */,
+				E2DEFDC51586DA2800D3D572 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E288E937158021F900EEB0F8 = {
+		E2DEFDB11586DA2800D3D572 = {
 			isa = PBXGroup;
 			children = (
-				E288E94C158021FA00EEB0F8 /* tasker */,
-				E288E945158021FA00EEB0F8 /* Frameworks */,
-				E288E943158021FA00EEB0F8 /* Products */,
+				E2DEFDC61586DA2800D3D572 /* tasker */,
+				E2DEFDBF1586DA2800D3D572 /* Frameworks */,
+				E2DEFDBD1586DA2800D3D572 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		E288E943158021FA00EEB0F8 /* Products */ = {
+		E2DEFDBD1586DA2800D3D572 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E288E942158021FA00EEB0F8 /* tasker.app */,
+				E2DEFDBC1586DA2800D3D572 /* tasker.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E288E945158021FA00EEB0F8 /* Frameworks */ = {
+		E2DEFDBF1586DA2800D3D572 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E288E946158021FA00EEB0F8 /* UIKit.framework */,
-				E288E948158021FA00EEB0F8 /* Foundation.framework */,
-				E288E94A158021FA00EEB0F8 /* CoreGraphics.framework */,
+				E2DEFDC01586DA2800D3D572 /* UIKit.framework */,
+				E2DEFDC21586DA2800D3D572 /* Foundation.framework */,
+				E2DEFDC41586DA2800D3D572 /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E288E94C158021FA00EEB0F8 /* tasker */ = {
+		E2DEFDC61586DA2800D3D572 /* tasker */ = {
 			isa = PBXGroup;
 			children = (
-				E288E955158021FA00EEB0F8 /* TaskerAppDelegate.h */,
-				E288E956158021FA00EEB0F8 /* TaskerAppDelegate.m */,
-				E288E958158021FA00EEB0F8 /* MainStoryboard.storyboard */,
-				E288E95B158021FA00EEB0F8 /* TaskerViewController.h */,
-				E288E95C158021FA00EEB0F8 /* TaskerViewController.m */,
-				E288E94D158021FA00EEB0F8 /* Supporting Files */,
-				E2DC7E1615859914006D4239 /* DataModel.h */,
-				E2DC7E1715859914006D4239 /* DataModel.m */,
+				E2DEFDCF1586DA2800D3D572 /* AppDelegate.h */,
+				E2DEFDD01586DA2800D3D572 /* AppDelegate.m */,
+				E2DEFDD21586DA2800D3D572 /* MainStoryboard.storyboard */,
+				E2DEFDD51586DA2800D3D572 /* FirstViewController.h */,
+				E2DEFDD61586DA2800D3D572 /* FirstViewController.m */,
+				E2DEFDD81586DA2800D3D572 /* first.png */,
+				E2DEFDDA1586DA2800D3D572 /* first@2x.png */,
+				E2DEFDDC1586DA2800D3D572 /* SecondViewController.h */,
+				E2DEFDDD1586DA2800D3D572 /* SecondViewController.m */,
+				E2DEFDDF1586DA2800D3D572 /* second.png */,
+				E2DEFDE11586DA2800D3D572 /* second@2x.png */,
+				E2DEFDC71586DA2800D3D572 /* Supporting Files */,
 			);
 			path = tasker;
 			sourceTree = "<group>";
 		};
-		E288E94D158021FA00EEB0F8 /* Supporting Files */ = {
+		E2DEFDC71586DA2800D3D572 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E288E94E158021FA00EEB0F8 /* tasker-Info.plist */,
-				E288E94F158021FA00EEB0F8 /* InfoPlist.strings */,
-				E288E952158021FA00EEB0F8 /* main.m */,
-				E288E954158021FA00EEB0F8 /* tasker-Prefix.pch */,
+				E2DEFDC81586DA2800D3D572 /* tasker-Info.plist */,
+				E2DEFDC91586DA2800D3D572 /* InfoPlist.strings */,
+				E2DEFDCC1586DA2800D3D572 /* main.m */,
+				E2DEFDCE1586DA2800D3D572 /* tasker-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -106,13 +118,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E288E941158021FA00EEB0F8 /* tasker */ = {
+		E2DEFDBB1586DA2800D3D572 /* tasker */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E288E960158021FA00EEB0F8 /* Build configuration list for PBXNativeTarget "tasker" */;
+			buildConfigurationList = E2DEFDE51586DA2800D3D572 /* Build configuration list for PBXNativeTarget "tasker" */;
 			buildPhases = (
-				E288E93E158021FA00EEB0F8 /* Sources */,
-				E288E93F158021FA00EEB0F8 /* Frameworks */,
-				E288E940158021FA00EEB0F8 /* Resources */,
+				E2DEFDB81586DA2800D3D572 /* Sources */,
+				E2DEFDB91586DA2800D3D572 /* Frameworks */,
+				E2DEFDBA1586DA2800D3D572 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -120,74 +132,77 @@
 			);
 			name = tasker;
 			productName = tasker;
-			productReference = E288E942158021FA00EEB0F8 /* tasker.app */;
+			productReference = E2DEFDBC1586DA2800D3D572 /* tasker.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		E288E939158021F900EEB0F8 /* Project object */ = {
+		E2DEFDB31586DA2800D3D572 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = Tasker;
 				LastUpgradeCheck = 0430;
 			};
-			buildConfigurationList = E288E93C158021F900EEB0F8 /* Build configuration list for PBXProject "tasker" */;
+			buildConfigurationList = E2DEFDB61586DA2800D3D572 /* Build configuration list for PBXProject "tasker" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = E288E937158021F900EEB0F8;
-			productRefGroup = E288E943158021FA00EEB0F8 /* Products */;
+			mainGroup = E2DEFDB11586DA2800D3D572;
+			productRefGroup = E2DEFDBD1586DA2800D3D572 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E288E941158021FA00EEB0F8 /* tasker */,
+				E2DEFDBB1586DA2800D3D572 /* tasker */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		E288E940158021FA00EEB0F8 /* Resources */ = {
+		E2DEFDBA1586DA2800D3D572 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E288E951158021FA00EEB0F8 /* InfoPlist.strings in Resources */,
-				E288E95A158021FA00EEB0F8 /* MainStoryboard.storyboard in Resources */,
+				E2DEFDCB1586DA2800D3D572 /* InfoPlist.strings in Resources */,
+				E2DEFDD41586DA2800D3D572 /* MainStoryboard.storyboard in Resources */,
+				E2DEFDD91586DA2800D3D572 /* first.png in Resources */,
+				E2DEFDDB1586DA2800D3D572 /* first@2x.png in Resources */,
+				E2DEFDE01586DA2800D3D572 /* second.png in Resources */,
+				E2DEFDE21586DA2800D3D572 /* second@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		E288E93E158021FA00EEB0F8 /* Sources */ = {
+		E2DEFDB81586DA2800D3D572 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E288E953158021FA00EEB0F8 /* main.m in Sources */,
-				E288E957158021FA00EEB0F8 /* TaskerAppDelegate.m in Sources */,
-				E288E95D158021FA00EEB0F8 /* TaskerViewController.m in Sources */,
-				E2DC7E1815859914006D4239 /* DataModel.m in Sources */,
+				E2DEFDCD1586DA2800D3D572 /* main.m in Sources */,
+				E2DEFDD11586DA2800D3D572 /* AppDelegate.m in Sources */,
+				E2DEFDD71586DA2800D3D572 /* FirstViewController.m in Sources */,
+				E2DEFDDE1586DA2800D3D572 /* SecondViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		E288E94F158021FA00EEB0F8 /* InfoPlist.strings */ = {
+		E2DEFDC91586DA2800D3D572 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E288E950158021FA00EEB0F8 /* en */,
+				E2DEFDCA1586DA2800D3D572 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		E288E958158021FA00EEB0F8 /* MainStoryboard.storyboard */ = {
+		E2DEFDD21586DA2800D3D572 /* MainStoryboard.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E288E959158021FA00EEB0F8 /* en */,
+				E2DEFDD31586DA2800D3D572 /* en */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
@@ -195,7 +210,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		E288E95E158021FA00EEB0F8 /* Debug */ = {
+		E2DEFDE31586DA2800D3D572 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -220,7 +235,7 @@
 			};
 			name = Debug;
 		};
-		E288E95F158021FA00EEB0F8 /* Release */ = {
+		E2DEFDE41586DA2800D3D572 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -240,7 +255,7 @@
 			};
 			name = Release;
 		};
-		E288E961158021FA00EEB0F8 /* Debug */ = {
+		E2DEFDE61586DA2800D3D572 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -251,7 +266,7 @@
 			};
 			name = Debug;
 		};
-		E288E962158021FA00EEB0F8 /* Release */ = {
+		E2DEFDE71586DA2800D3D572 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -265,25 +280,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E288E93C158021F900EEB0F8 /* Build configuration list for PBXProject "tasker" */ = {
+		E2DEFDB61586DA2800D3D572 /* Build configuration list for PBXProject "tasker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E288E95E158021FA00EEB0F8 /* Debug */,
-				E288E95F158021FA00EEB0F8 /* Release */,
+				E2DEFDE31586DA2800D3D572 /* Debug */,
+				E2DEFDE41586DA2800D3D572 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E288E960158021FA00EEB0F8 /* Build configuration list for PBXNativeTarget "tasker" */ = {
+		E2DEFDE51586DA2800D3D572 /* Build configuration list for PBXNativeTarget "tasker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E288E961158021FA00EEB0F8 /* Debug */,
-				E288E962158021FA00EEB0F8 /* Release */,
+				E2DEFDE61586DA2800D3D572 /* Debug */,
+				E2DEFDE71586DA2800D3D572 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = E288E939158021F900EEB0F8 /* Project object */;
+	rootObject = E2DEFDB31586DA2800D3D572 /* Project object */;
 }
