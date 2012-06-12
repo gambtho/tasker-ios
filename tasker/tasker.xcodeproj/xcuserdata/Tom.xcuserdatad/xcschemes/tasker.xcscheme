@@ -13,7 +13,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E288E941158021FA00EEB0F8"
+               BlueprintIdentifier = "E2DEFDBB1586DA2800D3D572"
                BuildableName = "tasker.app"
                BlueprintName = "tasker"
                ReferencedContainer = "container:tasker.xcodeproj">
@@ -31,7 +31,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E288E941158021FA00EEB0F8"
+            BlueprintIdentifier = "E2DEFDBB1586DA2800D3D572"
             BuildableName = "tasker.app"
             BlueprintName = "tasker"
             ReferencedContainer = "container:tasker.xcodeproj">
@@ -50,7 +50,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E288E941158021FA00EEB0F8"
+            BlueprintIdentifier = "E2DEFDBB1586DA2800D3D572"
             BuildableName = "tasker.app"
             BlueprintName = "tasker"
             ReferencedContainer = "container:tasker.xcodeproj">
@@ -68,7 +68,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E288E941158021FA00EEB0F8"
+            BlueprintIdentifier = "E2DEFDBB1586DA2800D3D572"
             BuildableName = "tasker.app"
             BlueprintName = "tasker"
             ReferencedContainer = "container:tasker.xcodeproj">

@@ -1,14 +1,14 @@
 //
-//  TaskerAppDelegate.m
+//  AppDelegate.m
 //  tasker
 //
-//  Created by Thomas Gamble on 6/6/12.
+//  Created by Thomas Gamble on 6/11/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "TaskerAppDelegate.h"
+#import "AppDelegate.h"
 
-@implementation TaskerAppDelegate
+@implementation AppDelegate
 
 @synthesize window = _window;
 

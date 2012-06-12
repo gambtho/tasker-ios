@@ -1,14 +1,14 @@
 //
-//  TaskerAppDelegate.h
+//  AppDelegate.h
 //  tasker
 //
-//  Created by Thomas Gamble on 6/6/12.
+//  Created by Thomas Gamble on 6/11/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface TaskerAppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
