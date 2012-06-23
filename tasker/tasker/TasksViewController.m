@@ -7,12 +7,16 @@
 //
 
 #import "TasksViewController.h"
+#import "TaskCell.h"
+#import "Task.h"
 
 @interface TasksViewController ()
 
 @end
 
-@implementation TasksViewController
+@implementation TasksViewController{
+    NSMutableArray *tasks;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -27,11 +31,13 @@
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    tasks = [[NSMutableArray alloc] initWithCapacity:20];
+    
+    Task *tempTask = [[Task alloc] init];
+    tempTask.title = @"Placeholder";
+    tempTask.dueDate = [NSDate date];
+    
+    [tasks addObject:tempTask];
 }
 
 - (void)viewDidUnload
@@ -48,29 +54,42 @@
 
 #pragma mark - Table view data source
 
+/*
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
+*/
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return [tasks count];
+}
+
+-(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    Task *task = [tasks objectAtIndex:indexPath.row];
+    
+    UILabel *title = (UILabel *)[cell viewWithTag:1000];
+    title.text = task.title;
+    
+    UILabel *dueDate = (UILabel *)[cell viewWithTag:1001];
+    dueDate.text = [NSDateFormatter localizedStringFromDate:task.dueDate 
+                                                  dateStyle:NSDateFormatterShortStyle 
+                                                  timeStyle:NSDateFormatterNoStyle];
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TaskCell"];
     
-    // Configure the cell...
-    
+    [self configureCell:cell atIndexPath:indexPath];
+
     return cell;
 }
+
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -81,19 +100,17 @@
 }
 */
 
-/*
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+
+    [tasks removeObjectAtIndex:indexPath.row];
+    
+    [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ 
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.
@@ -111,6 +128,17 @@
 }
 */
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    
+    if([segue.identifier isEqualToString:@"AddTask"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        AddTaskViewController *controller = (AddTaskViewController *)navigationController.topViewController;
+        controller.delegate = self;
+    }
+
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -122,6 +150,25 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+}
+
+#pragma mark - Add Task delegate
+
+-(void)addTaskViewControllerDidCancel:(AddTaskViewController *)controller
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)addTaskViewController:(AddTaskViewController *)controller didFinishAddingItem:(Task *)task
+{
+    int newRowIndex = [tasks count];
+    [tasks addObject:task];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:newRowIndex inSection:0];
+    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

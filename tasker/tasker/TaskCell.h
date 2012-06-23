@@ -10,7 +10,6 @@
 
 @interface TaskCell : UITableViewCell
 
-@property (nonatomic, assign) BOOL completed;
 @property (nonatomic, strong) IBOutlet UILabel *title;
 @property (nonatomic, strong) IBOutlet UILabel *dueDate;
 @property (nonatomic, strong) IBOutlet UIImageView *image;

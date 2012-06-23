@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		E2553837158E94C900B12D3F /* TaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2553836158E94C900B12D3F /* TaskCell.m */; };
 		E2553846158EA84C00B12D3F /* TasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2553845158EA84C00B12D3F /* TasksViewController.m */; };
+		E262A018159158F600D79EAE /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E262A017159158F600D79EAE /* DatePickerViewController.m */; };
+		E2B27944158EB90800BB99D8 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B27943158EB90800BB99D8 /* Task.m */; };
+		E2B27948158EC3D500BB99D8 /* AddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B27947158EC3D500BB99D8 /* AddTaskViewController.m */; };
 		E2DEFDC11586DA2800D3D572 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2DEFDC01586DA2800D3D572 /* UIKit.framework */; };
 		E2DEFDC31586DA2800D3D572 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2DEFDC21586DA2800D3D572 /* Foundation.framework */; };
 		E2DEFDC51586DA2800D3D572 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2DEFDC41586DA2800D3D572 /* CoreGraphics.framework */; };
@@ -23,6 +26,12 @@
 		E2553836158E94C900B12D3F /* TaskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskCell.m; sourceTree = "<group>"; };
 		E2553844158EA84C00B12D3F /* TasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksViewController.h; sourceTree = "<group>"; };
 		E2553845158EA84C00B12D3F /* TasksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksViewController.m; sourceTree = "<group>"; };
+		E262A016159158F600D79EAE /* DatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerViewController.h; sourceTree = "<group>"; };
+		E262A017159158F600D79EAE /* DatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerViewController.m; sourceTree = "<group>"; };
+		E2B27942158EB90800BB99D8 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
+		E2B27943158EB90800BB99D8 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
+		E2B27946158EC3D500BB99D8 /* AddTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTaskViewController.h; sourceTree = "<group>"; };
+		E2B27947158EC3D500BB99D8 /* AddTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTaskViewController.m; sourceTree = "<group>"; };
 		E2DEFDBC1586DA2800D3D572 /* tasker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tasker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2DEFDC01586DA2800D3D572 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E2DEFDC21586DA2800D3D572 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -88,6 +97,12 @@
 				E2553836158E94C900B12D3F /* TaskCell.m */,
 				E2553844158EA84C00B12D3F /* TasksViewController.h */,
 				E2553845158EA84C00B12D3F /* TasksViewController.m */,
+				E2B27942158EB90800BB99D8 /* Task.h */,
+				E2B27943158EB90800BB99D8 /* Task.m */,
+				E2B27946158EC3D500BB99D8 /* AddTaskViewController.h */,
+				E2B27947158EC3D500BB99D8 /* AddTaskViewController.m */,
+				E262A016159158F600D79EAE /* DatePickerViewController.h */,
+				E262A017159158F600D79EAE /* DatePickerViewController.m */,
 			);
 			path = tasker;
 			sourceTree = "<group>";
@@ -169,6 +184,9 @@
 				E2DEFDD11586DA2800D3D572 /* AppDelegate.m in Sources */,
 				E2553837158E94C900B12D3F /* TaskCell.m in Sources */,
 				E2553846158EA84C00B12D3F /* TasksViewController.m in Sources */,
+				E2B27944158EB90800BB99D8 /* Task.m in Sources */,
+				E2B27948158EC3D500BB99D8 /* AddTaskViewController.m in Sources */,
+				E262A018159158F600D79EAE /* DatePickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

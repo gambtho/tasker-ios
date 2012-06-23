@@ -12,8 +12,7 @@
 
 @synthesize title;
 @synthesize image;
-@synthesize dueDate;
-@synthesize completed; 
+@synthesize dueDate; 
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
