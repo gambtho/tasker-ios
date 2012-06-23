@@ -122,8 +122,6 @@
     }
 }
 
-
-
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSString *tempText = [titleField.text stringByReplacingCharactersInRange:range withString:string];
@@ -131,6 +129,52 @@
     return YES;
 }
 
+-(void)choosePhotoFromLibrary
+{
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    imagePicker.delegate = self;
+    imagePicker.allowsEditing = YES;
+    [self.navigationController presentViewController:imagePicker animated:YES completion:nil];
+}
+
+-(void)takePhoto
+{
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    imagePicker.delegate = self;
+    imagePicker.allowsEditing = YES;
+    [self.navigationController presentViewController:imagePicker animated:YES completion:nil];
+}
+
+-(void)showPhotoMenu
+{
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                      initWithTitle:nil
+                                      delegate:self
+                                      cancelButtonTitle:@"Cancel"
+                                      destructiveButtonTitle:nil
+                                      otherButtonTitles:@"TakePhoto", @"Choose From Library", nil];
+        [actionSheet showInView:self.view];
+    }
+    else {
+        [self choosePhotoFromLibrary];
+    }
+}
+
+#pragma mark - Image Picker delegate
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
 
 #pragma mark - DatePicker
 
@@ -206,6 +250,19 @@
 }
 */
 
+#pragma mark - Action Sheet Delegate
+
+-(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 0){
+        [self takePhoto];
+    } 
+    
+    else if (buttonIndex == 1) {
+        [self choosePhotoFromLibrary];
+    }
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -215,6 +272,10 @@
     }
     else if (indexPath.section == 1 && indexPath.row == 0) {
         [self.descriptionTextView becomeFirstResponder];    
+    }
+    else if (indexPath.section == 1 && indexPath.row == 1){
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [self showPhotoMenu];
     }
 
 }

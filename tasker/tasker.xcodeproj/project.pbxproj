@@ -10,6 +10,13 @@
 		E2553837158E94C900B12D3F /* TaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2553836158E94C900B12D3F /* TaskCell.m */; };
 		E2553846158EA84C00B12D3F /* TasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2553845158EA84C00B12D3F /* TasksViewController.m */; };
 		E262A018159158F600D79EAE /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E262A017159158F600D79EAE /* DatePickerViewController.m */; };
+		E262A0221596504100D79EAE /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = E262A01B1596504100D79EAE /* Icon-72.png */; };
+		E262A0231596504100D79EAE /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E262A01C1596504100D79EAE /* Icon-Small-50.png */; };
+		E262A0241596504100D79EAE /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = E262A01D1596504100D79EAE /* Icon-Small.png */; };
+		E262A0251596504100D79EAE /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E262A01E1596504100D79EAE /* Icon-Small@2x.png */; };
+		E262A0261596504100D79EAE /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E262A01F1596504100D79EAE /* Icon.png */; };
+		E262A0271596504100D79EAE /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E262A0201596504100D79EAE /* Icon@2x.png */; };
+		E262A0281596504100D79EAE /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = E262A0211596504100D79EAE /* iTunesArtwork */; };
 		E2B27944158EB90800BB99D8 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B27943158EB90800BB99D8 /* Task.m */; };
 		E2B27948158EC3D500BB99D8 /* AddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B27947158EC3D500BB99D8 /* AddTaskViewController.m */; };
 		E2DEFDC11586DA2800D3D572 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2DEFDC01586DA2800D3D572 /* UIKit.framework */; };
@@ -28,6 +35,13 @@
 		E2553845158EA84C00B12D3F /* TasksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksViewController.m; sourceTree = "<group>"; };
 		E262A016159158F600D79EAE /* DatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerViewController.h; sourceTree = "<group>"; };
 		E262A017159158F600D79EAE /* DatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerViewController.m; sourceTree = "<group>"; };
+		E262A01B1596504100D79EAE /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		E262A01C1596504100D79EAE /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
+		E262A01D1596504100D79EAE /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		E262A01E1596504100D79EAE /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		E262A01F1596504100D79EAE /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		E262A0201596504100D79EAE /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		E262A0211596504100D79EAE /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		E2B27942158EB90800BB99D8 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		E2B27943158EB90800BB99D8 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
 		E2B27946158EC3D500BB99D8 /* AddTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTaskViewController.h; sourceTree = "<group>"; };
@@ -59,6 +73,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E262A01A1596504100D79EAE /* Icon */ = {
+			isa = PBXGroup;
+			children = (
+				E262A01B1596504100D79EAE /* Icon-72.png */,
+				E262A01C1596504100D79EAE /* Icon-Small-50.png */,
+				E262A01D1596504100D79EAE /* Icon-Small.png */,
+				E262A01E1596504100D79EAE /* Icon-Small@2x.png */,
+				E262A01F1596504100D79EAE /* Icon.png */,
+				E262A0201596504100D79EAE /* Icon@2x.png */,
+				E262A0211596504100D79EAE /* iTunesArtwork */,
+			);
+			path = Icon;
+			sourceTree = "<group>";
+		};
 		E2DEFDB11586DA2800D3D572 = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +117,7 @@
 		E2DEFDC61586DA2800D3D572 /* tasker */ = {
 			isa = PBXGroup;
 			children = (
+				E262A01A1596504100D79EAE /* Icon */,
 				E2DEFDCF1586DA2800D3D572 /* AppDelegate.h */,
 				E2DEFDD01586DA2800D3D572 /* AppDelegate.m */,
 				E2DEFDD21586DA2800D3D572 /* MainStoryboard.storyboard */,
@@ -170,6 +199,13 @@
 			files = (
 				E2DEFDCB1586DA2800D3D572 /* InfoPlist.strings in Resources */,
 				E2DEFDD41586DA2800D3D572 /* MainStoryboard.storyboard in Resources */,
+				E262A0221596504100D79EAE /* Icon-72.png in Resources */,
+				E262A0231596504100D79EAE /* Icon-Small-50.png in Resources */,
+				E262A0241596504100D79EAE /* Icon-Small.png in Resources */,
+				E262A0251596504100D79EAE /* Icon-Small@2x.png in Resources */,
+				E262A0261596504100D79EAE /* Icon.png in Resources */,
+				E262A0271596504100D79EAE /* Icon@2x.png in Resources */,
+				E262A0281596504100D79EAE /* iTunesArtwork in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -18,7 +18,12 @@
 -(void)addTaskViewController:(AddTaskViewController *)controller didFinishAddingItem:(Task *)task;
 @end
 
-@interface AddTaskViewController : UITableViewController <UITextFieldDelegate, DatePickerViewControllerDelegate>
+@interface AddTaskViewController : UITableViewController 
+    <UITextFieldDelegate, 
+    DatePickerViewControllerDelegate, 
+    UIImagePickerControllerDelegate, 
+    UIActionSheetDelegate,
+    UINavigationControllerDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *dueDateLabel;
 @property (strong, nonatomic) IBOutlet UITextField *titleField;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
