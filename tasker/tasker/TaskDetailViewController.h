@@ -11,7 +11,7 @@
 
 @class Task;
 
-@interface AddTaskViewController : UITableViewController 
+@interface TaskDetailViewController : UITableViewController 
     <UITextFieldDelegate, 
     DatePickerViewControllerDelegate, 
     UIImagePickerControllerDelegate, 

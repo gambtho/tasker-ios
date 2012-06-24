@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AddTaskViewController.h"
+#import "TaskDetailViewController.h"
 
 @interface TasksViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 

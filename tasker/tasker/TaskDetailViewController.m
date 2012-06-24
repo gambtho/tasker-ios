@@ -6,11 +6,11 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "AddTaskViewController.h"
+#import "TaskDetailViewController.h"
 #import "Task.h"
 #import "UIImage+Resize.h"
 
-@implementation AddTaskViewController{
+@implementation TaskDetailViewController{
     NSDate *dueDate;
     NSNumber *beforePhotoId;
     UIImage *image;

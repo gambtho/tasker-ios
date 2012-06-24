@@ -192,13 +192,13 @@
     
     if([segue.identifier isEqualToString:@"AddTask"]) {
         UINavigationController *navigationController = segue.destinationViewController;
-        AddTaskViewController *controller = (AddTaskViewController *)navigationController.topViewController;
+        TaskDetailViewController *controller = (TaskDetailViewController *)navigationController.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
     }
     
     if([segue.identifier isEqualToString:@"EditTask"]) {
         UINavigationController *navigationController = segue.destinationViewController;
-        AddTaskViewController *controller = (AddTaskViewController *)navigationController.topViewController;
+        TaskDetailViewController *controller = (TaskDetailViewController *)navigationController.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
         
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
