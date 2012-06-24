@@ -11,4 +11,6 @@
 
 @interface TasksViewController : UITableViewController <AddTaskViewControllerDelegate>
 
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+
 @end

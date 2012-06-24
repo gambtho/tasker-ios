@@ -8,7 +8,7 @@
 
 #import "TasksViewController.h"
 #import "TaskCell.h"
-#import "Task.h"
+#import "TaskItem.h"
 
 @interface TasksViewController ()
 
@@ -17,6 +17,8 @@
 @implementation TasksViewController{
     NSMutableArray *tasks;
 }
+
+@synthesize managedObjectContext;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -33,7 +35,7 @@
 
     tasks = [[NSMutableArray alloc] initWithCapacity:20];
     
-    Task *tempTask = [[Task alloc] init];
+    TaskItem *tempTask = [[TaskItem alloc] init];
     tempTask.title = @"Placeholder";
     tempTask.dueDate = [NSDate date];
     
@@ -68,7 +70,7 @@
 
 -(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    Task *task = [tasks objectAtIndex:indexPath.row];
+    TaskItem *task = [tasks objectAtIndex:indexPath.row];
     
     UILabel *title = (UILabel *)[cell viewWithTag:1000];
     title.text = task.title;
@@ -159,7 +161,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)addTaskViewController:(AddTaskViewController *)controller didFinishAddingItem:(Task *)task
+-(void)addTaskViewController:(AddTaskViewController *)controller didFinishAddingItem:(TaskItem *)task
 {
     int newRowIndex = [tasks count];
     [tasks addObject:task];

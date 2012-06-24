@@ -2,19 +2,24 @@
 //  Task.h
 //  tasker
 //
-//  Created by Thomas Gamble on 6/17/12.
+//  Created by Thomas Gamble on 6/23/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface Task : NSObject
 
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *description;
-@property (nonatomic, strong) NSNumber *beforePhotoId;
-@property (nonatomic, strong) NSDate *dueDate;
-@property (nonatomic, strong) NSString * category;
-@property (nonatomic, strong) NSString * assignedTo;
+@interface Task : NSManagedObject
+
+@property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSString * taskDescription;
+@property (nonatomic, retain) NSDate * dueDate;
+@property (nonatomic, retain) NSDate * completedDate;
+@property (nonatomic, retain) NSString * creator;
+@property (nonatomic, retain) NSString * completor;
+@property (nonatomic, retain) NSNumber * beforePhotoId;
+@property (nonatomic, retain) NSNumber * afterPhotoId;
+@property (nonatomic, retain) NSString * status;
 
 @end

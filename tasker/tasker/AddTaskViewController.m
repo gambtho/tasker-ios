@@ -7,7 +7,7 @@
 //
 
 #import "AddTaskViewController.h"
-#import "Task.h"
+#import "TaskItem.h"
 
 @implementation AddTaskViewController{
     NSDate *dueDate;
@@ -86,7 +86,7 @@
 
 -(IBAction)done:(id)sender
 {
-    Task *task = [[Task alloc] init];
+    TaskItem *task = [[TaskItem alloc] init];
     task.title = self.titleField.text;
     task.description = self.descriptionTextView.text;
     task.dueDate = dueDate;

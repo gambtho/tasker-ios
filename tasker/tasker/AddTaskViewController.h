@@ -9,13 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "DatePickerViewController.h"
 
-@class Task;
+@class TaskItem;
 @class AddTaskViewController;
 
 
 @protocol AddTaskViewControllerDelegate <NSObject>
 -(void)addTaskViewControllerDidCancel:(AddTaskViewController *)controller;
--(void)addTaskViewController:(AddTaskViewController *)controller didFinishAddingItem:(Task *)task;
+-(void)addTaskViewController:(AddTaskViewController *)controller didFinishAddingItem:(TaskItem *)task;
 @end
 
 @interface AddTaskViewController : UITableViewController 
@@ -28,7 +28,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *titleField;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *doneBarButton;
-@property (strong, nonatomic) Task *taskToAdd;
+@property (strong, nonatomic) TaskItem *taskToAdd;
 @property (weak, nonatomic) id <AddTaskViewControllerDelegate> delegate;
 
 -(IBAction)cancel:(id)sender;
