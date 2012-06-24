@@ -26,6 +26,11 @@
     TasksViewController *taskViewController = (TasksViewController *)[[navigationController viewControllers] objectAtIndex:0];
     taskViewController.managedObjectContext = self.managedObjectContext;
     
+    //remove the next line before release...and the compiler setting under target build phases
+    [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+    [TestFlight takeOff:@"bee96b8435ae376fc15786c7c99c64fe_OTgwMzIyMDEyLTA2LTI0IDE0OjQ1OjU4LjA5MDMzMw"];
+    [TestFlight passCheckpoint:@"LAUNCHED APPLICATION"];
+
     return YES;
 }
 							
@@ -39,11 +44,13 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [TestFlight passCheckpoint:@"APPLICATION WENT TO BACKGROUND"];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [TestFlight passCheckpoint:@"APPLICATION WENT TO FOREGROUND"];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -54,13 +61,16 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [TestFlight passCheckpoint:@"CLOSED APPLICATION"];
 }
 
 -(void)fatalCoreDataError:(NSError *)error
 {
     UIAlertView *alertView = [[UIAlertView alloc]
                               initWithTitle:NSLocalizedString(@"Internal Error", nil) message:@"There was a fatal error in the app and it cannot continue" delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+    [TestFlight passCheckpoint:@"CORE DATA ERROR"];
     [alertView show];
+    
 }
 
 #pragma mark - AlertView Delegate

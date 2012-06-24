@@ -145,9 +145,11 @@
     Task *task = nil;
     
     if(self.taskToEdit !=nil) {
+        [TestFlight passCheckpoint:@"ADDED TASK"];
         task = taskToEdit;
     } else {
         task = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:managedObjectContext];
+        [TestFlight passCheckpoint:@"EDITED TASK"];
     }
     
     task.title = self.titleField.text;

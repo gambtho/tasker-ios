@@ -84,6 +84,10 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+-(IBAction)launchFeedback {
+    [TestFlight openFeedbackView];
+}
+
 #pragma mark - Table view data source
 
 /*

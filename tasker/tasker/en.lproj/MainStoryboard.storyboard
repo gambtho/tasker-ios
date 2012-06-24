@@ -54,6 +54,11 @@
                         </prototypes>
                     </tableView>
                     <navigationItem key="navigationItem" title="To Do" id="avi-vr-u9x">
+                        <barButtonItem key="leftBarButtonItem" title="Feedback" id="P9Q-lS-gUD">
+                            <connections>
+                                <action selector="launchFeedback" destination="Jvt-XY-KkO" id="TQV-iH-mHf"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="AFh-v6-Dj3">
                             <connections>
                                 <segue destination="ld4-hq-S9J" kind="modal" identifier="AddTask" id="rly-cQ-fpC"/>
@@ -442,6 +447,46 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <point key="canvasLocation" x="1615" y="-3"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="AddTaskViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddTaskViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="action" name="textDone:"/>
+                <relationship kind="outlet" name="descriptionTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="doneBarButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="dueDateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="photoLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="titleField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="DatePickerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DatePickerViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel"/>
+                <relationship kind="action" name="dateChanged"/>
+                <relationship kind="action" name="done"/>
+                <relationship kind="outlet" name="dateButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="datePicker" candidateClass="UIDatePicker"/>
+            </relationships>
+        </class>
+        <class className="TaskCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TaskCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="dueDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="title" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="TasksViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TasksViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="launchFeedback"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

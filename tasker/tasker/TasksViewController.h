@@ -13,4 +13,6 @@
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
+-(IBAction)launchFeedback;
+
 @end
