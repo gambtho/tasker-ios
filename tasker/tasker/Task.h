@@ -21,5 +21,6 @@
 @property (nonatomic, retain) NSNumber * beforePhotoId;
 @property (nonatomic, retain) NSNumber * afterPhotoId;
 @property (nonatomic, retain) NSString * status;
+@property (nonatomic, retain) NSDate * createDate;
 
 @end

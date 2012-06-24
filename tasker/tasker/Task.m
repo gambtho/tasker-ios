@@ -20,5 +20,6 @@
 @dynamic beforePhotoId;
 @dynamic afterPhotoId;
 @dynamic status;
+@dynamic createDate;
 
 @end

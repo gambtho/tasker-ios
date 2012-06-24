@@ -7,7 +7,7 @@
 //
 
 #import "AddTaskViewController.h"
-#import "TaskItem.h"
+#import "Task.h"
 
 @implementation AddTaskViewController{
     NSDate *dueDate;
@@ -17,8 +17,7 @@
 @synthesize titleField;
 @synthesize descriptionTextView;
 @synthesize doneBarButton;
-@synthesize taskToAdd;
-@synthesize delegate;
+@synthesize managedObjectContext;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -80,19 +79,28 @@
 
 -(IBAction)cancel:(id)sender
 {
-    [self.delegate addTaskViewControllerDidCancel:self];
+//    [self.delegate addTaskViewControllerDidCancel:self];
+    [self.presentingViewController  dismissViewControllerAnimated:YES completion:nil];
     
 }
 
 -(IBAction)done:(id)sender
 {
-    TaskItem *task = [[TaskItem alloc] init];
+    Task *task = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:managedObjectContext];
+
     task.title = self.titleField.text;
-    task.description = self.descriptionTextView.text;
+    task.taskDescription = self.descriptionTextView.text;
     task.dueDate = dueDate;
     task.beforePhotoId = beforePhotoId;
+    task.createDate = [NSDate date];
     
-    [self.delegate addTaskViewController:self didFinishAddingItem:task];
+    NSError *error;
+    if(![self.managedObjectContext save:&error]) {
+        FATAL_CORE_DATA_ERROR(error);
+        return;
+    }
+    
+    [self.presentingViewController  dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(IBAction)textDone:(id)sender

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AddTaskViewController.h"
 
-@interface TasksViewController : UITableViewController <AddTaskViewControllerDelegate>
+@interface TasksViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 

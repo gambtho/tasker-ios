@@ -8,14 +8,14 @@
 
 #import "TasksViewController.h"
 #import "TaskCell.h"
-#import "TaskItem.h"
+#import "Task.h"
 
 @interface TasksViewController ()
 
 @end
 
 @implementation TasksViewController{
-    NSMutableArray *tasks;
+    NSFetchedResultsController *fetchedResultsController;
 }
 
 @synthesize managedObjectContext;
@@ -29,24 +29,53 @@
     return self;
 }
 
+-(NSFetchedResultsController *)fetchedResultsController
+{
+    if (fetchedResultsController == nil) {
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+        [fetchRequest setEntity:entity];
+        
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"dueDate" ascending:YES];
+        [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+        
+        [fetchRequest setFetchBatchSize:20];
+        
+        fetchedResultsController = [[NSFetchedResultsController alloc]
+                                    initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Tasks"];
+        fetchedResultsController.delegate = self;
+    }
+    return fetchedResultsController;
+}
+
+-(void)performFetch
+{
+    NSError *error;
+    if(![self.fetchedResultsController performFetch:&error]) 
+    {
+        FATAL_CORE_DATA_ERROR(error);
+        return;
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    tasks = [[NSMutableArray alloc] initWithCapacity:20];
-    
-    TaskItem *tempTask = [[TaskItem alloc] init];
-    tempTask.title = @"Placeholder";
-    tempTask.dueDate = [NSDate date];
-    
-    [tasks addObject:tempTask];
+    [self performFetch];
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    
+    fetchedResultsController.delegate = nil;
+    fetchedResultsController = nil;    
+}
+
+-(void)dealloc
+{
+    fetchedResultsController.delegate = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -65,29 +94,34 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [tasks count];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
 }
 
 -(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    TaskItem *task = [tasks objectAtIndex:indexPath.row];
+    TaskCell *taskCell = (TaskCell *)cell;
+    Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    UILabel *title = (UILabel *)[cell viewWithTag:1000];
-    title.text = task.title;
-    
-    UILabel *dueDate = (UILabel *)[cell viewWithTag:1001];
-    dueDate.text = [NSDateFormatter localizedStringFromDate:task.dueDate 
+    if([task.title length] > 0)
+    {
+        taskCell.title.text = task.title;
+    }
+    else {
+        taskCell.title.text = @"No title";
+    }
+    if(task.dueDate!=nil)
+    {
+        taskCell.dueDate.text = [NSDateFormatter localizedStringFromDate:task.dueDate 
                                                   dateStyle:NSDateFormatterShortStyle 
                                                   timeStyle:NSDateFormatterNoStyle];
-
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TaskCell"];
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Task"];
     [self configureCell:cell atIndexPath:indexPath];
-
     return cell;
 }
 
@@ -106,11 +140,16 @@
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    [tasks removeObjectAtIndex:indexPath.row];
-    
-    [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
- 
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [self.managedObjectContext deleteObject:task];
+        
+        NSError *error;
+        if (![self.managedObjectContext save:&error]) {
+            FATAL_CORE_DATA_ERROR(error);
+            return;
+        }
+    }
 }
 
 
@@ -136,9 +175,10 @@
     if([segue.identifier isEqualToString:@"AddTask"]) {
         UINavigationController *navigationController = segue.destinationViewController;
         AddTaskViewController *controller = (AddTaskViewController *)navigationController.topViewController;
-        controller.delegate = self;
+        controller.managedObjectContext = self.managedObjectContext;
     }
 
+    // Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
 #pragma mark - Table view delegate
@@ -154,23 +194,66 @@
      */
 }
 
-#pragma mark - Add Task delegate
+#pragma mark - NSFetchedResultsControllerDelegate
 
--(void)addTaskViewControllerDidCancel:(AddTaskViewController *)controller
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    NSLog(@"*** controllerWillChangeContent");
+    [self.tableView beginUpdates];
 }
 
--(void)addTaskViewController:(AddTaskViewController *)controller didFinishAddingItem:(TaskItem *)task
+- (void)controller:(NSFetchedResultsController *)controller
+   didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath
+     forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath
 {
-    int newRowIndex = [tasks count];
-    [tasks addObject:task];
-    
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:newRowIndex inSection:0];
-    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
-    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
+    switch (type) {
+        case NSFetchedResultsChangeInsert:
+            NSLog(@"*** controllerDidChangeObject - NSFetchedResultsChangeInsert");
+            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            NSLog(@"*** controllerDidChangeObject - NSFetchedResultsChangeDelete");
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            NSLog(@"*** controllerDidChangeObject - NSFetchedResultsChangeUpdate");
+            [self configureCell:[self.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            NSLog(@"*** controllerDidChangeObject - NSFetchedResultsChangeMove");
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controller:(NSFetchedResultsController *)controller
+  didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex
+     forChangeType:(NSFetchedResultsChangeType)type
+{
+    switch (type) {
+        case NSFetchedResultsChangeInsert:
+            NSLog(@"*** controllerDidChangeSection - NSFetchedResultsChangeInsert");
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            NSLog(@"*** controllerDidChangeSection - NSFetchedResultsChangeDelete");
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    NSLog(@"*** controllerDidChangeContent");
+    [self.tableView endUpdates];
 }
 
 @end

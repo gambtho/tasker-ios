@@ -11,7 +11,7 @@
 @implementation TaskCell
 
 @synthesize title;
-@synthesize image;
+@synthesize imageView;
 @synthesize dueDate; 
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

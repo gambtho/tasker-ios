@@ -56,6 +56,20 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+-(void)fatalCoreDataError:(NSError *)error
+{
+    UIAlertView *alertView = [[UIAlertView alloc]
+                              initWithTitle:NSLocalizedString(@"Internal Error", nil) message:@"There was a fatal error in the app and it cannot continue" delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+    [alertView show];
+}
+
+#pragma mark - AlertView Delegate
+
+-(void)alertView:(UIAlertView *)theAlertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    abort();
+}
+
 #pragma mark - Core Data
 
 - (NSManagedObjectModel *)managedObjectModel
@@ -107,5 +121,7 @@
     }
     return managedObjectContext;
 }
+
+
 
 @end
