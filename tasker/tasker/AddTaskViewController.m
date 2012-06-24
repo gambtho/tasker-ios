@@ -8,16 +8,23 @@
 
 #import "AddTaskViewController.h"
 #import "Task.h"
+#import "UIImage+Resize.h"
 
 @implementation AddTaskViewController{
     NSDate *dueDate;
     NSNumber *beforePhotoId;
+    UIImage *image;
+    NSString *title;
+    NSString *description;
 }
 @synthesize dueDateLabel;
 @synthesize titleField;
 @synthesize descriptionTextView;
 @synthesize doneBarButton;
 @synthesize managedObjectContext;
+@synthesize imageView;
+@synthesize photoLabel;
+@synthesize taskToEdit;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -29,20 +36,60 @@
     return self;
 }
 
+-(void)showImage:(UIImage *)theImage
+{
+    self.imageView.image = theImage;
+    self.imageView.hidden = NO;
+    self.imageView.frame = CGRectMake(10, 10, 260, 260);
+    self.photoLabel.hidden = YES;
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if(taskToEdit != nil) {
+        self.title =@"Edit Task";        
+/*        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] 
+                                                  initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
+                                                  target:self action:@selector(done:)];
+*/        
+    }
+    
+    if(image != nil) {
+        [self showImage:image];
+    }
+    
+    self.titleField.text = title;
+    self.descriptionTextView.text = description;
+    
+    if(dueDate != nil) {
+        [self updateDueDateLabel];
+    }
     
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard:)];
     
     gestureRecognizer.cancelsTouchesInView = NO;
     [self.tableView addGestureRecognizer:gestureRecognizer];
+}
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+-(void)setTaskToEdit:(Task *)theTaskToEdit
+{
+    if(taskToEdit != theTaskToEdit) {
+        taskToEdit = theTaskToEdit;
+        
+        title = taskToEdit.title;
+        description = taskToEdit.taskDescription;
+        if([taskToEdit hasBeforePhoto]) {
+            UIImage *existingImage = [taskToEdit photoImage:[taskToEdit.beforePhotoId intValue]];
+            if(existingImage!=nil) {
+                existingImage = [existingImage resizedImageWithBounds:CGSizeMake(260, 260)];
+                image = existingImage;
+            }
+        }
+        dueDate = taskToEdit.dueDate;
+    }
 }
 
 - (void)viewDidUnload
@@ -51,9 +98,10 @@
     [self setDescriptionTextView:nil];
     [self setDoneBarButton:nil];
     [self setDueDateLabel:nil];
+    [self setImageView:nil];
+    [self setPhotoLabel:nil];
+    
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -84,15 +132,41 @@
     
 }
 
+- (int)nextPhotoId
+{
+    int photoId = [[NSUserDefaults standardUserDefaults] integerForKey:@"PhotoID"];
+    [[NSUserDefaults standardUserDefaults] setInteger:photoId+1 forKey:@"PhotoID"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    return photoId;
+}
+
 -(IBAction)done:(id)sender
 {
-    Task *task = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:managedObjectContext];
-
+    Task *task = nil;
+    
+    if(self.taskToEdit !=nil) {
+        task = taskToEdit;
+    } else {
+        task = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:managedObjectContext];
+    }
+    
     task.title = self.titleField.text;
     task.taskDescription = self.descriptionTextView.text;
     task.dueDate = dueDate;
-    task.beforePhotoId = beforePhotoId;
+    task.beforePhotoId = [NSNumber numberWithInt:-1];
     task.createDate = [NSDate date];
+    
+    if(image != nil) {
+        if(![task hasBeforePhoto]){
+            task.beforePhotoId = [NSNumber numberWithInt:[self nextPhotoId]];
+        }
+                                  
+      NSData *data = UIImagePNGRepresentation(image);
+      NSError *error;
+    if (![data writeToFile:[task photoPath:[task.beforePhotoId intValue]] options:NSDataWritingAtomic error:&error]) {
+          NSLog(@"Error writing file: %@", error);
+      }                          
+    }
     
     NSError *error;
     if(![self.managedObjectContext save:&error]) {
@@ -176,6 +250,13 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    image = [info objectForKey:UIImagePickerControllerEditedImage];
+    
+    if ([self isViewLoaded]) {
+        [self showImage:image];
+        [self.tableView reloadData];
+    }
+    
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -297,6 +378,21 @@
     else {
         return nil;
     }
+}
+
+- (CGFloat)tableView:(UITableView *)theTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 1 && indexPath.row == 0) {
+        return 88;
+    } else if (indexPath.section == 1 && indexPath.row == 1) {
+        if (self.imageView.hidden) {
+            return 44;
+        } else {
+            return 280;
+        }
+    } else {
+        return 44;
+    }  
 }
 
 @end

@@ -9,6 +9,7 @@
 #import "TasksViewController.h"
 #import "TaskCell.h"
 #import "Task.h"
+#import "UIImage+Resize.h"
 
 @interface TasksViewController ()
 
@@ -106,16 +107,28 @@
     if([task.title length] > 0)
     {
         taskCell.title.text = task.title;
-    }
-    else {
+    } else {
         taskCell.title.text = @"No title";
     }
+    
     if(task.dueDate!=nil)
     {
         taskCell.dueDate.text = [NSDateFormatter localizedStringFromDate:task.dueDate 
                                                   dateStyle:NSDateFormatterShortStyle 
                                                   timeStyle:NSDateFormatterNoStyle];
+    } else {
+        taskCell.dueDate.text = @" ";
     }
+    
+    UIImage *image = nil;
+    if([task hasBeforePhoto]) {
+        image = [task photoImage:[task.beforePhotoId intValue]];
+        if(image!=nil) {
+            image = [image resizedImageWithBounds:CGSizeMake(60, 60)];
+        }
+    }
+    taskCell.imageView.image = image;
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -142,6 +155,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [task removePhotoFiles];
         [self.managedObjectContext deleteObject:task];
         
         NSError *error;
@@ -176,6 +190,16 @@
         UINavigationController *navigationController = segue.destinationViewController;
         AddTaskViewController *controller = (AddTaskViewController *)navigationController.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
+    }
+    
+    if([segue.identifier isEqualToString:@"EditTask"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        AddTaskViewController *controller = (AddTaskViewController *)navigationController.topViewController;
+        controller.managedObjectContext = self.managedObjectContext;
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+        Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        controller.taskToEdit = task;
     }
 
     // Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];

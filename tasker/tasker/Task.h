@@ -23,4 +23,9 @@
 @property (nonatomic, retain) NSString * status;
 @property (nonatomic, retain) NSDate * createDate;
 
+-(BOOL)hasBeforePhoto;
+-(NSString *)photoPath:(int)photoId;
+-(UIImage *)photoImage:(int)photoId;
+-(void)removePhotoFiles;
+
 @end

@@ -29,6 +29,7 @@
 		E2F8FBD81596A26E00317F84 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E2F8FBD61596A26E00317F84 /* DataModel.xcdatamodeld */; };
 		E2F8FBDD1596A2F500317F84 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F8FBDC1596A2F500317F84 /* CoreData.framework */; };
 		E2F8FBE01596A3B400317F84 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F8FBDF1596A3B400317F84 /* Task.m */; };
+		E2F8FBE71597897C00317F84 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F8FBE61597897C00317F84 /* UIImage+Resize.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,8 @@
 		E2F8FBDC1596A2F500317F84 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		E2F8FBDE1596A3B400317F84 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		E2F8FBDF1596A3B400317F84 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
+		E2F8FBE51597897C00317F84 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
+		E2F8FBE61597897C00317F84 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +147,8 @@
 				E2F8FBD61596A26E00317F84 /* DataModel.xcdatamodeld */,
 				E2F8FBDE1596A3B400317F84 /* Task.h */,
 				E2F8FBDF1596A3B400317F84 /* Task.m */,
+				E2F8FBE51597897C00317F84 /* UIImage+Resize.h */,
+				E2F8FBE61597897C00317F84 /* UIImage+Resize.m */,
 			);
 			path = tasker;
 			sourceTree = "<group>";
@@ -237,6 +242,7 @@
 				E262A018159158F600D79EAE /* DatePickerViewController.m in Sources */,
 				E2F8FBD81596A26E00317F84 /* DataModel.xcdatamodeld in Sources */,
 				E2F8FBE01596A3B400317F84 /* Task.m in Sources */,
+				E2F8FBE71597897C00317F84 /* UIImage+Resize.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
