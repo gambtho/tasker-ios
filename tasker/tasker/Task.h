@@ -28,5 +28,6 @@
 -(UIImage *)photoImage:(int)photoId;
 -(void)removePhotoFiles;
 -(BOOL)isComplete;
+-(BOOL)isAssigned;
 
 @end

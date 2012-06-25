@@ -136,6 +136,9 @@
     if([task isComplete]) {
         taskCell.completeCheck.hidden = NO;
     }
+    else {
+        taskCell.completeCheck.hidden = YES;
+    }
     
 }
 

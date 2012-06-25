@@ -77,4 +77,13 @@
     return FALSE;
 }
 
+-(BOOL)isAssigned
+{
+    NSLog(@"status is: %@", self.status);
+    if([self.status isEqualToString:@"assigned"]) {
+        return TRUE;
+    }
+    return FALSE;
+}
+
 @end

@@ -26,6 +26,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UILabel *photoLabel;
 @property (strong, nonatomic) Task *taskToEdit;
+@property (strong, nonatomic) IBOutlet UITableViewCell *assignCell;
 
 -(IBAction)cancel:(id)sender;
 -(IBAction)done:(id)sender;

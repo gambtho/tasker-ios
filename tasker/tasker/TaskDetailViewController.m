@@ -16,6 +16,9 @@
     UIImage *image;
     NSString *title;
     NSString *description;
+    NSString *user;
+    NSString *status;
+    NSString *completor;
 }
 @synthesize dueDateLabel;
 @synthesize titleField;
@@ -25,6 +28,7 @@
 @synthesize imageView;
 @synthesize photoLabel;
 @synthesize taskToEdit;
+@synthesize assignCell;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -44,23 +48,50 @@
     self.photoLabel.hidden = YES;
 }
 
+-(void)updateNavBar 
+{
+    if(taskToEdit != nil) {
+        if([taskToEdit isComplete])
+        {
+            self.title = @"View Completed Task";
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] 
+                                                     initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(cancel:)];
+            self.doneBarButton.enabled = FALSE;
+            self.assignCell.textLabel.text = self.taskToEdit.completor;
+            [self.assignCell setAccessoryType:UITableViewCellAccessoryNone];
+            [self.titleField setEnabled:FALSE];
+            [self.descriptionTextView setEditable:FALSE];
+        }
+        else if([taskToEdit isAssigned]) {
+            self.title = @"View Task";
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] 
+                                                     initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(cancel:)];
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] 
+                                                      initWithTitle:@"Complete!" style:UIBarButtonItemStyleBordered target:self action:@selector(complete:)];
+            self.assignCell.textLabel.text = self.taskToEdit.completor;
+            [self.assignCell setAccessoryType:UITableViewCellAccessoryNone];
+            [self.titleField setEnabled:FALSE];
+            [self.descriptionTextView setEditable:FALSE];
+        }
+        else {
+            self.title =@"Edit Task";
+            self.doneBarButton.enabled = YES;
+        }
+    } 
+}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    if(taskToEdit != nil) {
-        self.title =@"Edit Task";
-        if([taskToEdit isComplete])
-        {
-            // remove done button
-        }
-        else {
-            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] 
-                                                      initWithTitle:@"Complete!" style:UIBarButtonItemStyleBordered target:self action:@selector(complete:)];
-        }
-/*        
-*/        
+    [TestFlight passCheckpoint:@"LOADED TASK DETAIL"];
+    user = [[NSString alloc] initWithFormat:@"Current User"];
+    status = [[NSString alloc] initWithFormat:@"new"];
+    if(taskToEdit!=nil)
+    {
+        [self updateNavBar];
+        status = taskToEdit.status;
     }
     
     if(image != nil) {
@@ -95,7 +126,7 @@
             }
         }
         dueDate = taskToEdit.dueDate;
-    }
+    } 
 }
 
  
@@ -108,6 +139,7 @@
     [self setImageView:nil];
     [self setPhotoLabel:nil];
     
+    [self setAssignCell:nil];
     [super viewDidUnload];
 }
 
@@ -134,15 +166,31 @@
 
 -(IBAction)complete:(id)sender
 {
-    taskToEdit.status = [[NSString alloc] initWithFormat:@"complete"];
+    status = [[NSString alloc] initWithFormat:@"complete"];
+    
     taskToEdit.completedDate = [NSDate date];
+    
+    [TestFlight passCheckpoint:@"COMPLETED TASK"];
+    
     [self done:sender];
+}
+
+-(void)assign
+{
+    status = [[NSString alloc] initWithFormat:@"assigned"];
+    completor = user;
+    
+    [TestFlight passCheckpoint:@"ASSIGNED TASK"];
+    
+    [self done:self];
 }
 
 -(IBAction)cancel:(id)sender
 {
 //    [self.delegate addTaskViewControllerDidCancel:self];
     [self.presentingViewController  dismissViewControllerAnimated:YES completion:nil];
+    
+    [TestFlight passCheckpoint:@"CANCELLED TASK DETAIL"];
     
 }
 
@@ -157,21 +205,22 @@
 -(IBAction)done:(id)sender
 {
     Task *task = nil;
-    
+        
     if(self.taskToEdit !=nil) {
-        [TestFlight passCheckpoint:@"EDITED TASK"];
-        task = taskToEdit;
+        task = self.taskToEdit;
     } else {
         task = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:managedObjectContext];
         task.createDate = [NSDate date];
-        task.status = [[NSString alloc] initWithFormat:@"new"];
         task.beforePhotoId = [NSNumber numberWithInt:-1];
+        task.status = status;
         [TestFlight passCheckpoint:@"ADDED TASK"];
     }
     
     task.title = self.titleField.text;
     task.taskDescription = self.descriptionTextView.text;
     task.dueDate = dueDate;
+    task.status = status;
+    task.completor = completor;
         
     if(image != nil) {
         if(![task hasBeforePhoto]){
@@ -198,6 +247,7 @@
 {
     [sender resignFirstResponder];
 }
+
 
 -(void)hideKeyboard:(UIGestureRecognizer *)gestureRecognizer
 {
@@ -373,29 +423,39 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 0 && indexPath.row == 0) {
-        [self.titleField becomeFirstResponder];
-    }
-    else if (indexPath.section == 1 && indexPath.row == 0) {
-        [self.descriptionTextView becomeFirstResponder];    
-    }
-    else if (indexPath.section == 1 && indexPath.row == 1){
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        [self showPhotoMenu];
+    
+    
+    if((![taskToEdit isComplete]) && (![taskToEdit isAssigned])) {
+        if(indexPath.section == 0 && indexPath.row == 0) {
+            [self.titleField becomeFirstResponder];
+        }
+        else if (indexPath.section == 1 && indexPath.row == 0) {
+            [self.descriptionTextView becomeFirstResponder];    
+        }
+        else if (indexPath.section == 1 && indexPath.row == 1){
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            [self showPhotoMenu];
+        }
+        else if (indexPath.section == 2 && indexPath.row == 0){
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            [self assign];
+        }
     }
 
 }
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 0 || indexPath.section == 1)
+   //  && (indexPath.section == 2)
+    if(([self.taskToEdit isComplete] || [self.taskToEdit isAssigned]))
     {
-        return indexPath;
-    }
-    else {
         return nil;
     }
+    else {
+        return indexPath;
+    }
 }
+
 
 - (CGFloat)tableView:(UITableView *)theTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
