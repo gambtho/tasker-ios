@@ -25,7 +25,6 @@
 @synthesize imageView;
 @synthesize photoLabel;
 @synthesize taskToEdit;
-@synthesize tabBar;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -52,18 +51,15 @@
 
     if(taskToEdit != nil) {
         self.title =@"Edit Task";
-        self.doneBarButton.enabled = YES;
-        self.tabBar.hidden = NO;
         if([taskToEdit isComplete])
         {
-            self.tabBar.hidden = YES;
+            // remove done button
         }
         else {
-            //retstrict edit funcitonality.....
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] 
+                                                      initWithTitle:@"Complete!" style:UIBarButtonItemStyleBordered target:self action:@selector(complete:)];
         }
-/*        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] 
-                                                  initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
-                                                  target:self action:@selector(done:)];
+/*        
 */        
     }
     
@@ -102,9 +98,6 @@
     }
 }
 
--(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-        [self complete:item];
-}
  
 - (void)viewDidUnload
 {
@@ -115,7 +108,6 @@
     [self setImageView:nil];
     [self setPhotoLabel:nil];
     
-    [self setTabBar:nil];
     [super viewDidUnload];
 }
 
