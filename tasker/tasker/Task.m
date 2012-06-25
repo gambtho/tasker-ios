@@ -68,4 +68,13 @@
 //    [self removeFile:[self photoPath:[self.afterPhotoId intValue]]];
 }
 
+-(BOOL)isComplete
+{
+    NSLog(@"status is: %@", self.status);
+    if([self.status isEqualToString:@"complete"]) {
+        return TRUE;
+    }
+    return FALSE;
+}
+
 @end

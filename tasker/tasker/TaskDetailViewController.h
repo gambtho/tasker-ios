@@ -16,6 +16,7 @@
     DatePickerViewControllerDelegate, 
     UIImagePickerControllerDelegate, 
     UIActionSheetDelegate,
+    UITabBarDelegate,
     UINavigationControllerDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *dueDateLabel;
 @property (strong, nonatomic) IBOutlet UITextField *titleField;
@@ -26,9 +27,11 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UILabel *photoLabel;
 @property (strong, nonatomic) Task *taskToEdit;
+@property (strong, nonatomic) IBOutlet UITabBar *tabBar;
 
 -(IBAction)cancel:(id)sender;
 -(IBAction)done:(id)sender;
 -(IBAction)textDone:(id)sender;
+-(IBAction)complete:(id)sender;
 
 @end

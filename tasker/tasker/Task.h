@@ -27,5 +27,6 @@
 -(NSString *)photoPath:(int)photoId;
 -(UIImage *)photoImage:(int)photoId;
 -(void)removePhotoFiles;
+-(BOOL)isComplete;
 
 @end

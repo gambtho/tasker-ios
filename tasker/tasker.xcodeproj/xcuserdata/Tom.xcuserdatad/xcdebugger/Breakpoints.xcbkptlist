@@ -8,7 +8,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "tasker/TaskCell.h"
-         timestampString = "361676776.759868"
+         timestampString = "362282507.57316"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "15"
@@ -27,6 +27,19 @@
          startingLineNumber = "290"
          endingLineNumber = "290"
          landmarkName = "-prepareForSegue:sender:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "tasker/TasksViewController.m"
+         timestampString = "362283364.9676"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "137"
+         endingLineNumber = "137"
+         landmarkName = "-configureCell:atIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

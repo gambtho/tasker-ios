@@ -25,6 +25,7 @@
 @synthesize imageView;
 @synthesize photoLabel;
 @synthesize taskToEdit;
+@synthesize tabBar;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -48,9 +49,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     if(taskToEdit != nil) {
-        self.title =@"Edit Task";        
+        self.title =@"Edit Task";
+        self.doneBarButton.enabled = YES;
+        self.tabBar.hidden = NO;
+        if([taskToEdit isComplete])
+        {
+            self.tabBar.hidden = YES;
+        }
+        else {
+            //retstrict edit funcitonality.....
+        }
 /*        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] 
                                                   initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
                                                   target:self action:@selector(done:)];
@@ -92,6 +102,10 @@
     }
 }
 
+-(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+        [self complete:item];
+}
+ 
 - (void)viewDidUnload
 {
     [self setTitleField:nil];
@@ -101,6 +115,7 @@
     [self setImageView:nil];
     [self setPhotoLabel:nil];
     
+    [self setTabBar:nil];
     [super viewDidUnload];
 }
 
@@ -125,6 +140,13 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+-(IBAction)complete:(id)sender
+{
+    taskToEdit.status = [[NSString alloc] initWithFormat:@"complete"];
+    taskToEdit.completedDate = [NSDate date];
+    [self done:sender];
+}
+
 -(IBAction)cancel:(id)sender
 {
 //    [self.delegate addTaskViewControllerDidCancel:self];
@@ -145,19 +167,20 @@
     Task *task = nil;
     
     if(self.taskToEdit !=nil) {
-        [TestFlight passCheckpoint:@"ADDED TASK"];
+        [TestFlight passCheckpoint:@"EDITED TASK"];
         task = taskToEdit;
     } else {
         task = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:managedObjectContext];
-        [TestFlight passCheckpoint:@"EDITED TASK"];
+        task.createDate = [NSDate date];
+        task.status = [[NSString alloc] initWithFormat:@"new"];
+        task.beforePhotoId = [NSNumber numberWithInt:-1];
+        [TestFlight passCheckpoint:@"ADDED TASK"];
     }
     
     task.title = self.titleField.text;
     task.taskDescription = self.descriptionTextView.text;
     task.dueDate = dueDate;
-    task.beforePhotoId = [NSNumber numberWithInt:-1];
-    task.createDate = [NSDate date];
-    
+        
     if(image != nil) {
         if(![task hasBeforePhoto]){
             task.beforePhotoId = [NSNumber numberWithInt:[self nextPhotoId]];

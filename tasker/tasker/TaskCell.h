@@ -13,6 +13,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *title;
 @property (nonatomic, strong) IBOutlet UILabel *dueDate;
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
+@property (nonatomic, strong) IBOutlet UILabel *completeCheck;
 
 
 @end

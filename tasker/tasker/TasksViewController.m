@@ -133,6 +133,10 @@
     }
     taskCell.imageView.image = image;
     
+    if([task isComplete]) {
+        taskCell.completeCheck.hidden = NO;
+    }
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
