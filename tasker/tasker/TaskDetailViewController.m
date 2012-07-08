@@ -29,6 +29,7 @@
 @synthesize photoLabel;
 @synthesize taskToEdit;
 @synthesize assignCell;
+@synthesize userEmail;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -86,7 +87,7 @@
     [super viewDidLoad];
 
     [TestFlight passCheckpoint:@"LOADED TASK DETAIL"];
-    user = [[NSString alloc] initWithFormat:@"Current User"];
+    
     status = [[NSString alloc] initWithFormat:@"new"];
     if(taskToEdit!=nil)
     {
@@ -97,6 +98,11 @@
     if(image != nil) {
         [self showImage:image];
     }
+    
+    if(self.userEmail == nil) {
+        self.userEmail = @"UserName Here";
+    }
+    user = self.userEmail;
     
     self.titleField.text = title;
     self.descriptionTextView.text = description;
@@ -213,6 +219,7 @@
         task.createDate = [NSDate date];
         task.beforePhotoId = [NSNumber numberWithInt:-1];
         task.status = status;
+        task.creator = user;
         [TestFlight passCheckpoint:@"ADDED TASK"];
     }
     

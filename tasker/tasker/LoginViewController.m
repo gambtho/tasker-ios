@@ -17,6 +17,9 @@
 @implementation LoginViewController
 
 @synthesize managedObjectContext;
+@synthesize accessToken;
+@synthesize delegate;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,13 +33,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
+    [self setAccessToken:nil];
+
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -48,7 +51,7 @@
 {    
     [GTMHTTPFetcher setLoggingEnabled:YES];
     
-    static NSString *const kKeychainItemName = @"taskerAuth";
+    static NSString *const kKeychainItemName = @"Tasker: Google Auth";
     
     NSString *kMyClientID = @"340027406247.apps.googleusercontent.com";     // pre-assigned by service
     NSString *kMyClientSecret = @"AR0hLFuzc7fL5vu23vTD7MBw"; // pre-assigned by service
@@ -59,15 +62,19 @@
     
     
     GTMOAuth2ViewControllerTouch *viewController;
-    viewController = [[[GTMOAuth2ViewControllerTouch alloc] initWithScope:scope
+    viewController = [[GTMOAuth2ViewControllerTouch alloc] initWithScope:scope
                                                                  clientID:kMyClientID
                                                              clientSecret:kMyClientSecret
                                                          keychainItemName:kKeychainItemName
                                                                  delegate:self
-                                                         finishedSelector:@selector(viewController:finishedWithAuth:error:)] autorelease];
+                                                         finishedSelector:@selector(viewController:finishedWithAuth:error:)];
     
     [[self navigationController] pushViewController:viewController
                                            animated:YES];
+}
+
+- (IBAction)didCancel:(id)sender {
+    [self.delegate loginCancelled:self];
 }
 
 - (void)viewController:(GTMOAuth2ViewControllerTouch *)viewController
@@ -80,16 +87,17 @@
         NSData *responseData = [[error userInfo] objectForKey:@"data"]; // kGTMHTTPFetcherStatusDataKey
         if ([responseData length] > 0) {
             // show the body of the server's authentication failure response
-            NSString *str = [[[NSString alloc] initWithData:responseData
-                                                   encoding:NSUTF8StringEncoding] autorelease];
+            NSString *str = [[NSString alloc] initWithData:responseData
+                                                   encoding:NSUTF8StringEncoding];
             NSLog(@"%@", str);
         }
-//
+        
     } else {
 
-//        self.auth = auth;
+        self.accessToken = auth.userEmail;
+        NSLog(@"Email: %@", self.accessToken);
+        [self.delegate loginCompleted:self didLogin:auth.userEmail];
     }
     
-//    [self updateUI];
 }
 @end

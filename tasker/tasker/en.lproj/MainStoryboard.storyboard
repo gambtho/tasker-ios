@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="eRa-lv-uSz">
-                                <rect key="frame" x="122" y="170" width="76" height="37"/>
+                                <rect key="frame" x="122" y="104" width="76" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Google">
@@ -30,13 +30,26 @@
                                     <action selector="googleLogin:" destination="Gc0-xE-YXV" eventType="touchUpInside" id="hqg-oQ-ySm"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Choose how you would like to login:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="36u-kL-4kL">
+                                <rect key="frame" x="20" y="58" width="275" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="gkc-0k-eBT"/>
+                    <navigationItem key="navigationItem" id="gkc-0k-eBT">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="XFH-4Y-1rz">
+                            <connections>
+                                <action selector="didCancel:" destination="Gc0-xE-YXV" id="oAE-HS-VfE"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="1162" y="-594"/>
+            <point key="canvasLocation" x="1688" y="-594"/>
         </scene>
         <!--Tasks View Controller - To Do-->
         <scene sceneID="Tk0-Ln-JZr">
@@ -96,7 +109,7 @@
                     <navigationItem key="navigationItem" title="To Do" id="avi-vr-u9x">
                         <barButtonItem key="leftBarButtonItem" title="Login" id="P9Q-lS-gUD">
                             <connections>
-                                <segue destination="Gc0-xE-YXV" kind="push" id="uSQ-l6-oGf"/>
+                                <segue destination="W4P-yD-YgU" kind="modal" identifier="Login" id="uSQ-l6-oGf"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="AFh-v6-Dj3">
@@ -105,6 +118,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addButton" destination="AFh-v6-Dj3" id="U7n-XB-yL6"/>
+                        <outlet property="loginButton" destination="P9Q-lS-gUD" id="M8H-DA-EBf"/>
+                    </connections>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="1161" y="-1"/>
@@ -380,53 +397,25 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="1615" y="-3"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="bKu-Oc-aLL">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ke5-WQ-jnn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController id="W4P-yD-YgU" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="iD1-lX-qIo">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Gc0-xE-YXV" kind="relationship" relationship="rootViewController" id="BNj-xZ-zbF"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="1162" y="-594"/>
+        </scene>
     </scenes>
-    <classes>
-        <class className="DatePickerViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DatePickerViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel"/>
-                <relationship kind="action" name="dateChanged"/>
-                <relationship kind="action" name="done"/>
-                <relationship kind="outlet" name="dateButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="datePicker" candidateClass="UIDatePicker"/>
-            </relationships>
-        </class>
-        <class className="LoginViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="googleLogin:"/>
-            </relationships>
-        </class>
-        <class className="TaskCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TaskCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="completeCheck" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dueDate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="title" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="TaskDetailViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TaskDetailViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="complete:"/>
-                <relationship kind="action" name="done:"/>
-                <relationship kind="action" name="textDone:"/>
-                <relationship kind="outlet" name="assignCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="descriptionTextView" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="doneBarButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="dueDateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="photoLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="titleField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="TasksViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TasksViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -20,12 +20,15 @@
 }
 
 @synthesize managedObjectContext;
+@synthesize userEmail;
+@synthesize addButton;
+@synthesize loginButton;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+
     }
     return self;
 }
@@ -33,10 +36,17 @@
 -(NSFetchedResultsController *)fetchedResultsController
 {
     if (fetchedResultsController == nil) {
+        
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        
+        [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
         
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
         [fetchRequest setEntity:entity];
+
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"creator == %@", self.userEmail];
+        [fetchRequest setPredicate:predicate];
+       
         
         NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"dueDate" ascending:YES];
         [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
@@ -63,15 +73,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if(self.userEmail==nil) {
+        userEmail = @"Placeholder user";
+        addButton.enabled = FALSE;
+    }
+//    [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
     [self performFetch];
 }
 
 - (void)viewDidUnload
 {
+    [self setAddButton:nil];
+    [self setLoginButton:nil];
     [super viewDidUnload];
     
     fetchedResultsController.delegate = nil;
     fetchedResultsController = nil;    
+    userEmail = nil;
+
 }
 
 -(void)dealloc
@@ -203,15 +223,16 @@
         UINavigationController *navigationController = segue.destinationViewController;
         TaskDetailViewController *controller = (TaskDetailViewController *)navigationController.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
+        controller.userEmail = self.userEmail;
     }
-    
-/*    
+     
     if([segue.identifier isEqualToString:@"Login"]) {
         UINavigationController *navigationController = segue.destinationViewController;
-        TaskDetailViewController *controller = (TaskDetailViewController *)navigationController.topViewController;
+        LoginViewController *controller = (LoginViewController *)navigationController.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
+        
+        controller.delegate = self;
     }
-*/
     
     if([segue.identifier isEqualToString:@"EditTask"]) {
         UINavigationController *navigationController = segue.destinationViewController;
@@ -221,6 +242,7 @@
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
         Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
         controller.taskToEdit = task;
+        controller.userEmail = self.userEmail;
     }
 
     // Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -299,6 +321,28 @@
 {
     NSLog(@"*** controllerDidChangeContent");
     [self.tableView endUpdates];
+}
+
+#pragma mark - Login Delegate
+
+- (void)loginCompleted:(LoginViewController *)login didLogin:(NSString *)theUserEmail
+{
+    self.addButton.enabled = TRUE;
+    self.userEmail = theUserEmail;
+    [self dismissModalViewControllerAnimated:YES];
+    
+    [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"creator == %@", self.userEmail];
+    [self.fetchedResultsController.fetchRequest setPredicate:predicate];
+    
+    [self performFetch];
+    [self.tableView reloadData];
+}
+
+-(void)loginCancelled:(LoginViewController *)login
+{
+    [self dismissModalViewControllerAnimated:NO];
 }
 
 @end

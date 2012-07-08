@@ -16,7 +16,7 @@
 		E260BFB715A7D11B0048694E /* GTMOAuth2SignIn.m in Sources */ = {isa = PBXBuildFile; fileRef = E260BFB615A7D11B0048694E /* GTMOAuth2SignIn.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E260BFB915A7D1C30048694E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E260BFB815A7D1C30048694E /* Security.framework */; };
 		E260BFBB15A7D2070048694E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E260BFBA15A7D2070048694E /* SystemConfiguration.framework */; };
-		E260BFC415A90B810048694E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E260BFC315A90B810048694E /* LoginViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E260BFC415A90B810048694E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E260BFC315A90B810048694E /* LoginViewController.m */; };
 		E260BFCB15A911B30048694E /* GTMHTTPFetcherLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = E260BFCA15A911B30048694E /* GTMHTTPFetcherLogging.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E262A018159158F600D79EAE /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E262A017159158F600D79EAE /* DatePickerViewController.m */; };
 		E262A0221596504100D79EAE /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = E262A01B1596504100D79EAE /* Icon-72.png */; };
