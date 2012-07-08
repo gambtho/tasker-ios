@@ -84,9 +84,11 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+/*
 -(IBAction)launchFeedback {
     [TestFlight openFeedbackView];
 }
+*/
 
 #pragma mark - Table view data source
 
@@ -202,6 +204,14 @@
         TaskDetailViewController *controller = (TaskDetailViewController *)navigationController.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
     }
+    
+/*    
+    if([segue.identifier isEqualToString:@"Login"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        TaskDetailViewController *controller = (TaskDetailViewController *)navigationController.topViewController;
+        controller.managedObjectContext = self.managedObjectContext;
+    }
+*/
     
     if([segue.identifier isEqualToString:@"EditTask"]) {
         UINavigationController *navigationController = segue.destinationViewController;
