@@ -33,6 +33,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [TestFlight passCheckpoint:@"LOADED LOGIN SCREEN"];
 }
 
 - (void)viewDidUnload

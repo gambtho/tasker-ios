@@ -75,7 +75,7 @@
     [super viewDidLoad];
     
     if(self.userEmail==nil) {
-        userEmail = @"Placeholder user";
+//        userEmail = @"Placeholder user";
         addButton.enabled = FALSE;
     }
 //    [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
@@ -109,6 +109,7 @@
     [TestFlight openFeedbackView];
 }
 */
+
 
 #pragma mark - Table view data source
 
@@ -227,6 +228,8 @@
     }
      
     if([segue.identifier isEqualToString:@"Login"]) {
+        self.userEmail = nil;
+        self.loginButton.title = @"Login";
         UINavigationController *navigationController = segue.destinationViewController;
         LoginViewController *controller = (LoginViewController *)navigationController.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
@@ -323,11 +326,14 @@
     [self.tableView endUpdates];
 }
 
+
 #pragma mark - Login Delegate
 
 - (void)loginCompleted:(LoginViewController *)login didLogin:(NSString *)theUserEmail
 {
     self.addButton.enabled = TRUE;
+    self.loginButton.title = @"Logout";
+    
     self.userEmail = theUserEmail;
     [self dismissModalViewControllerAnimated:YES];
     
@@ -338,11 +344,23 @@
     
     [self performFetch];
     [self.tableView reloadData];
+    
+    [TestFlight passCheckpoint:@"SUCCESFUL LOGIN"];
+    
 }
 
 -(void)loginCancelled:(LoginViewController *)login
 {
     [self dismissModalViewControllerAnimated:NO];
+    
+    [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"creator == %@", self.userEmail];
+    [self.fetchedResultsController.fetchRequest setPredicate:predicate];
+    
+    [self performFetch];
+    [self.tableView reloadData];
+    [TestFlight passCheckpoint:@"CANCELLED LOGIN"];
 }
 
 @end
