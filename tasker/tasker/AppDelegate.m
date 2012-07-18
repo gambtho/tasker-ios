@@ -8,29 +8,30 @@
 
 #import "AppDelegate.h"
 #import "TasksViewController.h"
-#import "RestKit/RestKit.h"
+#import "Task.h"
+#import <RestKit/RestKit.h>
 
 @interface AppDelegate ()
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, strong) RKObjectManager *objectManager;
+@property (nonatomic, strong) RKManagedObjectMapping *taskMapping;
 @end
 
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize managedObjectContext, managedObjectModel, persistentStoreCoordinator;
+@synthesize managedObjectContext, managedObjectModel, persistentStoreCoordinator, objectManager, taskMapping;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [self testFlightSetup];
+    
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
     TasksViewController *taskViewController = (TasksViewController *)[[navigationController viewControllers] objectAtIndex:0];
     taskViewController.managedObjectContext = self.managedObjectContext;
-    
-    //remove the next line before release...and the compiler setting under target build phases
-    [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
-    [TestFlight takeOff:@"bee96b8435ae376fc15786c7c99c64fe_OTgwMzIyMDEyLTA2LTI0IDE0OjQ1OjU4LjA5MDMzMw"];
-    [TestFlight passCheckpoint:@"LAUNCHED APPLICATION"];
+    taskViewController.objectManager = self.objectManager;
 
     return YES;
 }
@@ -72,6 +73,54 @@
     [TestFlight passCheckpoint:@"CORE DATA ERROR"];
     [alertView show];
     
+}
+
+#pragma mark - TestFlight
+
+-(void)testFlightSetup
+{
+    //remove the next line before release...and the compiler setting under target build phases
+    [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+    [TestFlight takeOff:@"bee96b8435ae376fc15786c7c99c64fe_OTgwMzIyMDEyLTA2LTI0IDE0OjQ1OjU4LjA5MDMzMw"];
+    [TestFlight passCheckpoint:@"LAUNCHED APPLICATION"];
+}
+
+#pragma mark - RestKit
+
+- (RKObjectManager *)objectManager
+{
+    if(objectManager == nil)
+    {
+        
+        NSString *seedDatabaseName = nil;
+        NSString *databaseName = RKDefaultSeedDatabaseFileName;
+        
+        // Initialize RestKit
+        objectManager = [RKObjectManager managerWithBaseURLString:@"http://localhost:8888/"];
+        
+        // Enable automatic network activity indicator management
+        objectManager.client.requestQueue.showsNetworkActivityIndicatorWhenBusy = YES;
+        
+        objectManager.objectStore = [RKManagedObjectStore objectStoreWithStoreFilename:databaseName usingSeedDatabaseName:seedDatabaseName managedObjectModel:nil delegate:self]; 
+        NSLog(@"object store created");
+        [objectManager.mappingProvider setObjectMapping:[self taskMapping] forResourcePathPattern:@"/tasker/task"];
+    }
+    return objectManager;
+}
+
+-(RKManagedObjectMapping *)taskMapping
+{
+    NSLog(@"creating taskMapping");
+    if(taskMapping == nil)
+    {
+        taskMapping = [RKManagedObjectMapping mappingForClass:[Task class] inManagedObjectStore:objectManager.objectStore];
+        taskMapping.primaryKeyAttribute = @"taskID";
+        [taskMapping mapKeyPath:@"id" toAttribute:@"taskID"];
+        [taskMapping mapKeyPath:@"title" toAttribute:@"title"];
+        [taskMapping mapKeyPath:@"creator" toAttribute:@"creator"];
+        [taskMapping mapKeyPath:@"createDate" toAttribute:@"createDate"];
+    }
+    return taskMapping;
 }
 
 #pragma mark - AlertView Delegate

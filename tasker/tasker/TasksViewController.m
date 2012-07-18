@@ -23,6 +23,7 @@
 @synthesize userEmail;
 @synthesize addButton;
 @synthesize loginButton;
+@synthesize objectManager;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -62,12 +63,35 @@
 
 -(void)performFetch
 {
+    NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:@"User2", @"user", nil];
+    NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
+    NSLog(@"%@", resourcePath);
+    [objectManager loadObjectsAtResourcePath:resourcePath delegate:self];
+    
     NSError *error;
     if(![self.fetchedResultsController performFetch:&error]) 
     {
         FATAL_CORE_DATA_ERROR(error);
         return;
     }
+}
+
+- (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
+{
+    NSLog(@"Error: %@", [error localizedDescription]);
+}
+
+- (void)request:(RKRequest*)request didLoadResponse:(RKResponse*)response {
+    NSLog(@"response code: %d", [response statusCode]);
+    NSLog(@"response is: %@", [response bodyAsString]);
+}
+
+- (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
+{
+    NSLog(@"objects[%d]", [objects count]);
+//    data = objects;
+    
+//    [self.tableView reloadData];
 }
 
 - (void)viewDidLoad

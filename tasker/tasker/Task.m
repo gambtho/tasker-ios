@@ -21,6 +21,7 @@
 @dynamic afterPhotoId;
 @dynamic status;
 @dynamic createDate;
+@dynamic taskID;
 
 -(BOOL)hasBeforePhoto
 {

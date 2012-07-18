@@ -233,11 +233,6 @@
 		E2DEFDB11586DA2800D3D572 = {
 			isa = PBXGroup;
 			children = (
-				E2851A6B15B74B090007DACC /* libxml2.dylib */,
-				E2851A6515B74AFE0007DACC /* CFNetwork.framework */,
-				E2851A6615B74AFE0007DACC /* MobileCoreServices.framework */,
-				E2851A6715B74AFE0007DACC /* QuartzCore.framework */,
-				E2851A4C15B74A2A0007DACC /* RestKit.xcodeproj */,
 				E2DEFDC61586DA2800D3D572 /* tasker */,
 				E2DEFDBF1586DA2800D3D572 /* Frameworks */,
 				E2DEFDBD1586DA2800D3D572 /* Products */,
@@ -255,6 +250,11 @@
 		E2DEFDBF1586DA2800D3D572 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E2851A6B15B74B090007DACC /* libxml2.dylib */,
+				E2851A6515B74AFE0007DACC /* CFNetwork.framework */,
+				E2851A6615B74AFE0007DACC /* MobileCoreServices.framework */,
+				E2851A6715B74AFE0007DACC /* QuartzCore.framework */,
+				E2851A4C15B74A2A0007DACC /* RestKit.xcodeproj */,
 				E2F8FBF01597968900317F84 /* libz.dylib */,
 				E260BFBA15A7D2070048694E /* SystemConfiguration.framework */,
 				E260BFB815A7D1C30048694E /* Security.framework */,

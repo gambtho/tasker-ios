@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
+#import <RestKit/RestKit.h>
 
 @interface Task : NSManagedObject
 
@@ -20,6 +20,7 @@
 @property (nonatomic, retain) NSString * completor;
 @property (nonatomic, retain) NSNumber * beforePhotoId;
 @property (nonatomic, retain) NSNumber * afterPhotoId;
+@property (nonatomic, retain) NSNumber * taskID;
 @property (nonatomic, retain) NSString * status;
 @property (nonatomic, retain) NSDate * createDate;
 

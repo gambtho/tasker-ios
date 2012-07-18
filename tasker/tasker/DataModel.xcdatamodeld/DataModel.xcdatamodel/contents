@@ -10,9 +10,10 @@
         <attribute name="dueDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="taskDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="taskID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Task" positionX="160" positionY="192" width="128" height="195"/>
+        <element name="Task" positionX="160" positionY="192" width="128" height="210"/>
     </elements>
 </model>
