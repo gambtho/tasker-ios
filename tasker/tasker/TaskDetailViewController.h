@@ -28,6 +28,8 @@
 @property (strong, nonatomic) Task *taskToEdit;
 @property (strong, nonatomic) IBOutlet UITableViewCell *assignCell;
 
+@property (strong, nonatomic) NSString *userEmail;
+
 -(IBAction)cancel:(id)sender;
 -(IBAction)done:(id)sender;
 -(IBAction)textDone:(id)sender;
