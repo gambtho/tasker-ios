@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "TasksViewController.h"
+#import "RestKit/RestKit.h"
 
 @interface AppDelegate ()
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;

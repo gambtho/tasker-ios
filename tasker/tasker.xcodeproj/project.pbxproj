@@ -26,6 +26,11 @@
 		E262A0261596504100D79EAE /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E262A01F1596504100D79EAE /* Icon.png */; };
 		E262A0271596504100D79EAE /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E262A0201596504100D79EAE /* Icon@2x.png */; };
 		E262A0281596504100D79EAE /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = E262A0211596504100D79EAE /* iTunesArtwork */; };
+		E2851A6415B74AB20007DACC /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E2851A5815B74A2A0007DACC /* libRestKit.a */; };
+		E2851A6815B74AFE0007DACC /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2851A6515B74AFE0007DACC /* CFNetwork.framework */; };
+		E2851A6915B74AFE0007DACC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2851A6615B74AFE0007DACC /* MobileCoreServices.framework */; };
+		E2851A6A15B74AFE0007DACC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2851A6715B74AFE0007DACC /* QuartzCore.framework */; };
+		E2851A6C15B74B090007DACC /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E2851A6B15B74B090007DACC /* libxml2.dylib */; };
 		E2B27948158EC3D500BB99D8 /* TaskDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B27947158EC3D500BB99D8 /* TaskDetailViewController.m */; };
 		E2DEFDC11586DA2800D3D572 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2DEFDC01586DA2800D3D572 /* UIKit.framework */; };
 		E2DEFDC31586DA2800D3D572 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2DEFDC21586DA2800D3D572 /* Foundation.framework */; };
@@ -43,6 +48,51 @@
 		E2F8FBEF1597962800317F84 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = E2F8FBEB1597962800317F84 /* release_notes.txt */; };
 		E2F8FBF11597968900317F84 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F8FBF01597968900317F84 /* libz.dylib */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E2851A5715B74A2A0007DACC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2851A4C15B74A2A0007DACC /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160D1614564E810060A5C5;
+			remoteInfo = RestKit;
+		};
+		E2851A5915B74A2A0007DACC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2851A4C15B74A2A0007DACC /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160D2614564E820060A5C5;
+			remoteInfo = RestKitTests;
+		};
+		E2851A5B15B74A2A0007DACC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2851A4C15B74A2A0007DACC /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160E62145651060060A5C5;
+			remoteInfo = RestKitFramework;
+		};
+		E2851A5D15B74A2A0007DACC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2851A4C15B74A2A0007DACC /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160E78145651060060A5C5;
+			remoteInfo = RestKitFrameworkTests;
+		};
+		E2851A5F15B74A2A0007DACC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2851A4C15B74A2A0007DACC /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 259C301615128079003066A2;
+			remoteInfo = RestKitResources;
+		};
+		E2851A6215B74A9D0007DACC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2851A4C15B74A2A0007DACC /* RestKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 25160D1514564E810060A5C5;
+			remoteInfo = RestKit;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		E2553835158E94C900B12D3F /* TaskCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskCell.h; sourceTree = "<group>"; };
@@ -73,6 +123,11 @@
 		E262A01F1596504100D79EAE /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		E262A0201596504100D79EAE /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		E262A0211596504100D79EAE /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
+		E2851A4C15B74A2A0007DACC /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = ../RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
+		E2851A6515B74AFE0007DACC /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		E2851A6615B74AFE0007DACC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		E2851A6715B74AFE0007DACC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E2851A6B15B74B090007DACC /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		E2B27946158EC3D500BB99D8 /* TaskDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailViewController.h; sourceTree = "<group>"; };
 		E2B27947158EC3D500BB99D8 /* TaskDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailViewController.m; sourceTree = "<group>"; };
 		E2DEFDBC1586DA2800D3D572 /* tasker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tasker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +159,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2851A6C15B74B090007DACC /* libxml2.dylib in Frameworks */,
+				E2851A6815B74AFE0007DACC /* CFNetwork.framework in Frameworks */,
+				E2851A6915B74AFE0007DACC /* MobileCoreServices.framework in Frameworks */,
+				E2851A6A15B74AFE0007DACC /* QuartzCore.framework in Frameworks */,
+				E2851A6415B74AB20007DACC /* libRestKit.a in Frameworks */,
 				E260BFBB15A7D2070048694E /* SystemConfiguration.framework in Frameworks */,
 				E260BFB915A7D1C30048694E /* Security.framework in Frameworks */,
 				E2F8FBDD1596A2F500317F84 /* CoreData.framework in Frameworks */,
@@ -158,9 +218,26 @@
 			path = Icon;
 			sourceTree = "<group>";
 		};
+		E2851A4D15B74A2A0007DACC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E2851A5815B74A2A0007DACC /* libRestKit.a */,
+				E2851A5A15B74A2A0007DACC /* RestKitTests.octest */,
+				E2851A5C15B74A2A0007DACC /* RestKit.framework */,
+				E2851A5E15B74A2A0007DACC /* RestKitFrameworkTests.octest */,
+				E2851A6015B74A2A0007DACC /* RestKitResources.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		E2DEFDB11586DA2800D3D572 = {
 			isa = PBXGroup;
 			children = (
+				E2851A6B15B74B090007DACC /* libxml2.dylib */,
+				E2851A6515B74AFE0007DACC /* CFNetwork.framework */,
+				E2851A6615B74AFE0007DACC /* MobileCoreServices.framework */,
+				E2851A6715B74AFE0007DACC /* QuartzCore.framework */,
+				E2851A4C15B74A2A0007DACC /* RestKit.xcodeproj */,
 				E2DEFDC61586DA2800D3D572 /* tasker */,
 				E2DEFDBF1586DA2800D3D572 /* Frameworks */,
 				E2DEFDBD1586DA2800D3D572 /* Products */,
@@ -255,6 +332,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				E2851A6315B74A9D0007DACC /* PBXTargetDependency */,
 			);
 			name = tasker;
 			productName = tasker;
@@ -279,12 +357,56 @@
 			mainGroup = E2DEFDB11586DA2800D3D572;
 			productRefGroup = E2DEFDBD1586DA2800D3D572 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E2851A4D15B74A2A0007DACC /* Products */;
+					ProjectRef = E2851A4C15B74A2A0007DACC /* RestKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				E2DEFDBB1586DA2800D3D572 /* tasker */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		E2851A5815B74A2A0007DACC /* libRestKit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRestKit.a;
+			remoteRef = E2851A5715B74A2A0007DACC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E2851A5A15B74A2A0007DACC /* RestKitTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitTests.octest;
+			remoteRef = E2851A5915B74A2A0007DACC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E2851A5C15B74A2A0007DACC /* RestKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = RestKit.framework;
+			remoteRef = E2851A5B15B74A2A0007DACC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E2851A5E15B74A2A0007DACC /* RestKitFrameworkTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitFrameworkTests.octest;
+			remoteRef = E2851A5D15B74A2A0007DACC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E2851A6015B74A2A0007DACC /* RestKitResources.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitResources.bundle;
+			remoteRef = E2851A5F15B74A2A0007DACC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		E2DEFDBA1586DA2800D3D572 /* Resources */ = {
@@ -332,6 +454,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E2851A6315B74A9D0007DACC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RestKit;
+			targetProxy = E2851A6215B74A9D0007DACC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		E2DEFDC91586DA2800D3D572 /* InfoPlist.strings */ = {
@@ -405,10 +535,15 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tasker/tasker-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**";
 				INFOPLIST_FILE = "tasker/tasker-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/TestFlightSDK1\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -420,10 +555,15 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tasker/tasker-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**";
 				INFOPLIST_FILE = "tasker/tasker-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/TestFlightSDK1\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
