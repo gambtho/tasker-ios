@@ -41,8 +41,8 @@
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         
         [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
-        
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+                
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:managedObjectContext];
         [fetchRequest setEntity:entity];
 
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"creator == %@", self.userEmail];
@@ -55,7 +55,7 @@
         [fetchRequest setFetchBatchSize:20];
         
         fetchedResultsController = [[NSFetchedResultsController alloc]
-                                    initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Tasks"];
+                                    initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:@"Tasks"];
         fetchedResultsController.delegate = self;
     }
     return fetchedResultsController;
@@ -63,7 +63,8 @@
 
 -(void)performFetch
 {
-    NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:@"User2", @"user", nil];
+    self.userEmail = @"User2";
+    NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:self.userEmail, @"user", nil];
     NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
     NSLog(@"%@", resourcePath);
     [objectManager loadObjectsAtResourcePath:resourcePath delegate:self];
@@ -103,6 +104,7 @@
         addButton.enabled = FALSE;
     }
 //    [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
+    
     [self performFetch];
 }
 
