@@ -12,9 +12,6 @@
 #import <RestKit/RestKit.h>
 
 @interface AppDelegate ()
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
-@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, strong) RKObjectManager *objectManager;
 @property (nonatomic, strong) RKManagedObjectMapping *taskMapping;
 @end
@@ -22,7 +19,7 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize managedObjectContext, managedObjectModel, persistentStoreCoordinator, objectManager, taskMapping;
+@synthesize objectManager, taskMapping;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -30,9 +27,9 @@
     
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
     TasksViewController *taskViewController = (TasksViewController *)[[navigationController viewControllers] objectAtIndex:0];
-    taskViewController.managedObjectContext = self.managedObjectContext;
-    taskViewController.objectManager = self.objectManager;
-
+    taskViewController.objectManager = [self objectManager];
+    taskViewController.managedObjectContext = [self objectManager].objectStore.managedObjectContextForCurrentThread;
+    
     return YES;
 }
 							
@@ -123,6 +120,7 @@
     return taskMapping;
 }
 
+
 #pragma mark - AlertView Delegate
 
 -(void)alertView:(UIAlertView *)theAlertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -130,6 +128,7 @@
     abort();
 }
 
+/*
 #pragma mark - Core Data
 
 - (NSManagedObjectModel *)managedObjectModel
@@ -182,6 +181,6 @@
     return managedObjectContext;
 }
 
-
+*/
 
 @end

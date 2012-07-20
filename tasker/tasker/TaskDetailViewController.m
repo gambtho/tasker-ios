@@ -30,6 +30,7 @@
 @synthesize taskToEdit;
 @synthesize assignCell;
 @synthesize userEmail;
+@synthesize objectManager;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -208,13 +209,48 @@
     return photoId;
 }
 
+- (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
+{
+    NSLog(@"Error: %@", [error localizedDescription]);
+}
+
+- (void)request:(RKRequest*)request didLoadResponse:(RKResponse*)response {
+    NSLog(@"response code: %d", [response statusCode]);
+    NSLog(@"response is: %@", [response bodyAsString]);
+}
+
+- (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
+{
+    NSLog(@"objects[%d]", [objects count]);
+}
+
+-(void)updateRemote
+{
+    NSLog(@"adasda");
+    
+    NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 taskToEdit.taskID, @"task",
+                                 taskToEdit.title, @"title",
+                                 taskToEdit.creator, @"creator",
+                                 nil];
+    NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
+    
+    [objectManager loadObjectsAtResourcePath:resourcePath usingBlock:^(RKObjectLoader *loader) {
+        loader.delegate = self;
+        loader.method = RKRequestMethodPOST;
+        loader.targetObject = nil;
+    }];
+}
+
 -(IBAction)done:(id)sender
 {
+    [self updateRemote]; 
     Task *task = nil;
         
     if(self.taskToEdit !=nil) {
         task = self.taskToEdit;
-    } else {
+    } 
+    else {
         task = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:managedObjectContext];
         task.createDate = [NSDate date];
         task.beforePhotoId = [NSNumber numberWithInt:-1];
@@ -228,6 +264,7 @@
     task.dueDate = dueDate;
     task.status = status;
     task.completor = completor;
+    task.title = @"this is a test";
         
     if(image != nil) {
         if(![task hasBeforePhoto]){
@@ -235,6 +272,9 @@
         }
                                   
       NSData *data = UIImagePNGRepresentation(image);
+        
+     
+        
       NSError *error;
     if (![data writeToFile:[task photoPath:[task.beforePhotoId intValue]] options:NSDataWritingAtomic error:&error]) {
           NSLog(@"Error writing file: %@", error);
@@ -246,6 +286,8 @@
         FATAL_CORE_DATA_ERROR(error);
         return;
     }
+    
+    
     
     [self.presentingViewController  dismissViewControllerAnimated:YES completion:nil];
 }

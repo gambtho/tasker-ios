@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DatePickerViewController.h"
+#import <RestKit/Restkit.h>
 
 @class Task;
 
@@ -16,12 +17,14 @@
     DatePickerViewControllerDelegate, 
     UIImagePickerControllerDelegate, 
     UIActionSheetDelegate,
-    UINavigationControllerDelegate>
+    UINavigationControllerDelegate,
+    RKObjectLoaderDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *dueDateLabel;
 @property (strong, nonatomic) IBOutlet UITextField *titleField;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *doneBarButton;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) RKObjectManager *objectManager;
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UILabel *photoLabel;

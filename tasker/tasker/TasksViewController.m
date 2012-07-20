@@ -61,14 +61,17 @@
     return fetchedResultsController;
 }
 
--(void)performFetch
+-(void)getTasks
 {
     self.userEmail = @"User2";
     NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:self.userEmail, @"user", nil];
     NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
     NSLog(@"%@", resourcePath);
-    [objectManager loadObjectsAtResourcePath:resourcePath delegate:self];
-    
+    [objectManager loadObjectsAtResourcePath:resourcePath delegate:self]; 
+}
+
+-(void)performFetch
+{
     NSError *error;
     if(![self.fetchedResultsController performFetch:&error]) 
     {
@@ -104,7 +107,7 @@
         addButton.enabled = FALSE;
     }
 //    [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
-    
+    [self getTasks];
     [self performFetch];
 }
 
@@ -272,6 +275,7 @@
         Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
         controller.taskToEdit = task;
         controller.userEmail = self.userEmail;
+        controller.objectManager = objectManager;
     }
 
     // Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -368,6 +372,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"creator == %@", self.userEmail];
     [self.fetchedResultsController.fetchRequest setPredicate:predicate];
     
+    [self getTasks];
     [self performFetch];
     [self.tableView reloadData];
     
@@ -384,6 +389,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"creator == %@", self.userEmail];
     [self.fetchedResultsController.fetchRequest setPredicate:predicate];
     
+    [self getTasks];
     [self performFetch];
     [self.tableView reloadData];
     [TestFlight passCheckpoint:@"CANCELLED LOGIN"];
