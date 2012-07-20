@@ -63,7 +63,6 @@
 
 -(void)getTasks
 {
-    self.userEmail = @"User2";
     NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:self.userEmail, @"user", nil];
     NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
     NSLog(@"%@", resourcePath);
@@ -212,12 +211,25 @@
 }
 */
 
+-(void)deleteRemote:(Task *)task {
+    NSLog(@"Contacting server to delete %@", task.title);
+    NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 task.taskID, @"task",
+                                 nil];
+    NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
+    
+    [objectManager loadObjectsAtResourcePath:resourcePath usingBlock:^(RKObjectLoader *loader) {
+        loader.delegate = self;
+        loader.method = RKRequestMethodDELETE;
+    }];
+}
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [self deleteRemote:task];
         [task removePhotoFiles];
         [self.managedObjectContext deleteObject:task];
         
@@ -253,6 +265,7 @@
         UINavigationController *navigationController = segue.destinationViewController;
         TaskDetailViewController *controller = (TaskDetailViewController *)navigationController.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
+        controller.objectManager = objectManager;
         controller.userEmail = self.userEmail;
     }
      

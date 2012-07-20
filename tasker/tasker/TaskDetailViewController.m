@@ -94,6 +94,7 @@
     {
         [self updateNavBar];
         status = taskToEdit.status;
+        NSLog(@"Task ID: %@", taskToEdit.taskID);
     }
     
     if(image != nil) {
@@ -224,27 +225,42 @@
     NSLog(@"objects[%d]", [objects count]);
 }
 
--(void)updateRemote
+-(void)updateRemote:(Task *)task
 {
-    NSLog(@"adasda");
+    if(self.taskToEdit!=nil) {
+        NSLog(@"Contacting server to update %@", task.title);
+        
+        NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     task.taskID, @"task",
+                                     task.title, @"title",
+                                     task.creator, @"creator",
+                                     nil];
+        NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
+        
+        [objectManager loadObjectsAtResourcePath:resourcePath usingBlock:^(RKObjectLoader *loader) {
+            loader.delegate = self;
+            loader.method = RKRequestMethodPOST;
+        }];
+    }
+    else {
+        NSLog(@"Contacting server to add %@", task.title);
+        NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     task.title, @"title",
+                                     task.creator, @"creator",
+                                     nil];
+        NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
     
-    NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 taskToEdit.taskID, @"task",
-                                 taskToEdit.title, @"title",
-                                 taskToEdit.creator, @"creator",
-                                 nil];
-    NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
-    
-    [objectManager loadObjectsAtResourcePath:resourcePath usingBlock:^(RKObjectLoader *loader) {
-        loader.delegate = self;
-        loader.method = RKRequestMethodPOST;
-        loader.targetObject = nil;
-    }];
+        
+        [objectManager loadObjectsAtResourcePath:resourcePath usingBlock:^(RKObjectLoader *loader) {
+            loader.delegate = self;
+            loader.method = RKRequestMethodPUT;
+            loader.targetObject = task;
+            }];
+    }
 }
 
 -(IBAction)done:(id)sender
 {
-    [self updateRemote]; 
     Task *task = nil;
         
     if(self.taskToEdit !=nil) {
@@ -264,7 +280,6 @@
     task.dueDate = dueDate;
     task.status = status;
     task.completor = completor;
-    task.title = @"this is a test";
         
     if(image != nil) {
         if(![task hasBeforePhoto]){
@@ -280,14 +295,14 @@
           NSLog(@"Error writing file: %@", error);
       }                          
     }
+    NSLog(@"Task id = : %@ ",task.taskID);
+    [self updateRemote:task]; 
     
     NSError *error;
     if(![self.managedObjectContext save:&error]) {
         FATAL_CORE_DATA_ERROR(error);
         return;
     }
-    
-    
     
     [self.presentingViewController  dismissViewControllerAnimated:YES completion:nil];
 }
