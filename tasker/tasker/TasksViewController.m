@@ -45,7 +45,7 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:managedObjectContext];
         [fetchRequest setEntity:entity];
 
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"creator == %@", self.userEmail];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(creator == %@) OR (completor == %@)", self.userEmail, self.userEmail];
         [fetchRequest setPredicate:predicate];
        
         
@@ -105,9 +105,13 @@
     [super viewDidLoad];
     
     self.userEmail = [[NSUserDefaults standardUserDefaults] valueForKey:@"UserEmail"];
-    
+
     if(self.userEmail == nil) {
         addButton.enabled = FALSE;
+    }
+    else {
+        self.addButton.enabled = TRUE;
+        self.loginButton.title = @"Logout"; 
     }
 //    [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
     [self getTasks];

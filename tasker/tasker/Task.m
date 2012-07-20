@@ -71,7 +71,7 @@
 
 -(BOOL)isComplete
 {
-    NSLog(@"status is: %@", self.status);
+//    NSLog(@"status is: %@", self.status);
     if([self.status isEqualToString:@"complete"]) {
         return TRUE;
     }
@@ -80,7 +80,7 @@
 
 -(BOOL)isAssigned
 {
-    NSLog(@"status is: %@", self.status);
+//    NSLog(@"status is: %@", self.status);
     if([self.status isEqualToString:@"assigned"]) {
         return TRUE;
     }

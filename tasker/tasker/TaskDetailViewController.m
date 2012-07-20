@@ -70,7 +70,7 @@
                                                      initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(cancel:)];
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] 
                                                       initWithTitle:@"Complete!" style:UIBarButtonItemStyleBordered target:self action:@selector(complete:)];
-            self.assignCell.textLabel.text = self.taskToEdit.completor;
+            self.assignCell.textLabel.text = completor;
             [self.assignCell setAccessoryType:UITableViewCellAccessoryNone];
             [self.titleField setEnabled:FALSE];
             [self.descriptionTextView setEditable:FALSE];
@@ -88,13 +88,17 @@
     [super viewDidLoad];
 
     [TestFlight passCheckpoint:@"LOADED TASK DETAIL"];
-    
+
     status = [[NSString alloc] initWithFormat:@"new"];
     if(taskToEdit!=nil)
     {
-        [self updateNavBar];
+        
         status = taskToEdit.status;
         NSLog(@"Task ID: %@", taskToEdit.taskID);
+        completor = taskToEdit.completor;
+        NSLog(@"Completor: %@", completor);
+        NSLog(@"Status: %@", status);
+        [self updateNavBar];
     }
     
     if(image != nil) {
@@ -183,14 +187,17 @@
     [self done:sender];
 }
 
--(void)assign
+-(void)assign:(NSString *)email
 {
     status = [[NSString alloc] initWithFormat:@"assigned"];
-    completor = user;
+    completor = email;
+    NSLog(@"Completor is %@", completor);
+    self.assignCell.textLabel.text = completor;
+    [self.assignCell setAccessoryType:UITableViewCellAccessoryNone];
+    [self.titleField setEnabled:FALSE];
+
     
     [TestFlight passCheckpoint:@"ASSIGNED TASK"];
-    
-    [self done:self];
 }
 
 -(IBAction)cancel:(id)sender
@@ -277,7 +284,6 @@
 
     if(self.taskToEdit !=nil) {
         task = self.taskToEdit;
-        task.completor = completor;
         NSLog(@"Due date is: %@", task.dueDate);
     } 
     else {
@@ -286,7 +292,10 @@
         task.beforePhotoId = [NSNumber numberWithInt:-1];
         task.status = status;
         task.creator = user;
-        task.completor = user;
+        if(completor==nil)
+        {
+            completor = user;
+        }
         [TestFlight passCheckpoint:@"ADDED TASK"];
     }
     
@@ -294,6 +303,7 @@
     task.taskDescription = self.descriptionTextView.text;
     task.dueDate = dueDate;
     task.status = status;
+    task.completor = completor;
     NSLog(@"Due date is: %@", task.dueDate);
         
     if(image != nil) {
@@ -428,6 +438,19 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - Friend Select
+
+-(void)friendSelect:(FriendSelectViewController *)selector didSelectFriend:(NSString *)emailAddress
+{
+    [self assign:emailAddress];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)FriendSelectDidCancel:(FriendSelectViewController *)selector
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - Seque
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -437,14 +460,12 @@
         controller.delegate = self;
         controller.date = [NSDate date];
     }
-    
-/*    
+        
     if([segue.identifier isEqualToString:@"AssignTask"]) {
-        AssignmentViewController *controller = segue.destinationViewController;
+        FriendSelectViewController *controller = segue.destinationViewController;
         controller.delegate = self;
-        controller.assignment = taskAssignee;
+        controller.emailField.text = completor;
     }
- */
 }
 
 
@@ -519,7 +540,7 @@
         }
         else if (indexPath.section == 2 && indexPath.row == 0){
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            [self assign];
+//            [self assign];
         }
     }
 

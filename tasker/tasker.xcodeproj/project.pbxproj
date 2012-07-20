@@ -31,6 +31,7 @@
 		E2851A6915B74AFE0007DACC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2851A6615B74AFE0007DACC /* MobileCoreServices.framework */; };
 		E2851A6A15B74AFE0007DACC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2851A6715B74AFE0007DACC /* QuartzCore.framework */; };
 		E2851A6C15B74B090007DACC /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E2851A6B15B74B090007DACC /* libxml2.dylib */; };
+		E297E22F15B9FA2A00FBE1B3 /* FriendSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E297E22E15B9FA2A00FBE1B3 /* FriendSelectViewController.m */; };
 		E2B27948158EC3D500BB99D8 /* TaskDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B27947158EC3D500BB99D8 /* TaskDetailViewController.m */; };
 		E2DEFDC11586DA2800D3D572 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2DEFDC01586DA2800D3D572 /* UIKit.framework */; };
 		E2DEFDC31586DA2800D3D572 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2DEFDC21586DA2800D3D572 /* Foundation.framework */; };
@@ -128,6 +129,8 @@
 		E2851A6615B74AFE0007DACC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		E2851A6715B74AFE0007DACC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E2851A6B15B74B090007DACC /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		E297E22D15B9FA2A00FBE1B3 /* FriendSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendSelectViewController.h; sourceTree = "<group>"; };
+		E297E22E15B9FA2A00FBE1B3 /* FriendSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendSelectViewController.m; sourceTree = "<group>"; };
 		E2B27946158EC3D500BB99D8 /* TaskDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailViewController.h; sourceTree = "<group>"; };
 		E2B27947158EC3D500BB99D8 /* TaskDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailViewController.m; sourceTree = "<group>"; };
 		E2DEFDBC1586DA2800D3D572 /* tasker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tasker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -278,6 +281,8 @@
 				E2DEFDC71586DA2800D3D572 /* Supporting Files */,
 				E2553835158E94C900B12D3F /* TaskCell.h */,
 				E2553836158E94C900B12D3F /* TaskCell.m */,
+				E297E22D15B9FA2A00FBE1B3 /* FriendSelectViewController.h */,
+				E297E22E15B9FA2A00FBE1B3 /* FriendSelectViewController.m */,
 				E2553844158EA84C00B12D3F /* TasksViewController.h */,
 				E2553845158EA84C00B12D3F /* TasksViewController.m */,
 				E2B27946158EC3D500BB99D8 /* TaskDetailViewController.h */,
@@ -450,6 +455,7 @@
 				E260BFB715A7D11B0048694E /* GTMOAuth2SignIn.m in Sources */,
 				E260BFC415A90B810048694E /* LoginViewController.m in Sources */,
 				E260BFCB15A911B30048694E /* GTMHTTPFetcherLogging.m in Sources */,
+				E297E22F15B9FA2A00FBE1B3 /* FriendSelectViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

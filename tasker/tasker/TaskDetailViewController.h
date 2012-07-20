@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "DatePickerViewController.h"
 #import <RestKit/Restkit.h>
+#import "FriendSelectViewController.h"
 
 @class Task;
 
 @interface TaskDetailViewController : UITableViewController 
     <UITextFieldDelegate, 
-    DatePickerViewControllerDelegate, 
+    DatePickerViewControllerDelegate,   
+    FriendSelectViewControllerDelegate,
     UIImagePickerControllerDelegate, 
     UIActionSheetDelegate,
     UINavigationControllerDelegate,
