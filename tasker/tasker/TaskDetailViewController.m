@@ -231,15 +231,21 @@
         NSLog(@"Contacting server to update %@", task.title);
         
         NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
-                                     task.taskID, @"task",
+                                     task.taskID, @"taskID",
                                      task.title, @"title",
                                      task.creator, @"creator",
+                                     task.status, @"status",
+                                     task.taskDescription, @"taskDescription",
+                                     task.dueDate, @"dueDate",
+                                     task.completor, @"completor",
+                                     task.completedDate, @"completedDate",
                                      nil];
         NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
-        
+        NSLog(@"%@", resourcePath);
         [objectManager loadObjectsAtResourcePath:resourcePath usingBlock:^(RKObjectLoader *loader) {
             loader.delegate = self;
             loader.method = RKRequestMethodPOST;
+            loader.targetObject = task;
         }];
     }
     else {
@@ -247,9 +253,14 @@
         NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
                                      task.title, @"title",
                                      task.creator, @"creator",
+                                     task.completor, @"completor",
+                                     task.status, @"status",
+                                     task.taskDescription, @"taskDescription",
+                                     task.dueDate, @"dueDate",
                                      nil];
+        
         NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
-    
+        NSLog(@"%@", resourcePath);
         
         [objectManager loadObjectsAtResourcePath:resourcePath usingBlock:^(RKObjectLoader *loader) {
             loader.delegate = self;
@@ -262,9 +273,12 @@
 -(IBAction)done:(id)sender
 {
     Task *task = nil;
-        
+    
+
     if(self.taskToEdit !=nil) {
         task = self.taskToEdit;
+        task.completor = completor;
+        NSLog(@"Due date is: %@", task.dueDate);
     } 
     else {
         task = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:managedObjectContext];
@@ -272,6 +286,7 @@
         task.beforePhotoId = [NSNumber numberWithInt:-1];
         task.status = status;
         task.creator = user;
+        task.completor = user;
         [TestFlight passCheckpoint:@"ADDED TASK"];
     }
     
@@ -279,7 +294,7 @@
     task.taskDescription = self.descriptionTextView.text;
     task.dueDate = dueDate;
     task.status = status;
-    task.completor = completor;
+    NSLog(@"Due date is: %@", task.dueDate);
         
     if(image != nil) {
         if(![task hasBeforePhoto]){
@@ -296,14 +311,16 @@
       }                          
     }
     NSLog(@"Task id = : %@ ",task.taskID);
+    NSLog(@"Due date is: %@", task.dueDate);
     [self updateRemote:task]; 
+    
     
     NSError *error;
     if(![self.managedObjectContext save:&error]) {
         FATAL_CORE_DATA_ERROR(error);
         return;
     }
-    
+    NSLog(@"Due date is: %@", task.dueDate);
     [self.presentingViewController  dismissViewControllerAnimated:YES completion:nil];
 }
 

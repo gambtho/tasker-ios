@@ -63,10 +63,13 @@
 
 -(void)getTasks
 {
-    NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:self.userEmail, @"user", nil];
-    NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
-    NSLog(@"%@", resourcePath);
-    [objectManager loadObjectsAtResourcePath:resourcePath delegate:self]; 
+    if(userEmail!=nil)
+    {
+        NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:self.userEmail, @"user", nil];
+        NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
+        NSLog(@"%@", resourcePath);
+        [objectManager loadObjectsAtResourcePath:resourcePath delegate:self]; 
+    }
 }
 
 -(void)performFetch
@@ -101,8 +104,9 @@
 {
     [super viewDidLoad];
     
-    if(self.userEmail==nil) {
-//        userEmail = @"Placeholder user";
+    self.userEmail = [[NSUserDefaults standardUserDefaults] valueForKey:@"UserEmail"];
+    
+    if(self.userEmail == nil) {
         addButton.enabled = FALSE;
     }
 //    [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
@@ -214,7 +218,7 @@
 -(void)deleteRemote:(Task *)task {
     NSLog(@"Contacting server to delete %@", task.title);
     NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 task.taskID, @"task",
+                                 task.taskID, @"taskID",
                                  nil];
     NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
     
@@ -272,6 +276,7 @@
     if([segue.identifier isEqualToString:@"Login"]) {
         self.userEmail = nil;
         self.loginButton.title = @"Login";
+        [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"UserEmail"];
         UINavigationController *navigationController = segue.destinationViewController;
         LoginViewController *controller = (LoginViewController *)navigationController.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
@@ -377,8 +382,10 @@
     self.addButton.enabled = TRUE;
     self.loginButton.title = @"Logout";
     
+    [[NSUserDefaults standardUserDefaults] setValue:theUserEmail forKey:@"UserEmail"];
+    
     self.userEmail = theUserEmail;
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissModalViewControllerAnimated:NO];
     
     [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
     

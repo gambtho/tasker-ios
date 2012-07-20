@@ -112,10 +112,22 @@
     {
         taskMapping = [RKManagedObjectMapping mappingForClass:[Task class] inManagedObjectStore:objectManager.objectStore];
         taskMapping.primaryKeyAttribute = @"taskID";
-        [taskMapping mapKeyPath:@"id" toAttribute:@"taskID"];
+        [taskMapping mapKeyPath:@"taskID" toAttribute:@"taskID"];
         [taskMapping mapKeyPath:@"title" toAttribute:@"title"];
         [taskMapping mapKeyPath:@"creator" toAttribute:@"creator"];
         [taskMapping mapKeyPath:@"createDate" toAttribute:@"createDate"];
+        [taskMapping mapKeyPath:@"completedDate" toAttribute:@"completedDate"];
+        [taskMapping mapKeyPath:@"dueDate" toAttribute:@"dueDate"];
+        [taskMapping mapKeyPath:@"status" toAttribute:@"status"];
+        [taskMapping mapKeyPath:@"taskDescription" toAttribute:@"taskDescription"];
+        [taskMapping mapKeyPath:@"completor" toAttribute:@"completor"];
+        
+        NSDateFormatter* dateFormatter = [NSDateFormatter new];
+        [dateFormatter  setDateFormat:@"MM dd, yy HH:mm:ss a"];
+        dateFormatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"EST"];
+        dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+        
+        taskMapping.dateFormatters = [NSArray arrayWithObject: dateFormatter];
     }
     return taskMapping;
 }
