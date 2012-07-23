@@ -37,25 +37,26 @@
 -(NSFetchedResultsController *)fetchedResultsController
 {
     if (fetchedResultsController == nil) {
-        
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        
-        [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
                 
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:managedObjectContext];
+        NSFetchRequest *fetchRequest = [[[RKObjectManager sharedManager] 
+                                         mappingProvider] fetchRequestForResourcePath:@"/tasker/task"]; 
+        
+        [NSFetchedResultsController deleteCacheWithName:@"Tasks"]; 
+    
+/*        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:managedObjectContext];
         [fetchRequest setEntity:entity];
 
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(creator == %@) OR (completor == %@)", self.userEmail, self.userEmail];
-        [fetchRequest setPredicate:predicate];
-       
-        
         NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"dueDate" ascending:YES];
         [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-        
+*/      
         [fetchRequest setFetchBatchSize:20];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"completor == %@", self.userEmail];   
+        [fetchRequest setPredicate:predicate];
         
         fetchedResultsController = [[NSFetchedResultsController alloc]
                                     initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:@"Tasks"];
+        
         fetchedResultsController.delegate = self;
     }
     return fetchedResultsController;
@@ -80,6 +81,11 @@
         FATAL_CORE_DATA_ERROR(error);
         return;
     }
+    else{
+        NSLog(@"Fetch succesful");
+        id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:0];
+        NSLog(@"Number objects fetched: %d", [sectionInfo numberOfObjects]);
+    }
 }
 
 - (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
@@ -89,23 +95,39 @@
 
 - (void)request:(RKRequest*)request didLoadResponse:(RKResponse*)response {
     NSLog(@"response code: %d", [response statusCode]);
-    NSLog(@"response is: %@", [response bodyAsString]);
+//    NSLog(@"response is: %@", [response bodyAsString]);
 }
 
 - (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
     NSLog(@"objects[%d]", [objects count]);
 //    data = objects;
-    
-//    [self.tableView reloadData];
+}
+
+
+-(void)objectLoaderDidFinishLoading:(RKObjectLoader *)objectLoader{
+
+}
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.userEmail = [[NSUserDefaults standardUserDefaults] valueForKey:@"UserEmail"];
+    [self getTasks];
 }
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+
     
     self.userEmail = [[NSUserDefaults standardUserDefaults] valueForKey:@"UserEmail"];
 
+//    [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
+    
+//    [self getTasks];
+    
+    [super viewDidLoad];
+    
     if(self.userEmail == nil) {
         addButton.enabled = FALSE;
     }
@@ -113,8 +135,7 @@
         self.addButton.enabled = TRUE;
         self.loginButton.title = @"Logout"; 
     }
-//    [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
-    [self getTasks];
+    
     [self performFetch];
 }
 
@@ -158,8 +179,17 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if(userEmail==nil)
+    {
+        return 0;
+    
+    } else {
+    
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    NSLog(@"Number of objects is: %d", [sectionInfo numberOfObjects]);
     return [sectionInfo numberOfObjects];
+    
+    }
 }
 
 -(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
@@ -393,11 +423,13 @@
     
     [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"creator == %@", self.userEmail];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"completor == %@", self.userEmail];
     [self.fetchedResultsController.fetchRequest setPredicate:predicate];
-    
+
     [self getTasks];
+    
     [self performFetch];
+    
     [self.tableView reloadData];
     
     [TestFlight passCheckpoint:@"SUCCESFUL LOGIN"];
@@ -410,12 +442,13 @@
     
     [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"creator == %@", self.userEmail];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"completor == %@", self.userEmail];
     [self.fetchedResultsController.fetchRequest setPredicate:predicate];
+
+//    [self performFetch];
     
-    [self getTasks];
-    [self performFetch];
     [self.tableView reloadData];
+    
     [TestFlight passCheckpoint:@"CANCELLED LOGIN"];
 }
 

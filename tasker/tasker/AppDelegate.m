@@ -9,27 +9,31 @@
 #import "AppDelegate.h"
 #import "TasksViewController.h"
 #import "Task.h"
+#import "MappingProvider.h"
 #import <RestKit/RestKit.h>
 
 @interface AppDelegate ()
 @property (nonatomic, strong) RKObjectManager *objectManager;
-@property (nonatomic, strong) RKManagedObjectMapping *taskMapping;
+@property (nonatomic, strong) RKManagedObjectStore *objectStore;
+@property (nonatomic, strong) NSManagedObjectContext *objectContext;
 @end
 
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize objectManager, taskMapping;
+@synthesize objectManager, objectStore, objectContext;
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self testFlightSetup];
+    [self restKitSetup];
     
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
     TasksViewController *taskViewController = (TasksViewController *)[[navigationController viewControllers] objectAtIndex:0];
-    taskViewController.objectManager = [self objectManager];
-    taskViewController.managedObjectContext = [self objectManager].objectStore.managedObjectContextForCurrentThread;
-    
+    taskViewController.objectManager = self.objectManager;
+    taskViewController.managedObjectContext = self.objectContext;
+
     return YES;
 }
 							
@@ -84,52 +88,22 @@
 
 #pragma mark - RestKit
 
-- (RKObjectManager *)objectManager
+-(void)restKitSetup
 {
-    if(objectManager == nil)
-    {
-        
-        NSString *seedDatabaseName = nil;
-        NSString *databaseName = RKDefaultSeedDatabaseFileName;
-        
-        // Initialize RestKit
-        objectManager = [RKObjectManager managerWithBaseURLString:@"http://localhost:8888/"];
-        
-        // Enable automatic network activity indicator management
-        objectManager.client.requestQueue.showsNetworkActivityIndicatorWhenBusy = YES;
-        
-        objectManager.objectStore = [RKManagedObjectStore objectStoreWithStoreFilename:databaseName usingSeedDatabaseName:seedDatabaseName managedObjectModel:nil delegate:self]; 
-        NSLog(@"object store created");
-        [objectManager.mappingProvider setObjectMapping:[self taskMapping] forResourcePathPattern:@"/tasker/task"];
-    }
-    return objectManager;
-}
-
--(RKManagedObjectMapping *)taskMapping
-{
-    NSLog(@"creating taskMapping");
-    if(taskMapping == nil)
-    {
-        taskMapping = [RKManagedObjectMapping mappingForClass:[Task class] inManagedObjectStore:objectManager.objectStore];
-        taskMapping.primaryKeyAttribute = @"taskID";
-        [taskMapping mapKeyPath:@"taskID" toAttribute:@"taskID"];
-        [taskMapping mapKeyPath:@"title" toAttribute:@"title"];
-        [taskMapping mapKeyPath:@"creator" toAttribute:@"creator"];
-        [taskMapping mapKeyPath:@"createDate" toAttribute:@"createDate"];
-        [taskMapping mapKeyPath:@"completedDate" toAttribute:@"completedDate"];
-        [taskMapping mapKeyPath:@"dueDate" toAttribute:@"dueDate"];
-        [taskMapping mapKeyPath:@"status" toAttribute:@"status"];
-        [taskMapping mapKeyPath:@"taskDescription" toAttribute:@"taskDescription"];
-        [taskMapping mapKeyPath:@"completor" toAttribute:@"completor"];
-        
-        NSDateFormatter* dateFormatter = [NSDateFormatter new];
-        [dateFormatter  setDateFormat:@"MM dd, yy HH:mm:ss a"];
-        dateFormatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"EST"];
-        dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-        
-        taskMapping.dateFormatters = [NSArray arrayWithObject: dateFormatter];
-    }
-    return taskMapping;
+    
+  //  RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
+    
+    
+    self.objectManager = [RKObjectManager managerWithBaseURLString:@"http://localhost:8888"];
+    //        self. objectManager = [RKObjectManager managerWithBaseURLString:@"http://ymtasker.appspot.com"];
+    
+    
+    self.objectManager.client.requestQueue.showsNetworkActivityIndicatorWhenBusy = YES;
+    self.objectStore = [RKManagedObjectStore objectStoreWithStoreFilename:@"Tasker.sqlite"];
+    self.objectManager.objectStore = self.objectStore;
+    self.objectManager.mappingProvider = [MappingProvider mappingProviderWithObjectStore:self.objectStore];
+    self.objectContext = self.objectStore.managedObjectContextForCurrentThread;
+    
 }
 
 
@@ -139,60 +113,5 @@
 {
     abort();
 }
-
-/*
-#pragma mark - Core Data
-
-- (NSManagedObjectModel *)managedObjectModel
-{
-    if (managedObjectModel == nil) {
-        NSString *modelPath = [[NSBundle mainBundle] pathForResource:@"DataModel" ofType:@"momd"];
-        NSURL *modelURL = [NSURL fileURLWithPath:modelPath];
-        managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    }
-    return managedObjectModel;
-}
-
-- (NSString *)documentsDirectory
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    return documentsDirectory;
-}
-
-- (NSString *)dataStorePath
-{
-    return [[self documentsDirectory] stringByAppendingPathComponent:@"DataStore.sqlite"];
-}
-
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
-{
-    if (persistentStoreCoordinator == nil) {
-        NSURL *storeURL = [NSURL fileURLWithPath:[self dataStorePath]];
-        
-        persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
-        
-        NSError *error;
-        if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-            NSLog(@"Error adding persistent store %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }
-    return persistentStoreCoordinator;
-}
-
-- (NSManagedObjectContext *)managedObjectContext
-{
-    if (managedObjectContext == nil) {
-        NSPersistentStoreCoordinator *coordinator = self.persistentStoreCoordinator;
-        if (coordinator != nil) {
-            managedObjectContext = [[NSManagedObjectContext alloc] init];
-            [managedObjectContext setPersistentStoreCoordinator:coordinator];
-        }
-    }
-    return managedObjectContext;
-}
-
-*/
 
 @end

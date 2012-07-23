@@ -26,6 +26,7 @@
 		E262A0261596504100D79EAE /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E262A01F1596504100D79EAE /* Icon.png */; };
 		E262A0271596504100D79EAE /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E262A0201596504100D79EAE /* Icon@2x.png */; };
 		E262A0281596504100D79EAE /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = E262A0211596504100D79EAE /* iTunesArtwork */; };
+		E26C483615BC96C300EFFEC1 /* MappingProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = E26C483515BC96C300EFFEC1 /* MappingProvider.m */; };
 		E2851A6415B74AB20007DACC /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E2851A5815B74A2A0007DACC /* libRestKit.a */; };
 		E2851A6815B74AFE0007DACC /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2851A6515B74AFE0007DACC /* CFNetwork.framework */; };
 		E2851A6915B74AFE0007DACC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2851A6615B74AFE0007DACC /* MobileCoreServices.framework */; };
@@ -124,6 +125,8 @@
 		E262A01F1596504100D79EAE /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		E262A0201596504100D79EAE /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		E262A0211596504100D79EAE /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
+		E26C483415BC96C300EFFEC1 /* MappingProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MappingProvider.h; sourceTree = "<group>"; };
+		E26C483515BC96C300EFFEC1 /* MappingProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MappingProvider.m; sourceTree = "<group>"; };
 		E2851A4C15B74A2A0007DACC /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = ../RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		E2851A6515B74AFE0007DACC /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		E2851A6615B74AFE0007DACC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -194,7 +197,8 @@
 				E260BFB615A7D11B0048694E /* GTMOAuth2SignIn.m */,
 				E260BFAC15A7D03C0048694E /* Touch */,
 			);
-			path = OAuth;
+			name = OAuth;
+			path = tasker/OAuth;
 			sourceTree = "<group>";
 		};
 		E260BFAC15A7D03C0048694E /* Touch */ = {
@@ -253,6 +257,8 @@
 		E2DEFDBF1586DA2800D3D572 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E260BFA515A7D03C0048694E /* OAuth */,
+				E2F8FBE81597962800317F84 /* TestFlightSDK1 */,
 				E2851A6B15B74B090007DACC /* libxml2.dylib */,
 				E2851A6515B74AFE0007DACC /* CFNetwork.framework */,
 				E2851A6615B74AFE0007DACC /* MobileCoreServices.framework */,
@@ -272,11 +278,11 @@
 		E2DEFDC61586DA2800D3D572 /* tasker */ = {
 			isa = PBXGroup;
 			children = (
-				E260BFA515A7D03C0048694E /* OAuth */,
-				E2F8FBE81597962800317F84 /* TestFlightSDK1 */,
 				E262A01A1596504100D79EAE /* Icon */,
 				E2DEFDCF1586DA2800D3D572 /* AppDelegate.h */,
 				E2DEFDD01586DA2800D3D572 /* AppDelegate.m */,
+				E26C483415BC96C300EFFEC1 /* MappingProvider.h */,
+				E26C483515BC96C300EFFEC1 /* MappingProvider.m */,
 				E2DEFDD21586DA2800D3D572 /* MainStoryboard.storyboard */,
 				E2DEFDC71586DA2800D3D572 /* Supporting Files */,
 				E2553835158E94C900B12D3F /* TaskCell.h */,
@@ -319,8 +325,7 @@
 				E2F8FBEA1597962800317F84 /* README.txt */,
 				E2F8FBEB1597962800317F84 /* release_notes.txt */,
 			);
-			name = TestFlightSDK1;
-			path = ../TestFlightSDK1;
+			path = TestFlightSDK1;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -456,6 +461,7 @@
 				E260BFC415A90B810048694E /* LoginViewController.m in Sources */,
 				E260BFCB15A911B30048694E /* GTMHTTPFetcherLogging.m in Sources */,
 				E297E22F15B9FA2A00FBE1B3 /* FriendSelectViewController.m in Sources */,
+				E26C483615BC96C300EFFEC1 /* MappingProvider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
