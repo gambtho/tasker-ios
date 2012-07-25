@@ -35,16 +35,16 @@
     return documentsDirectory;
 }
 
-- (NSString *)photoPath:(int)photoId
+- (NSString *)photoPath:(NSString *)photoId
 {
-    NSString *filename = [NSString stringWithFormat:@"Photo-%d.png", photoId];
+    NSString *filename = [NSString stringWithFormat:@"Photo-%@.png", photoId];
     return [[self documentsDirectory] stringByAppendingPathComponent:filename];
 }
 
-- (UIImage *)photoImage:(int)photoId
+- (UIImage *)photoImage:(NSString *)photoId
 {
 //    NSAssert(photoId != nil, @"No photo ID set");
-    NSAssert(photoId != -1, @"Photo ID is -1");
+    NSAssert(photoId != @"-1", @"Photo ID is -1");
     
     return [UIImage imageWithContentsOfFile:[self photoPath:photoId]];
 }
@@ -64,7 +64,7 @@
 {
     if([self hasBeforePhoto])
     {
-        [self removeFile:[self photoPath:[self.beforePhotoId intValue]]];
+        [self removeFile:[self photoPath:self.beforePhotoId]];
     }
 //    [self removeFile:[self photoPath:[self.afterPhotoId intValue]]];
 }

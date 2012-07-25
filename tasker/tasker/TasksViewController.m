@@ -36,6 +36,7 @@
 
 -(NSFetchedResultsController *)fetchedResultsController
 {
+    NSLog(@"Getting fetched results controller");
     if (fetchedResultsController == nil) {
                 
         NSFetchRequest *fetchRequest = [[[RKObjectManager sharedManager] 
@@ -64,6 +65,7 @@
 
 -(void)getTasks
 {
+    NSLog(@"Getting tasks");
     if(userEmail!=nil)
     {
         NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:self.userEmail, @"user", nil];
@@ -75,6 +77,7 @@
 
 -(void)performFetch
 {
+    NSLog(@"Performing fetch");
     NSError *error;
     if(![self.fetchedResultsController performFetch:&error]) 
     {
@@ -100,7 +103,7 @@
 
 - (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
-    NSLog(@"objects[%d]", [objects count]);
+    NSLog(@"Objectloader loaded objects[%d]", [objects count]);
 //    data = objects;
 }
 
@@ -109,22 +112,15 @@
 
 }
 
-
--(void)viewWillAppear:(BOOL)animated
-{
-    self.userEmail = [[NSUserDefaults standardUserDefaults] valueForKey:@"UserEmail"];
-    [self getTasks];
-}
-
 - (void)viewDidLoad
 {
-
+    NSLog(@"View did load");
     
     self.userEmail = [[NSUserDefaults standardUserDefaults] valueForKey:@"UserEmail"];
 
 //    [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
     
-//    [self getTasks];
+    [self getTasks];
     
     [super viewDidLoad];
     
@@ -141,6 +137,7 @@
 
 - (void)viewDidUnload
 {
+    NSLog(@"View did unload");
     [self setAddButton:nil];
     [self setLoginButton:nil];
     [super viewDidUnload];
@@ -179,6 +176,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"Number of rows in section");
     if(userEmail==nil)
     {
         return 0;
@@ -194,6 +192,7 @@
 
 -(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"Configuring cell");
     TaskCell *taskCell = (TaskCell *)cell;
     Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
@@ -215,7 +214,7 @@
     
     UIImage *image = nil;
     if([task hasBeforePhoto]) {
-        image = [task photoImage:[task.beforePhotoId intValue]];
+        image = [task photoImage:task.beforePhotoId];
         if(image!=nil) {
             image = [image resizedImageWithBounds:CGSizeMake(60, 60)];
         }
@@ -233,6 +232,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"Cell for row and index path");
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Task"];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
@@ -265,6 +265,7 @@
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"User initiated delete");
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [self deleteRemote:task];
@@ -298,12 +299,13 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    
+    NSLog(@"Preparing for seque");
     if([segue.identifier isEqualToString:@"AddTask"]) {
         UINavigationController *navigationController = segue.destinationViewController;
         TaskDetailViewController *controller = (TaskDetailViewController *)navigationController.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
         controller.objectManager = objectManager;
+        controller.delegate = self;
         controller.userEmail = self.userEmail;
     }
      
@@ -328,6 +330,7 @@
         controller.taskToEdit = task;
         controller.userEmail = self.userEmail;
         controller.objectManager = objectManager;
+        controller.delegate = self;
     }
 
     // Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -450,6 +453,20 @@
     [self.tableView reloadData];
     
     [TestFlight passCheckpoint:@"CANCELLED LOGIN"];
+}
+
+#pragma mark - Task Detail Delegate
+
+-(void)taskDetailCancelled:(TaskDetailViewController *)taskDetail 
+{
+   [self dismissModalViewControllerAnimated:NO];
+}
+
+-(void)taskDetailCompleted:(TaskDetailViewController *)taskDetail
+{
+    NSLog(@"Task detail completed");
+    [self.tableView reloadData];
+    [self dismissModalViewControllerAnimated:NO];
 }
 
 @end

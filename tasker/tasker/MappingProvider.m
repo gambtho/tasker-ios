@@ -56,6 +56,8 @@
     [mapping mapKeyPath:@"status" toAttribute:@"status"];
     [mapping mapKeyPath:@"taskDescription" toAttribute:@"taskDescription"];
     [mapping mapKeyPath:@"completor" toAttribute:@"completor"];
+    [mapping mapKeyPath:@"beforePhotoId" toAttribute:@"beforePhotoId"];
+    [mapping mapKeyPath:@"afterPhotoId" toAttribute:@"afterPhotoId"];
     
     NSDateFormatter* dateFormatter = [NSDateFormatter new];
     [dateFormatter  setDateFormat:@"MM dd, yy HH:mm:ss a"];
