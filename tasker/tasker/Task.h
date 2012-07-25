@@ -18,15 +18,15 @@
 @property (nonatomic, retain) NSDate * completedDate;
 @property (nonatomic, retain) NSString * creator;
 @property (nonatomic, retain) NSString * completor;
-@property (nonatomic, retain) NSNumber * beforePhotoId;
-@property (nonatomic, retain) NSNumber * afterPhotoId;
+@property (nonatomic, retain) NSString * beforePhotoId;
+@property (nonatomic, retain) NSString * afterPhotoId;
 @property (nonatomic, retain) NSNumber * taskID;
 @property (nonatomic, retain) NSString * status;
 @property (nonatomic, retain) NSDate * createDate;
 
 -(BOOL)hasBeforePhoto;
--(NSString *)photoPath:(int)photoId;
--(UIImage *)photoImage:(int)photoId;
+-(NSString *)photoPath:(NSString *)photoId;
+-(UIImage *)photoImage:(NSString *)photoId;
 -(void)removePhotoFiles;
 -(BOOL)isComplete;
 -(BOOL)isAssigned;

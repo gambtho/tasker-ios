@@ -12,7 +12,7 @@
 
 @implementation TaskDetailViewController{
     NSDate *dueDate;
-    NSNumber *beforePhotoId;
+    NSString *beforePhotoId;
     UIImage *image;
     NSString *title;
     NSString *description;
@@ -31,6 +31,7 @@
 @synthesize assignCell;
 @synthesize userEmail;
 @synthesize objectManager;
+@synthesize delegate;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -131,7 +132,7 @@
         title = taskToEdit.title;
         description = taskToEdit.taskDescription;
         if([taskToEdit hasBeforePhoto]) {
-            UIImage *existingImage = [taskToEdit photoImage:[taskToEdit.beforePhotoId intValue]];
+            UIImage *existingImage = [taskToEdit photoImage:taskToEdit.beforePhotoId];
             if(existingImage!=nil) {
                 existingImage = [existingImage resizedImageWithBounds:CGSizeMake(260, 260)];
                 image = existingImage;
@@ -202,8 +203,8 @@
 
 -(IBAction)cancel:(id)sender
 {
-//    [self.delegate addTaskViewControllerDidCancel:self];
-    [self.presentingViewController  dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate taskDetailCancelled:self];
+    
     
     [TestFlight passCheckpoint:@"CANCELLED TASK DETAIL"];
     
@@ -230,12 +231,48 @@
 - (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
     NSLog(@"objects[%d]", [objects count]);
+    
+    
+    if(image!=nil)
+    {
+        Task *task = [objects objectAtIndex:0];
+        beforePhotoId = task.beforePhotoId;
+        NSLog(@"%@ , %@", beforePhotoId, taskToEdit.beforePhotoId);
+        
+        NSData *data = UIImagePNGRepresentation(image);
+        
+        NSError *errorP;
+        if (![data writeToFile:[task photoPath:beforePhotoId] options:NSDataWritingAtomic error:&errorP]) {
+            NSLog(@"Error writing file: %@", errorP);
+        }                          
+        
+    }
+    
+    NSError *error;
+    if(![self.managedObjectContext save:&error]) {
+        FATAL_CORE_DATA_ERROR(error);
+        return;
+    }
+    NSLog(@"Before photoid: %@", beforePhotoId);
+    NSLog(@"Completed save in task detail");
+
 }
 
--(void)updateRemote:(Task *)task
+-(void)objectLoaderDidFinishLoading:(RKObjectLoader *)objectLoader
+{
+    [self.delegate taskDetailCompleted:self];
+    NSLog(@"Completed loading in task detail");
+}
+
+-(void)updateRemote
 {
     if(self.taskToEdit!=nil) {
+        
+        Task *task = taskToEdit;
+        
         NSLog(@"Contacting server to update %@", task.title);
+        
+        
         
         NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
                                      task.taskID, @"taskID",
@@ -256,63 +293,67 @@
         }];
     }
     else {
-        NSLog(@"Contacting server to add %@", task.title);
-        NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
-                                     task.title, @"title",
-                                     task.creator, @"creator",
-                                     task.completor, @"completor",
-                                     task.status, @"status",
-                                     task.taskDescription, @"taskDescription",
-                                     task.dueDate, @"dueDate",
-                                     nil];
+            taskToEdit = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:managedObjectContext];
         
-        NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
-        NSLog(@"%@", resourcePath);
+            Task *task = taskToEdit;
+            //        task.createDate = [NSDate date];
+            task.beforePhotoId = @"-1";
+            task.status = status;
+            task.creator = user;
+            if(completor==nil)
+            {
+                completor = user;
+            }
+            [TestFlight passCheckpoint:@"ADDED TASK"];
         
-        [objectManager loadObjectsAtResourcePath:resourcePath usingBlock:^(RKObjectLoader *loader) {
-            loader.delegate = self;
-            loader.method = RKRequestMethodPUT;
-            loader.targetObject = task;
-            }];
+            task.title = self.titleField.text;
+            task.taskDescription = self.descriptionTextView.text;
+            task.dueDate = dueDate;
+            task.status = status;
+            task.completor = completor;
+        
+            NSLog(@"Contacting server to add %@", task.title);
+            NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         task.title, @"title",
+                                         task.creator, @"creator",
+                                         task.completor, @"completor",
+                                         task.status, @"status",
+                                         task.taskDescription, @"taskDescription",
+                                         task.dueDate, @"dueDate",
+                                         nil];
+            
+            NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
+            NSLog(@"%@", resourcePath);
+            
+            [objectManager loadObjectsAtResourcePath:resourcePath usingBlock:^(RKObjectLoader *loader) {
+                loader.delegate = self;
+                loader.method = RKRequestMethodPUT;
+                loader.targetObject = task;
+                if(image!=nil)
+                {
+                    RKParams *params = [RKParams params];
+                    NSData *data = UIImagePNGRepresentation(image);
+                    [params setData:data MIMEType:@"image/png" forParam:@"beforeimage"];
+                    loader.params = params;
+                }
+                }];
     }
 }
 
 -(IBAction)done:(id)sender
 {
-    Task *task = nil;
-    
 
-    if(self.taskToEdit !=nil) {
-        task = self.taskToEdit;
-        NSLog(@"Due date is: %@", task.dueDate);
-    } 
-    else {
-        task = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:managedObjectContext];
-        task.createDate = [NSDate date];
-        task.beforePhotoId = [NSNumber numberWithInt:-1];
-        task.status = status;
-        task.creator = user;
-        if(completor==nil)
-        {
-            completor = user;
-        }
-        [TestFlight passCheckpoint:@"ADDED TASK"];
-    }
+
+    [self updateRemote];    
     
-    task.title = self.titleField.text;
-    task.taskDescription = self.descriptionTextView.text;
-    task.dueDate = dueDate;
-    task.status = status;
-    task.completor = completor;
-    NSLog(@"Due date is: %@", task.dueDate);
-        
-    if(image != nil) {
+/*    if(image != nil) {
         if(![task hasBeforePhoto]){
             task.beforePhotoId = [NSNumber numberWithInt:[self nextPhotoId]];
         }
-                                  
+      
+
       NSData *data = UIImagePNGRepresentation(image);
-        
+      
      
         
       NSError *error;
@@ -320,18 +361,7 @@
           NSLog(@"Error writing file: %@", error);
       }                          
     }
-    NSLog(@"Task id = : %@ ",task.taskID);
-    NSLog(@"Due date is: %@", task.dueDate);
-    [self updateRemote:task]; 
-    
-    
-    NSError *error;
-    if(![self.managedObjectContext save:&error]) {
-        FATAL_CORE_DATA_ERROR(error);
-        return;
-    }
-    NSLog(@"Due date is: %@", task.dueDate);
-    [self.presentingViewController  dismissViewControllerAnimated:YES completion:nil];
+*/ 
 }
 
 -(IBAction)textDone:(id)sender

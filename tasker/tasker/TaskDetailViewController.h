@@ -12,6 +12,12 @@
 #import "FriendSelectViewController.h"
 
 @class Task;
+@class TaskDetailViewController;
+
+@protocol TaskDetailViewControllerDelegate <NSObject>
+- (void)taskDetailCompleted:(TaskDetailViewController *)taskDetail;
+- (void)taskDetailCancelled:(TaskDetailViewController *)taskDetail;
+@end
 
 @interface TaskDetailViewController : UITableViewController 
     <UITextFieldDelegate, 
@@ -34,6 +40,8 @@
 @property (strong, nonatomic) IBOutlet UITableViewCell *assignCell;
 
 @property (strong, nonatomic) NSString *userEmail;
+
+@property (weak, nonatomic) id <TaskDetailViewControllerDelegate> delegate;
 
 -(IBAction)cancel:(id)sender;
 -(IBAction)done:(id)sender;
