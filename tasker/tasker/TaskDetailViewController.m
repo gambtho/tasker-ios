@@ -290,6 +290,14 @@
             loader.delegate = self;
             loader.method = RKRequestMethodPOST;
             loader.targetObject = task;
+            
+            if(image!=nil && task.beforePhotoId == @"-1")
+            {
+                RKParams *params = [RKParams params];
+                NSData *data = UIImagePNGRepresentation(image);
+                [params setData:data MIMEType:@"image/png" forParam:@"beforeimage"];
+                loader.params = params;
+            }
         }];
     }
     else {
