@@ -10,8 +10,13 @@
 #import "TaskCell.h"
 #import "Task.h"
 #import "UIImage+Resize.h"
+#import <SDWebImage/SDWebImageManager.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface TasksViewController ()
+{
+    BOOL needRefresh;
+}
 
 @end
 
@@ -63,6 +68,16 @@
     return fetchedResultsController;
 }
 
+-(void)imageDownloader:(SDWebImageDownloader *)downloader didFailWithError:(NSError *)error
+{
+    NSLog(@"Image download failed with error: %@", [error localizedDescription]);
+}
+
+-(void)imageDownloader:(SDWebImageDownloader *)downloader didFinishWithImage:(UIImage *)image
+{
+    //
+}
+
 -(void)getTasks
 {
     NSLog(@"Getting tasks");
@@ -103,8 +118,56 @@
 
 - (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
+
     NSLog(@"Objectloader loaded objects[%d]", [objects count]);
-//    data = objects;
+/*
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    for(Task *task in objects)
+    {
+        NSLog(@"First item: %@", task.taskID);
+        UIImage *image = nil;
+        if([task hasBeforePhoto]) {
+            image = [task photoImage:task.beforePhotoId];
+            if(image==nil) {
+                NSLog(@"task url is: %@", task.beforePhotoUrl.absoluteString);
+      //          NSURL *url = [[NSURL alloc] initWithString:task.beforePhotoId];
+                NSString *tempString = [NSString stringWithFormat:@"http://localhost:8888%@", task.beforePhotoUrl.path];
+                NSLog(@"%@", tempString);
+                NSURL *url = [[NSURL alloc] initWithString:tempString];
+                [manager downloadWithURL:url
+                                delegate:self
+                                 options:0
+                                 success:^(UIImage *newImage)
+                                 {
+                                     NSLog(@"Succesfull image download");
+                                     NSData *data = UIImagePNGRepresentation(newImage);
+                                     
+                                     NSError *errorP;
+                                     if (![data writeToFile:[task photoPath:task.beforePhotoId] options:NSDataWritingAtomic error:&errorP]) {
+                                         NSLog(@"Error writing file: %@", errorP);
+                                     }
+                                     else
+                                     {
+                                         needRefresh = TRUE;
+                                     }
+                                 }
+                                 failure:^(NSError *error)
+                                 {
+                                     NSLog(@"Error downloading image: %@", [error localizedDescription]);
+                                 }];
+            }
+            else{
+                NSLog(@"Image already present");
+            }
+        
+        }
+    }
+    if(needRefresh)
+    {
+        needRefresh = FALSE;
+        [self.tableView reloadData];
+    }
+*/
 }
 
 
@@ -119,6 +182,8 @@
     self.userEmail = [[NSUserDefaults standardUserDefaults] valueForKey:@"UserEmail"];
 
 //    [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
+   
+    needRefresh = FALSE;
     
     [self getTasks];
     
@@ -217,9 +282,33 @@
         image = [task photoImage:task.beforePhotoId];
         if(image!=nil) {
             image = [image resizedImageWithBounds:CGSizeMake(60, 60)];
+            taskCell.imageView.image = image;
+        }
+        else
+        {   
+            NSString *tempString = [NSString stringWithFormat:@"http://localhost:8888%@", task.beforePhotoUrl.path];
+            NSLog(@"%@", tempString);
+            NSURL *url = [[NSURL alloc] initWithString:tempString];
+            
+            [taskCell.imageView setImageWithURL:url success:^(UIImage *newImage) {
+                
+                NSLog(@"Succesfull image download for photoID: %@", task.beforePhotoId);
+                NSData *data = UIImagePNGRepresentation(newImage);
+                taskCell.imageView.image = [taskCell.imageView.image resizedImageWithBounds:CGSizeMake(60, 60)];
+                NSError *errorP;
+                if (![data writeToFile:[task photoPath:task.beforePhotoId] options:NSDataWritingAtomic error:&errorP]) {
+                    NSLog(@"Error writing file: %@", errorP);
+                }
+            } failure:^(NSError *error) {
+                NSLog(@"Error downloading image: %@", [error localizedDescription]);
+            }
+            ];
+            
         }
     }
-    taskCell.imageView.image = image;
+    else{
+        taskCell.imageView.image = nil;
+    }
     
     if([task isComplete]) {
         taskCell.completeCheck.hidden = NO;

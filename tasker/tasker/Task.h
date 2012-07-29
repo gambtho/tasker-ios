@@ -23,6 +23,8 @@
 @property (nonatomic, retain) NSNumber * taskID;
 @property (nonatomic, retain) NSString * status;
 @property (nonatomic, retain) NSDate * createDate;
+@property (nonatomic, retain) NSURL *beforePhotoUrl;
+@property (nonatomic, retain) NSURL *afterPhotoUrl;
 
 -(BOOL)hasBeforePhoto;
 -(NSString *)photoPath:(NSString *)photoId;

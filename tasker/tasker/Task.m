@@ -22,6 +22,8 @@
 @dynamic status;
 @dynamic createDate;
 @dynamic taskID;
+@dynamic beforePhotoUrl;
+@dynamic afterPhotoUrl;
 
 -(BOOL)hasBeforePhoto
 {
@@ -45,7 +47,7 @@
 {
 //    NSAssert(photoId != nil, @"No photo ID set");
     NSAssert(photoId != @"-1", @"Photo ID is -1");
-    
+    NSLog(@"Photo ID is %@", photoId);
     return [UIImage imageWithContentsOfFile:[self photoPath:photoId]];
 }
 

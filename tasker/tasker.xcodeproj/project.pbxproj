@@ -34,6 +34,8 @@
 		E2851A6C15B74B090007DACC /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E2851A6B15B74B090007DACC /* libxml2.dylib */; };
 		E297E22F15B9FA2A00FBE1B3 /* FriendSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E297E22E15B9FA2A00FBE1B3 /* FriendSelectViewController.m */; };
 		E2B27948158EC3D500BB99D8 /* TaskDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B27947158EC3D500BB99D8 /* TaskDetailViewController.m */; };
+		E2CA62C315C206A400CC653E /* libSDWebImageARC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E2CA62BB15C2062300CC653E /* libSDWebImageARC.a */; };
+		E2CA62C515C206B600CC653E /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2CA62C415C206B600CC653E /* ImageIO.framework */; };
 		E2DEFDC11586DA2800D3D572 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2DEFDC01586DA2800D3D572 /* UIKit.framework */; };
 		E2DEFDC31586DA2800D3D572 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2DEFDC21586DA2800D3D572 /* Foundation.framework */; };
 		E2DEFDC51586DA2800D3D572 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2DEFDC41586DA2800D3D572 /* CoreGraphics.framework */; };
@@ -94,6 +96,34 @@
 			remoteGlobalIDString = 25160D1514564E810060A5C5;
 			remoteInfo = RestKit;
 		};
+		E2CA62B815C2062300CC653E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2CA62AF15C2062300CC653E /* SDWebImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53922D6F148C55820056699D;
+			remoteInfo = SDWebImage;
+		};
+		E2CA62BA15C2062300CC653E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2CA62AF15C2062300CC653E /* SDWebImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53761325155AD0D5005750A4;
+			remoteInfo = "SDWebImage ARC";
+		};
+		E2CA62BC15C2062300CC653E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2CA62AF15C2062300CC653E /* SDWebImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 531041E0157EAFA400BBABC3;
+			remoteInfo = "SDWebImage ARC+MKAnnotation";
+		};
+		E2CA62C115C2066F00CC653E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2CA62AF15C2062300CC653E /* SDWebImage.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 53761307155AD0D5005750A4;
+			remoteInfo = "SDWebImage ARC";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -136,6 +166,8 @@
 		E297E22E15B9FA2A00FBE1B3 /* FriendSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendSelectViewController.m; sourceTree = "<group>"; };
 		E2B27946158EC3D500BB99D8 /* TaskDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailViewController.h; sourceTree = "<group>"; };
 		E2B27947158EC3D500BB99D8 /* TaskDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailViewController.m; sourceTree = "<group>"; };
+		E2CA62AF15C2062300CC653E /* SDWebImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDWebImage.xcodeproj; path = ../SDWebImage/SDWebImage.xcodeproj; sourceTree = "<group>"; };
+		E2CA62C415C206B600CC653E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		E2DEFDBC1586DA2800D3D572 /* tasker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tasker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2DEFDC01586DA2800D3D572 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E2DEFDC21586DA2800D3D572 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -165,6 +197,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2CA62C515C206B600CC653E /* ImageIO.framework in Frameworks */,
+				E2CA62C315C206A400CC653E /* libSDWebImageARC.a in Frameworks */,
 				E2851A6C15B74B090007DACC /* libxml2.dylib in Frameworks */,
 				E2851A6815B74AFE0007DACC /* CFNetwork.framework in Frameworks */,
 				E2851A6915B74AFE0007DACC /* MobileCoreServices.framework in Frameworks */,
@@ -237,6 +271,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		E2CA62B015C2062300CC653E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E2CA62B915C2062300CC653E /* libSDWebImage.a */,
+				E2CA62BB15C2062300CC653E /* libSDWebImageARC.a */,
+				E2CA62BD15C2062300CC653E /* libSDWebImageARC+MKAnnotation.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		E2DEFDB11586DA2800D3D572 = {
 			isa = PBXGroup;
 			children = (
@@ -257,6 +301,8 @@
 		E2DEFDBF1586DA2800D3D572 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E2CA62C415C206B600CC653E /* ImageIO.framework */,
+				E2CA62AF15C2062300CC653E /* SDWebImage.xcodeproj */,
 				E260BFA515A7D03C0048694E /* OAuth */,
 				E2F8FBE81597962800317F84 /* TestFlightSDK1 */,
 				E2851A6B15B74B090007DACC /* libxml2.dylib */,
@@ -342,6 +388,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				E2CA62C215C2066F00CC653E /* PBXTargetDependency */,
 				E2851A6315B74A9D0007DACC /* PBXTargetDependency */,
 			);
 			name = tasker;
@@ -371,6 +418,10 @@
 				{
 					ProductGroup = E2851A4D15B74A2A0007DACC /* Products */;
 					ProjectRef = E2851A4C15B74A2A0007DACC /* RestKit.xcodeproj */;
+				},
+				{
+					ProductGroup = E2CA62B015C2062300CC653E /* Products */;
+					ProjectRef = E2CA62AF15C2062300CC653E /* SDWebImage.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -414,6 +465,27 @@
 			fileType = wrapper.cfbundle;
 			path = RestKitResources.bundle;
 			remoteRef = E2851A5F15B74A2A0007DACC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E2CA62B915C2062300CC653E /* libSDWebImage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSDWebImage.a;
+			remoteRef = E2CA62B815C2062300CC653E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E2CA62BB15C2062300CC653E /* libSDWebImageARC.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSDWebImageARC.a;
+			remoteRef = E2CA62BA15C2062300CC653E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E2CA62BD15C2062300CC653E /* libSDWebImageARC+MKAnnotation.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libSDWebImageARC+MKAnnotation.a";
+			remoteRef = E2CA62BC15C2062300CC653E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -472,6 +544,11 @@
 			isa = PBXTargetDependency;
 			name = RestKit;
 			targetProxy = E2851A6215B74A9D0007DACC /* PBXContainerItemProxy */;
+		};
+		E2CA62C215C2066F00CC653E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SDWebImage ARC";
+			targetProxy = E2CA62C115C2066F00CC653E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -547,7 +624,11 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tasker/tasker-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**";
+				HEADER_SEARCH_PATHS = (
+					"\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**",
+					"”$(OBJROOT)/UninstalledProducts/include”/**",
+					"”$(TARGET_BUILD_DIR)/usr/local/lib/include”/**",
+				);
 				INFOPLIST_FILE = "tasker/tasker-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -567,7 +648,11 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tasker/tasker-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**";
+				HEADER_SEARCH_PATHS = (
+					"\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**",
+					"”$(OBJROOT)/UninstalledProducts/include”/**",
+					"”$(TARGET_BUILD_DIR)/usr/local/lib/include”/**",
+				);
 				INFOPLIST_FILE = "tasker/tasker-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

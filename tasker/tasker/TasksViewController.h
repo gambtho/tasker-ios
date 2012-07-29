@@ -10,14 +10,18 @@
 #import "TaskDetailViewController.h"
 #import "LoginViewController.h"
 #import <RestKit/Restkit.h>
+#import <SDWebImage/SDWebImageManagerDelegate.h>
 
-@interface TasksViewController : UITableViewController <NSFetchedResultsControllerDelegate, LoginViewControllerDelegate, RKObjectLoaderDelegate, TaskDetailViewControllerDelegate>
+
+@interface TasksViewController : UITableViewController <NSFetchedResultsControllerDelegate, LoginViewControllerDelegate, RKObjectLoaderDelegate,
+    TaskDetailViewControllerDelegate, SDWebImageManagerDelegate>;
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) RKObjectManager *objectManager;
 @property (strong, nonatomic) NSString *userEmail;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *addButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *loginButton;
+
 
 
 @end

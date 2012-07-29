@@ -237,15 +237,16 @@
     {
         Task *task = [objects objectAtIndex:0];
         beforePhotoId = task.beforePhotoId;
-        NSLog(@"%@ , %@", beforePhotoId, taskToEdit.beforePhotoId);
-        
+        NSLog(@"In add/edit image, beforePhotoId = %@", beforePhotoId);
+       
+        /*
         NSData *data = UIImagePNGRepresentation(image);
         
         NSError *errorP;
         if (![data writeToFile:[task photoPath:beforePhotoId] options:NSDataWritingAtomic error:&errorP]) {
             NSLog(@"Error writing file: %@", errorP);
         }                          
-        
+        */
     }
     
     NSError *error;
@@ -253,7 +254,7 @@
         FATAL_CORE_DATA_ERROR(error);
         return;
     }
-    NSLog(@"Before photoid: %@", beforePhotoId);
+    
     NSLog(@"Completed save in task detail");
 
 }
@@ -272,7 +273,7 @@
         
         NSLog(@"Contacting server to update %@", task.title);
         
-        
+        NSLog(@"Task completor is: %@", task.completor);
         
         NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
                                      task.taskID, @"taskID",

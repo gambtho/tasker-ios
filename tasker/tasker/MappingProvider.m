@@ -58,6 +58,8 @@
     [mapping mapKeyPath:@"completor" toAttribute:@"completor"];
     [mapping mapKeyPath:@"beforePhotoId" toAttribute:@"beforePhotoId"];
     [mapping mapKeyPath:@"afterPhotoId" toAttribute:@"afterPhotoId"];
+    [mapping mapKeyPath:@"beforePhotoUrl" toAttribute:@"beforePhotoUrl"];
+    [mapping mapKeyPath:@"afterPhotoUrl" toAttribute:@"afterPhotoUrl"];
     
     NSDateFormatter* dateFormatter = [NSDateFormatter new];
     [dateFormatter  setDateFormat:@"MM dd, yy HH:mm:ss a"];
