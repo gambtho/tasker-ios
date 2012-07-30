@@ -56,8 +56,6 @@
     [mapping mapKeyPath:@"status" toAttribute:@"status"];
     [mapping mapKeyPath:@"taskDescription" toAttribute:@"taskDescription"];
     [mapping mapKeyPath:@"completor" toAttribute:@"completor"];
-    [mapping mapKeyPath:@"beforePhotoId" toAttribute:@"beforePhotoId"];
-    [mapping mapKeyPath:@"afterPhotoId" toAttribute:@"afterPhotoId"];
     [mapping mapKeyPath:@"beforePhotoUrl" toAttribute:@"beforePhotoUrl"];
     [mapping mapKeyPath:@"afterPhotoUrl" toAttribute:@"afterPhotoUrl"];
     

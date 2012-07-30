@@ -27,7 +27,8 @@
 
 -(BOOL)hasBeforePhoto
 {
-    return (self.beforePhotoId != nil) && ([self.beforePhotoId intValue] !=-1);
+    NSLog(@"Current beforePhoto value is: %@", self.beforePhotoId);
+    return (self.beforePhotoId != nil) && ([self.beforePhotoId intValue] != -1);
 }
 
 - (NSString *)documentsDirectory
@@ -37,17 +38,16 @@
     return documentsDirectory;
 }
 
-- (NSString *)photoPath:(NSString *)photoId
+- (NSString *)photoPath:(NSNumber *)photoId
 {
-    NSString *filename = [NSString stringWithFormat:@"Photo-%@.png", photoId];
+    NSString *filename = [NSString stringWithFormat:@"Photo-%d.png", [photoId intValue]];
     return [[self documentsDirectory] stringByAppendingPathComponent:filename];
 }
 
-- (UIImage *)photoImage:(NSString *)photoId
+- (UIImage *)photoImage:(NSNumber *)photoId
 {
-//    NSAssert(photoId != nil, @"No photo ID set");
-    NSAssert(photoId != @"-1", @"Photo ID is -1");
-    NSLog(@"Photo ID is %@", photoId);
+    NSAssert(photoId != nil, @"No photo ID set");
+    NSAssert([photoId intValue] !=-1, @"Photo ID is -1");
     return [UIImage imageWithContentsOfFile:[self photoPath:photoId]];
 }
 

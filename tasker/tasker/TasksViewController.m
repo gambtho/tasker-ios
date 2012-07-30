@@ -39,6 +39,15 @@
     return self;
 }
 
+- (int)nextPhotoId
+{
+    int photoId = [[NSUserDefaults standardUserDefaults] integerForKey:@"PhotoID"];
+    NSLog(@"Photo Id is currently: %d", photoId);
+    [[NSUserDefaults standardUserDefaults] setInteger:photoId+1 forKey:@"PhotoID"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    return photoId;
+}
+
 -(NSFetchedResultsController *)fetchedResultsController
 {
     NSLog(@"Getting fetched results controller");
@@ -68,15 +77,6 @@
     return fetchedResultsController;
 }
 
--(void)imageDownloader:(SDWebImageDownloader *)downloader didFailWithError:(NSError *)error
-{
-    NSLog(@"Image download failed with error: %@", [error localizedDescription]);
-}
-
--(void)imageDownloader:(SDWebImageDownloader *)downloader didFinishWithImage:(UIImage *)image
-{
-    //
-}
 
 -(void)getTasks
 {
@@ -121,6 +121,17 @@
 
     NSLog(@"Objectloader loaded objects[%d]", [objects count]);
 /*
+
+ -(void)imageDownloader:(SDWebImageDownloader *)downloader didFailWithError:(NSError *)error
+ {
+ NSLog(@"Image download failed with error: %@", [error localizedDescription]);
+ }
+ 
+ -(void)imageDownloader:(SDWebImageDownloader *)downloader didFinishWithImage:(UIImage *)image
+ {
+ //
+ }
+ 
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     for(Task *task in objects)
     {
@@ -172,7 +183,7 @@
 
 
 -(void)objectLoaderDidFinishLoading:(RKObjectLoader *)objectLoader{
-
+    //
 }
 
 - (void)viewDidLoad
@@ -284,24 +295,32 @@
             image = [image resizedImageWithBounds:CGSizeMake(60, 60)];
             taskCell.imageView.image = image;
         }
-        else
-        {   
+        else if(task.beforePhotoUrl==nil && task.beforePhotoId == 0)
+        {
+            NSLog(@"Resetting photoID");
+            task.beforePhotoId = [NSNumber numberWithInt:-1];
+            
+        } else {
             NSString *tempString = [NSString stringWithFormat:@"http://localhost:8888%@", task.beforePhotoUrl.path];
             NSLog(@"%@", tempString);
             NSURL *url = [[NSURL alloc] initWithString:tempString];
             
             [taskCell.imageView setImageWithURL:url success:^(UIImage *newImage) {
                 
-                NSLog(@"Succesfull image download for photoID: %@", task.beforePhotoId);
                 NSData *data = UIImagePNGRepresentation(newImage);
                 taskCell.imageView.image = [taskCell.imageView.image resizedImageWithBounds:CGSizeMake(60, 60)];
-                NSError *errorP;
-                if (![data writeToFile:[task photoPath:task.beforePhotoId] options:NSDataWritingAtomic error:&errorP]) {
-                    NSLog(@"Error writing file: %@", errorP);
+               
+                task.beforePhotoId = [NSNumber numberWithInt:[self nextPhotoId]];
+                NSLog(@"Succesfull image download for photoID: %@", task.beforePhotoId);
+                NSError *error;
+                if (![data writeToFile:[task photoPath:task.beforePhotoId]   options:NSDataWritingAtomic error:&error]) {
+                     NSLog(@"Error writing file: %@", error);
                 }
+
             } failure:^(NSError *error) {
-                NSLog(@"Error downloading image: %@", [error localizedDescription]);
+                    NSLog(@"Error downloading image: %@", [error localizedDescription]);
             }
+            
             ];
             
         }

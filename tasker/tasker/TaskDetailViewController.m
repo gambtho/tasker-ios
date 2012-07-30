@@ -12,7 +12,8 @@
 
 @implementation TaskDetailViewController{
     NSDate *dueDate;
-    NSString *beforePhotoId;
+    NSDate *completedDate;
+    NSNumber *beforePhotoId;
     UIImage *image;
     NSString *title;
     NSString *description;
@@ -139,6 +140,7 @@
             }
         }
         dueDate = taskToEdit.dueDate;
+        completedDate = taskToEdit.completedDate;
     } 
 }
 
@@ -183,6 +185,8 @@
     
     taskToEdit.completedDate = [NSDate date];
     
+    completedDate = taskToEdit.completedDate;
+    
     [TestFlight passCheckpoint:@"COMPLETED TASK"];
     
     [self done:sender];
@@ -213,6 +217,7 @@
 - (int)nextPhotoId
 {
     int photoId = [[NSUserDefaults standardUserDefaults] integerForKey:@"PhotoID"];
+    NSLog(@"Photo Id is currently: %d", photoId);
     [[NSUserDefaults standardUserDefaults] setInteger:photoId+1 forKey:@"PhotoID"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     return photoId;
@@ -231,23 +236,6 @@
 - (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
     NSLog(@"objects[%d]", [objects count]);
-    
-    
-    if(image!=nil)
-    {
-        Task *task = [objects objectAtIndex:0];
-        beforePhotoId = task.beforePhotoId;
-        NSLog(@"In add/edit image, beforePhotoId = %@", beforePhotoId);
-       
-        /*
-        NSData *data = UIImagePNGRepresentation(image);
-        
-        NSError *errorP;
-        if (![data writeToFile:[task photoPath:beforePhotoId] options:NSDataWritingAtomic error:&errorP]) {
-            NSLog(@"Error writing file: %@", errorP);
-        }                          
-        */
-    }
     
     NSError *error;
     if(![self.managedObjectContext save:&error]) {
@@ -271,18 +259,38 @@
         
         Task *task = taskToEdit;
         
+        if(image != nil) {
+            if(![taskToEdit hasBeforePhoto]){
+                taskToEdit.beforePhotoId = [NSNumber numberWithInt:[self nextPhotoId]];
+                NSLog(@"Saving photo with id: %@", taskToEdit.beforePhotoId);
+            }
+            
+            NSData *data = UIImagePNGRepresentation(image);
+            
+            NSError *error;
+            if (![data writeToFile:[taskToEdit photoPath:taskToEdit.beforePhotoId]   options:NSDataWritingAtomic error:&error]) {
+                NSLog(@"Error writing file: %@", error);
+            }
+        }
+        
+        task.taskDescription = self.descriptionTextView.text;
+        task.dueDate = dueDate;
+        task.completedDate = completedDate;
+        
         NSLog(@"Contacting server to update %@", task.title);
         
         NSLog(@"Task completor is: %@", task.completor);
+        
+        NSLog(@"Before ID is %@", taskToEdit.beforePhotoId);
         
         NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
                                      task.taskID, @"taskID",
                                      task.title, @"title",
                                      task.creator, @"creator",
                                      task.status, @"status",
+                                     task.completor, @"completor",
                                      task.taskDescription, @"taskDescription",
                                      task.dueDate, @"dueDate",
-                                     task.completor, @"completor",
                                      task.completedDate, @"completedDate",
                                      nil];
         NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
@@ -292,8 +300,9 @@
             loader.method = RKRequestMethodPOST;
             loader.targetObject = task;
             
-            if(image!=nil && task.beforePhotoId == @"-1")
+            if((image!=nil) && (task.beforePhotoUrl==nil))
             {
+                NSLog(@"Trying to send image in post");
                 RKParams *params = [RKParams params];
                 NSData *data = UIImagePNGRepresentation(image);
                 [params setData:data MIMEType:@"image/png" forParam:@"beforeimage"];
@@ -305,9 +314,22 @@
             taskToEdit = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:managedObjectContext];
         
             Task *task = taskToEdit;
-            //        task.createDate = [NSDate date];
-            task.beforePhotoId = @"-1";
-            task.status = status;
+            task.beforePhotoId = [NSNumber numberWithInt:-1];
+        
+            if(image != nil) {
+
+                taskToEdit.beforePhotoId = [NSNumber numberWithInt:[self nextPhotoId]];
+                NSLog(@"Saving photo with id: %@", taskToEdit.beforePhotoId);
+                
+                
+                NSData *data = UIImagePNGRepresentation(image);
+                
+                NSError *error;
+                if (![data writeToFile:[taskToEdit photoPath:taskToEdit.beforePhotoId]   options:NSDataWritingAtomic error:&error]) {
+                    NSLog(@"Error writing file: %@", error);
+                }
+            }
+
             task.creator = user;
             if(completor==nil)
             {
@@ -352,25 +374,8 @@
 -(IBAction)done:(id)sender
 {
 
-
     [self updateRemote];    
-    
-/*    if(image != nil) {
-        if(![task hasBeforePhoto]){
-            task.beforePhotoId = [NSNumber numberWithInt:[self nextPhotoId]];
-        }
-      
 
-      NSData *data = UIImagePNGRepresentation(image);
-      
-     
-        
-      NSError *error;
-    if (![data writeToFile:[task photoPath:[task.beforePhotoId intValue]] options:NSDataWritingAtomic error:&error]) {
-          NSLog(@"Error writing file: %@", error);
-      }                          
-    }
-*/ 
 }
 
 -(IBAction)textDone:(id)sender
