@@ -33,7 +33,7 @@
     TasksViewController *taskViewController = (TasksViewController *)[[navigationController viewControllers] objectAtIndex:0];
     taskViewController.objectManager = self.objectManager;
     taskViewController.managedObjectContext = self.objectContext;
-
+    
     return YES;
 }
 							
@@ -80,9 +80,11 @@
 
 -(void)testFlightSetup
 {
-    //remove the next line before release...and the compiler setting under target build phases
-    [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
-    [TestFlight takeOff:@"bee96b8435ae376fc15786c7c99c64fe_OTgwMzIyMDEyLTA2LTI0IDE0OjQ1OjU4LjA5MDMzMw"];
+    #ifdef DEBUG
+        [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+        [TestFlight passCheckpoint:@"SET DEVICE IDENTIFIER"];
+    #endif
+    [TestFlight takeOff:TF_ID];
     [TestFlight passCheckpoint:@"LAUNCHED APPLICATION"];
 }
 
@@ -90,16 +92,13 @@
 
 -(void)restKitSetup
 {
+
+    // RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
+
     
-  //  RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
-    
-    
-    self.objectManager = [RKObjectManager managerWithBaseURLString:@"http://localhost:8888"];
-    //        self. objectManager = [RKObjectManager managerWithBaseURLString:@"http://ymtasker.appspot.com"];
-    
-    
+    self.objectManager = [RKObjectManager managerWithBaseURLString:HOST];
     self.objectManager.client.requestQueue.showsNetworkActivityIndicatorWhenBusy = YES;
-    self.objectStore = [RKManagedObjectStore objectStoreWithStoreFilename:@"Tasker.sqlite"];
+    self.objectStore = [RKManagedObjectStore objectStoreWithStoreFilename:DB_NAME];
     self.objectManager.objectStore = self.objectStore;
     self.objectManager.mappingProvider = [MappingProvider mappingProviderWithObjectStore:self.objectStore];
     self.objectContext = self.objectStore.managedObjectContextForCurrentThread;

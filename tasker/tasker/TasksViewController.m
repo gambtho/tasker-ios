@@ -10,6 +10,7 @@
 #import "TaskCell.h"
 #import "Task.h"
 #import "UIImage+Resize.h"
+#import "UITableViewController+NextPhotoId.h"
 #import <SDWebImage/SDWebImageManager.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -39,22 +40,13 @@
     return self;
 }
 
-- (int)nextPhotoId
-{
-    int photoId = [[NSUserDefaults standardUserDefaults] integerForKey:@"PhotoID"];
-    NSLog(@"Photo Id is currently: %d", photoId);
-    [[NSUserDefaults standardUserDefaults] setInteger:photoId+1 forKey:@"PhotoID"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    return photoId;
-}
-
 -(NSFetchedResultsController *)fetchedResultsController
 {
-    NSLog(@"Getting fetched results controller");
+    LogTrace(@"Getting fetched results controller");
     if (fetchedResultsController == nil) {
                 
         NSFetchRequest *fetchRequest = [[[RKObjectManager sharedManager] 
-                                         mappingProvider] fetchRequestForResourcePath:@"/tasker/task"]; 
+                                         mappingProvider] fetchRequestForResourcePath:TASK_PATH];
         
         [NSFetchedResultsController deleteCacheWithName:@"Tasks"]; 
     
@@ -80,19 +72,19 @@
 
 -(void)getTasks
 {
-    NSLog(@"Getting tasks");
+    LogTrace(@"Getting tasks");
     if(userEmail!=nil)
     {
         NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:self.userEmail, @"user", nil];
-        NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
-        NSLog(@"%@", resourcePath);
+        NSString *resourcePath = [TASK_PATH stringByAppendingQueryParameters:queryParams];
+        LogTrace(@"%@", resourcePath);
         [objectManager loadObjectsAtResourcePath:resourcePath delegate:self]; 
     }
 }
 
 -(void)performFetch
 {
-    NSLog(@"Performing fetch");
+    LogTrace(@"Performing fetch");
     NSError *error;
     if(![self.fetchedResultsController performFetch:&error]) 
     {
@@ -100,100 +92,39 @@
         return;
     }
     else{
-        NSLog(@"Fetch succesful");
+        LogTrace(@"Fetch succesful");
         id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:0];
-        NSLog(@"Number objects fetched: %d", [sectionInfo numberOfObjects]);
+        LogInfo(@"Number objects fetched: %d", [sectionInfo numberOfObjects]);
     }
 }
 
 - (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
-    NSLog(@"Error: %@", [error localizedDescription]);
+    LogError(@"Error: %@", [error localizedDescription]);
 }
 
 - (void)request:(RKRequest*)request didLoadResponse:(RKResponse*)response {
-    NSLog(@"response code: %d", [response statusCode]);
-//    NSLog(@"response is: %@", [response bodyAsString]);
+    LogTrace(@"response code: %d", [response statusCode]);
+    LogTrace(@"response is: %@", [response bodyAsString]);
 }
 
 - (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
+    LogInfo(@"Objectloader loaded objects[%d]", [objects count]);
+}
 
-    NSLog(@"Objectloader loaded objects[%d]", [objects count]);
 /*
-
- -(void)imageDownloader:(SDWebImageDownloader *)downloader didFailWithError:(NSError *)error
- {
- NSLog(@"Image download failed with error: %@", [error localizedDescription]);
- }
- 
- -(void)imageDownloader:(SDWebImageDownloader *)downloader didFinishWithImage:(UIImage *)image
- {
- //
- }
- 
-    SDWebImageManager *manager = [SDWebImageManager sharedManager];
-    for(Task *task in objects)
-    {
-        NSLog(@"First item: %@", task.taskID);
-        UIImage *image = nil;
-        if([task hasBeforePhoto]) {
-            image = [task photoImage:task.beforePhotoId];
-            if(image==nil) {
-                NSLog(@"task url is: %@", task.beforePhotoUrl.absoluteString);
-      //          NSURL *url = [[NSURL alloc] initWithString:task.beforePhotoId];
-                NSString *tempString = [NSString stringWithFormat:@"http://localhost:8888%@", task.beforePhotoUrl.path];
-                NSLog(@"%@", tempString);
-                NSURL *url = [[NSURL alloc] initWithString:tempString];
-                [manager downloadWithURL:url
-                                delegate:self
-                                 options:0
-                                 success:^(UIImage *newImage)
-                                 {
-                                     NSLog(@"Succesfull image download");
-                                     NSData *data = UIImagePNGRepresentation(newImage);
-                                     
-                                     NSError *errorP;
-                                     if (![data writeToFile:[task photoPath:task.beforePhotoId] options:NSDataWritingAtomic error:&errorP]) {
-                                         NSLog(@"Error writing file: %@", errorP);
-                                     }
-                                     else
-                                     {
-                                         needRefresh = TRUE;
-                                     }
-                                 }
-                                 failure:^(NSError *error)
-                                 {
-                                     NSLog(@"Error downloading image: %@", [error localizedDescription]);
-                                 }];
-            }
-            else{
-                NSLog(@"Image already present");
-            }
-        
-        }
-    }
-    if(needRefresh)
-    {
-        needRefresh = FALSE;
-        [self.tableView reloadData];
-    }
-*/
-}
-
-
 -(void)objectLoaderDidFinishLoading:(RKObjectLoader *)objectLoader{
-    //
+
 }
+*/
 
 - (void)viewDidLoad
 {
-    NSLog(@"View did load");
+    LogTrace(@"View did load");
     
     self.userEmail = [[NSUserDefaults standardUserDefaults] valueForKey:@"UserEmail"];
 
-//    [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
-   
     needRefresh = FALSE;
     
     [self getTasks];
@@ -213,7 +144,7 @@
 
 - (void)viewDidUnload
 {
-    NSLog(@"View did unload");
+    LogTrace(@"View did unload");
     [self setAddButton:nil];
     [self setLoginButton:nil];
     [super viewDidUnload];
@@ -252,7 +183,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"Number of rows in section");
+    LogTrace(@"Number of rows in section");
     if(userEmail==nil)
     {
         return 0;
@@ -260,7 +191,7 @@
     } else {
     
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    NSLog(@"Number of objects is: %d", [sectionInfo numberOfObjects]);
+    LogTrace(@"Number of objects is: %d", [sectionInfo numberOfObjects]);
     return [sectionInfo numberOfObjects];
     
     }
@@ -268,7 +199,7 @@
 
 -(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Configuring cell");
+    LogTrace(@"Configuring cell");
     TaskCell *taskCell = (TaskCell *)cell;
     Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
@@ -297,28 +228,32 @@
         }
         else if(task.beforePhotoUrl==nil && task.beforePhotoId == 0)
         {
-            NSLog(@"Resetting photoID");
+            LogTrace(@"Resetting photoID as no photoURL was found");
             task.beforePhotoId = [NSNumber numberWithInt:-1];
             
-        } else {
-            NSString *tempString = [NSString stringWithFormat:@"http://localhost:8888%@", task.beforePhotoUrl.path];
-            NSLog(@"%@", tempString);
-            NSURL *url = [[NSURL alloc] initWithString:tempString];
-            
+        } else if ([task.beforePhotoId intValue] != -1) {
+            #ifdef DEBUG
+                NSString *tempString = [NSString stringWithFormat:@"%@%@", HOST, task.beforePhotoUrl.path];
+                LogTrace(@"%@", tempString);
+                NSURL *url = [[NSURL alloc] initWithString:tempString];
+            #else
+                NSURL *url = task.beforePhotoUrl;
+            #endif
+             task.beforePhotoId = [NSNumber numberWithInt:-1];
             [taskCell.imageView setImageWithURL:url success:^(UIImage *newImage) {
                 
                 NSData *data = UIImagePNGRepresentation(newImage);
                 taskCell.imageView.image = [taskCell.imageView.image resizedImageWithBounds:CGSizeMake(60, 60)];
                
                 task.beforePhotoId = [NSNumber numberWithInt:[self nextPhotoId]];
-                NSLog(@"Succesfull image download for photoID: %@", task.beforePhotoId);
+                LogTrace(@"Succesfull image download for photoID: %@", task.beforePhotoId);
                 NSError *error;
                 if (![data writeToFile:[task photoPath:task.beforePhotoId]   options:NSDataWritingAtomic error:&error]) {
-                     NSLog(@"Error writing file: %@", error);
+                     LogError(@"Error writing file: %@", error);
                 }
 
             } failure:^(NSError *error) {
-                    NSLog(@"Error downloading image: %@", [error localizedDescription]);
+                    LogError(@"Error downloading image: %@", [error localizedDescription]);
             }
             
             ];
@@ -340,7 +275,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Cell for row and index path");
+    LogTrace(@"Cell for row and index path");
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Task"];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
@@ -358,11 +293,11 @@
 */
 
 -(void)deleteRemote:(Task *)task {
-    NSLog(@"Contacting server to delete %@", task.title);
+    LogTrace(@"Contacting server to delete %@", task.title);
     NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
                                  task.taskID, @"taskID",
                                  nil];
-    NSString *resourcePath = [@"/tasker/task" stringByAppendingQueryParameters:queryParams];
+    NSString *resourcePath = [TASK_PATH stringByAppendingQueryParameters:queryParams];
     
     [objectManager loadObjectsAtResourcePath:resourcePath usingBlock:^(RKObjectLoader *loader) {
         loader.delegate = self;
@@ -373,7 +308,7 @@
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"User initiated delete");
+    LogTrace(@"User initiated delete");
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [self deleteRemote:task];
@@ -407,7 +342,7 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSLog(@"Preparing for seque");
+    LogTrace(@"Preparing for seque");
     if([segue.identifier isEqualToString:@"AddTask"]) {
         UINavigationController *navigationController = segue.destinationViewController;
         TaskDetailViewController *controller = (TaskDetailViewController *)navigationController.topViewController;
@@ -461,7 +396,7 @@
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
-    NSLog(@"*** controllerWillChangeContent");
+    LogTrace(@"*** controllerWillChangeContent");
     [self.tableView beginUpdates];
 }
 
@@ -473,22 +408,22 @@
 {
     switch (type) {
         case NSFetchedResultsChangeInsert:
-            NSLog(@"*** controllerDidChangeObject - NSFetchedResultsChangeInsert");
+            LogTrace(@"*** controllerDidChangeObject - NSFetchedResultsChangeInsert");
             [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
-            NSLog(@"*** controllerDidChangeObject - NSFetchedResultsChangeDelete");
+            LogTrace(@"*** controllerDidChangeObject - NSFetchedResultsChangeDelete");
             [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeUpdate:
-            NSLog(@"*** controllerDidChangeObject - NSFetchedResultsChangeUpdate");
+            LogTrace(@"*** controllerDidChangeObject - NSFetchedResultsChangeUpdate");
             [self configureCell:[self.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
             
         case NSFetchedResultsChangeMove:
-            NSLog(@"*** controllerDidChangeObject - NSFetchedResultsChangeMove");
+            LogTrace(@"*** controllerDidChangeObject - NSFetchedResultsChangeMove");
             [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
@@ -502,12 +437,12 @@
 {
     switch (type) {
         case NSFetchedResultsChangeInsert:
-            NSLog(@"*** controllerDidChangeSection - NSFetchedResultsChangeInsert");
+            LogTrace(@"*** controllerDidChangeSection - NSFetchedResultsChangeInsert");
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
-            NSLog(@"*** controllerDidChangeSection - NSFetchedResultsChangeDelete");
+            LogTrace(@"*** controllerDidChangeSection - NSFetchedResultsChangeDelete");
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
@@ -515,8 +450,18 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    NSLog(@"*** controllerDidChangeContent");
+    LogTrace(@"*** controllerDidChangeContent");
     [self.tableView endUpdates];
+    
+    NSError *error;
+    if(![self.managedObjectContext save:&error]) {
+        FATAL_CORE_DATA_ERROR(error);
+        return;
+    }
+    else
+    {
+        LogInfo(@"Saved context");
+    }
 }
 
 
@@ -572,7 +517,7 @@
 
 -(void)taskDetailCompleted:(TaskDetailViewController *)taskDetail
 {
-    NSLog(@"Task detail completed");
+    LogTrace(@"Task detail completed");
     [self.tableView reloadData];
     [self dismissModalViewControllerAnimated:NO];
 }

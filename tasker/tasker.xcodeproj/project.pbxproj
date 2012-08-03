@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E221CA2F15CB509200EFE792 /* UITableViewController+NextPhotoId.m in Sources */ = {isa = PBXBuildFile; fileRef = E221CA2E15CB509200EFE792 /* UITableViewController+NextPhotoId.m */; };
+		E221CA3215CB5C9400EFE792 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = E221CA3115CB5C9400EFE792 /* Constants.m */; };
 		E2553837158E94C900B12D3F /* TaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2553836158E94C900B12D3F /* TaskCell.m */; };
 		E2553846158EA84C00B12D3F /* TasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2553845158EA84C00B12D3F /* TasksViewController.m */; };
 		E260BFB015A7D03C0048694E /* GTMHTTPFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = E260BFA715A7D03C0048694E /* GTMHTTPFetcher.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -127,6 +129,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E221CA2915CB446800EFE792 /* Logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logging.h; sourceTree = "<group>"; };
+		E221CA2D15CB509100EFE792 /* UITableViewController+NextPhotoId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewController+NextPhotoId.h"; sourceTree = "<group>"; };
+		E221CA2E15CB509200EFE792 /* UITableViewController+NextPhotoId.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewController+NextPhotoId.m"; sourceTree = "<group>"; };
+		E221CA3015CB5C9400EFE792 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		E221CA3115CB5C9400EFE792 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		E2553835158E94C900B12D3F /* TaskCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskCell.h; sourceTree = "<group>"; };
 		E2553836158E94C900B12D3F /* TaskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskCell.m; sourceTree = "<group>"; };
 		E2553844158EA84C00B12D3F /* TasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksViewController.h; sourceTree = "<group>"; };
@@ -346,8 +353,13 @@
 				E2F8FBDF1596A3B400317F84 /* Task.m */,
 				E2F8FBE51597897C00317F84 /* UIImage+Resize.h */,
 				E2F8FBE61597897C00317F84 /* UIImage+Resize.m */,
+				E221CA2D15CB509100EFE792 /* UITableViewController+NextPhotoId.h */,
+				E221CA2E15CB509200EFE792 /* UITableViewController+NextPhotoId.m */,
 				E260BFC215A90B810048694E /* LoginViewController.h */,
 				E260BFC315A90B810048694E /* LoginViewController.m */,
+				E221CA3015CB5C9400EFE792 /* Constants.h */,
+				E221CA3115CB5C9400EFE792 /* Constants.m */,
+				E221CA2915CB446800EFE792 /* Logging.h */,
 			);
 			path = tasker;
 			sourceTree = "<group>";
@@ -534,6 +546,8 @@
 				E260BFCB15A911B30048694E /* GTMHTTPFetcherLogging.m in Sources */,
 				E297E22F15B9FA2A00FBE1B3 /* FriendSelectViewController.m in Sources */,
 				E26C483615BC96C300EFFEC1 /* MappingProvider.m in Sources */,
+				E221CA2F15CB509200EFE792 /* UITableViewController+NextPhotoId.m in Sources */,
+				E221CA3215CB5C9400EFE792 /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -586,6 +600,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					"LOGGING_ENABLED=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;

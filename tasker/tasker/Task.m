@@ -27,7 +27,7 @@
 
 -(BOOL)hasBeforePhoto
 {
-    NSLog(@"Current beforePhoto value is: %@", self.beforePhotoId);
+    LogTrace(@"Current beforePhoto value is: %@", self.beforePhotoId);
     return (self.beforePhotoId != nil) && ([self.beforePhotoId intValue] != -1);
 }
 
@@ -57,7 +57,7 @@
     if ([fileManager fileExistsAtPath:path]) {
         NSError *error;
         if (![fileManager removeItemAtPath:path error:&error]) {
-            NSLog(@"Error removing file: %@", error);
+            LogError(@"Error removing file: %@", error);
         }
     }
 }
@@ -73,7 +73,7 @@
 
 -(BOOL)isComplete
 {
-//    NSLog(@"status is: %@", self.status);
+//    LogTrace(@"status is: %@", self.status);
     if([self.status isEqualToString:@"complete"]) {
         return TRUE;
     }
@@ -82,7 +82,7 @@
 
 -(BOOL)isAssigned
 {
-//    NSLog(@"status is: %@", self.status);
+//    LogTrace(@"status is: %@", self.status);
     if([self.status isEqualToString:@"assigned"]) {
         return TRUE;
     }

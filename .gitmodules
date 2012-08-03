@@ -4,3 +4,6 @@
 [submodule "SDWebImage"]
 	path = SDWebImage
 	url = https://github.com/rs/SDWebImage.git
+[submodule "CocoaLumberjack"]
+	path = CocoaLumberjack
+	url = https://github.com/robbiehanson/CocoaLumberjack

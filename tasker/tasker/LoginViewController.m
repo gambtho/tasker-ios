@@ -84,7 +84,7 @@
     if (error != nil) {
         // Authentication failed (perhaps the user denied access, or closed the
         // window before granting access)
-        NSLog(@"Authentication error: %@", error);
+        LogTrace(@"Authentication error: %@", error);
         NSData *responseData = [[error userInfo] objectForKey:@"data"]; // kGTMHTTPFetcherStatusDataKey
         if ([responseData length] > 0) {
             // show the body of the server's authentication failure response
@@ -96,7 +96,7 @@
     } else {
 
         self.accessToken = auth.userEmail;
-        NSLog(@"Email: %@", self.accessToken);
+        LogTrace(@"Email: %@", self.accessToken);
         [self.delegate loginCompleted:self didLogin:auth.userEmail];
     }
     

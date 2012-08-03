@@ -30,7 +30,7 @@
     if (self) {
         self.objectStore = theObjectStore;
         
-        [self setObjectMapping:[self taskObjectMapping] forResourcePathPattern:@"/tasker/task" withFetchRequestBlock:^NSFetchRequest *(NSString *resourcePath) {
+        [self setObjectMapping:[self taskObjectMapping] forResourcePathPattern:TASK_PATH withFetchRequestBlock:^NSFetchRequest *(NSString *resourcePath) {
             NSFetchRequest *fetchRequest = [Task fetchRequest];
             fetchRequest.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"dueDate" ascending:YES]];
             return fetchRequest;
@@ -43,7 +43,7 @@
 
 - (RKManagedObjectMapping *)taskObjectMapping
 {
-    NSLog(@"creating taskMapping");
+    LogTrace(@"creating taskMapping");
     RKManagedObjectMapping *mapping = [RKManagedObjectMapping mappingForClass:[Task class] 
                                                          inManagedObjectStore:self.objectStore];
     mapping.primaryKeyAttribute = @"taskID";
