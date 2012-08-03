@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		E221CA2F15CB509200EFE792 /* UITableViewController+NextPhotoId.m in Sources */ = {isa = PBXBuildFile; fileRef = E221CA2E15CB509200EFE792 /* UITableViewController+NextPhotoId.m */; };
 		E221CA3215CB5C9400EFE792 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = E221CA3115CB5C9400EFE792 /* Constants.m */; };
+		E221CA4415CB678D00EFE792 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E221CA3515CB678D00EFE792 /* DDAbstractDatabaseLogger.m */; };
+		E221CA4515CB678D00EFE792 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E221CA3715CB678D00EFE792 /* DDASLLogger.m */; };
+		E221CA4615CB678D00EFE792 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E221CA3915CB678D00EFE792 /* DDFileLogger.m */; };
+		E221CA4715CB678D00EFE792 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = E221CA3B15CB678D00EFE792 /* DDLog.m */; };
+		E221CA4815CB678D00EFE792 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E221CA3D15CB678D00EFE792 /* DDTTYLogger.m */; };
+		E221CA4915CB678D00EFE792 /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = E221CA4015CB678D00EFE792 /* ContextFilterLogFormatter.m */; };
+		E221CA4A15CB678D00EFE792 /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = E221CA4215CB678D00EFE792 /* DispatchQueueLogFormatter.m */; };
 		E2553837158E94C900B12D3F /* TaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2553836158E94C900B12D3F /* TaskCell.m */; };
 		E2553846158EA84C00B12D3F /* TasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2553845158EA84C00B12D3F /* TasksViewController.m */; };
 		E260BFB015A7D03C0048694E /* GTMHTTPFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = E260BFA715A7D03C0048694E /* GTMHTTPFetcher.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -50,8 +57,6 @@
 		E2F8FBE01596A3B400317F84 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F8FBDF1596A3B400317F84 /* Task.m */; };
 		E2F8FBE71597897C00317F84 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F8FBE61597897C00317F84 /* UIImage+Resize.m */; };
 		E2F8FBED1597962800317F84 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F8FBE91597962800317F84 /* libTestFlight.a */; };
-		E2F8FBEE1597962800317F84 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = E2F8FBEA1597962800317F84 /* README.txt */; };
-		E2F8FBEF1597962800317F84 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = E2F8FBEB1597962800317F84 /* release_notes.txt */; };
 		E2F8FBF11597968900317F84 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F8FBF01597968900317F84 /* libz.dylib */; };
 /* End PBXBuildFile section */
 
@@ -129,11 +134,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		E221CA2915CB446800EFE792 /* Logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logging.h; sourceTree = "<group>"; };
 		E221CA2D15CB509100EFE792 /* UITableViewController+NextPhotoId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewController+NextPhotoId.h"; sourceTree = "<group>"; };
 		E221CA2E15CB509200EFE792 /* UITableViewController+NextPhotoId.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewController+NextPhotoId.m"; sourceTree = "<group>"; };
 		E221CA3015CB5C9400EFE792 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		E221CA3115CB5C9400EFE792 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		E221CA3415CB678D00EFE792 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
+		E221CA3515CB678D00EFE792 /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
+		E221CA3615CB678D00EFE792 /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogger.h; sourceTree = "<group>"; };
+		E221CA3715CB678D00EFE792 /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDASLLogger.m; sourceTree = "<group>"; };
+		E221CA3815CB678D00EFE792 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFileLogger.h; sourceTree = "<group>"; };
+		E221CA3915CB678D00EFE792 /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileLogger.m; sourceTree = "<group>"; };
+		E221CA3A15CB678D00EFE792 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
+		E221CA3B15CB678D00EFE792 /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
+		E221CA3C15CB678D00EFE792 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
+		E221CA3D15CB678D00EFE792 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
+		E221CA3F15CB678D00EFE792 /* ContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContextFilterLogFormatter.h; sourceTree = "<group>"; };
+		E221CA4015CB678D00EFE792 /* ContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContextFilterLogFormatter.m; sourceTree = "<group>"; };
+		E221CA4115CB678D00EFE792 /* DispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchQueueLogFormatter.h; sourceTree = "<group>"; };
+		E221CA4215CB678D00EFE792 /* DispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueueLogFormatter.m; sourceTree = "<group>"; };
+		E221CA4315CB678D00EFE792 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		E2553835158E94C900B12D3F /* TaskCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskCell.h; sourceTree = "<group>"; };
 		E2553836158E94C900B12D3F /* TaskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskCell.m; sourceTree = "<group>"; };
 		E2553844158EA84C00B12D3F /* TasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksViewController.h; sourceTree = "<group>"; };
@@ -225,6 +244,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E221CA3315CB678D00EFE792 /* Lumberjack */ = {
+			isa = PBXGroup;
+			children = (
+				E221CA3415CB678D00EFE792 /* DDAbstractDatabaseLogger.h */,
+				E221CA3515CB678D00EFE792 /* DDAbstractDatabaseLogger.m */,
+				E221CA3615CB678D00EFE792 /* DDASLLogger.h */,
+				E221CA3715CB678D00EFE792 /* DDASLLogger.m */,
+				E221CA3815CB678D00EFE792 /* DDFileLogger.h */,
+				E221CA3915CB678D00EFE792 /* DDFileLogger.m */,
+				E221CA3A15CB678D00EFE792 /* DDLog.h */,
+				E221CA3B15CB678D00EFE792 /* DDLog.m */,
+				E221CA3C15CB678D00EFE792 /* DDTTYLogger.h */,
+				E221CA3D15CB678D00EFE792 /* DDTTYLogger.m */,
+				E221CA3E15CB678D00EFE792 /* Extensions */,
+			);
+			name = Lumberjack;
+			path = tasker/Lumberjack;
+			sourceTree = "<group>";
+		};
+		E221CA3E15CB678D00EFE792 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E221CA3F15CB678D00EFE792 /* ContextFilterLogFormatter.h */,
+				E221CA4015CB678D00EFE792 /* ContextFilterLogFormatter.m */,
+				E221CA4115CB678D00EFE792 /* DispatchQueueLogFormatter.h */,
+				E221CA4215CB678D00EFE792 /* DispatchQueueLogFormatter.m */,
+				E221CA4315CB678D00EFE792 /* README.txt */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		E260BFA515A7D03C0048694E /* OAuth */ = {
 			isa = PBXGroup;
 			children = (
@@ -308,6 +358,7 @@
 		E2DEFDBF1586DA2800D3D572 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E221CA3315CB678D00EFE792 /* Lumberjack */,
 				E2CA62C415C206B600CC653E /* ImageIO.framework */,
 				E2CA62AF15C2062300CC653E /* SDWebImage.xcodeproj */,
 				E260BFA515A7D03C0048694E /* OAuth */,
@@ -359,7 +410,6 @@
 				E260BFC315A90B810048694E /* LoginViewController.m */,
 				E221CA3015CB5C9400EFE792 /* Constants.h */,
 				E221CA3115CB5C9400EFE792 /* Constants.m */,
-				E221CA2915CB446800EFE792 /* Logging.h */,
 			);
 			path = tasker;
 			sourceTree = "<group>";
@@ -516,8 +566,6 @@
 				E262A0261596504100D79EAE /* Icon.png in Resources */,
 				E262A0271596504100D79EAE /* Icon@2x.png in Resources */,
 				E262A0281596504100D79EAE /* iTunesArtwork in Resources */,
-				E2F8FBEE1597962800317F84 /* README.txt in Resources */,
-				E2F8FBEF1597962800317F84 /* release_notes.txt in Resources */,
 				E260BFB415A7D03C0048694E /* GTMOAuth2ViewTouch.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -548,6 +596,13 @@
 				E26C483615BC96C300EFFEC1 /* MappingProvider.m in Sources */,
 				E221CA2F15CB509200EFE792 /* UITableViewController+NextPhotoId.m in Sources */,
 				E221CA3215CB5C9400EFE792 /* Constants.m in Sources */,
+				E221CA4415CB678D00EFE792 /* DDAbstractDatabaseLogger.m in Sources */,
+				E221CA4515CB678D00EFE792 /* DDASLLogger.m in Sources */,
+				E221CA4615CB678D00EFE792 /* DDFileLogger.m in Sources */,
+				E221CA4715CB678D00EFE792 /* DDLog.m in Sources */,
+				E221CA4815CB678D00EFE792 /* DDTTYLogger.m in Sources */,
+				E221CA4915CB678D00EFE792 /* ContextFilterLogFormatter.m in Sources */,
+				E221CA4A15CB678D00EFE792 /* DispatchQueueLogFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

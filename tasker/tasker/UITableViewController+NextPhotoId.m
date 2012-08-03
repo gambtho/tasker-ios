@@ -10,9 +10,11 @@
 
 @implementation UITableViewController (NextPhotoId)
 
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+
 - (int) nextPhotoId {
     int photoId = [[NSUserDefaults standardUserDefaults] integerForKey:@"PhotoID"];
-    LogTrace(@"Photo Id is currently: %d", photoId);
+    DDLogVerbose(@"Photo Id is currently: %d", photoId);
     [[NSUserDefaults standardUserDefaults] setInteger:photoId+1 forKey:@"PhotoID"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     return photoId;

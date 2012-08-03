@@ -20,6 +20,7 @@
 @synthesize accessToken;
 @synthesize delegate;
 
+    static const int ddLogLevel = LOG_LEVEL_INFO;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -84,7 +85,7 @@
     if (error != nil) {
         // Authentication failed (perhaps the user denied access, or closed the
         // window before granting access)
-        LogTrace(@"Authentication error: %@", error);
+        DDLogVerbose(@"Authentication error: %@", error);
         NSData *responseData = [[error userInfo] objectForKey:@"data"]; // kGTMHTTPFetcherStatusDataKey
         if ([responseData length] > 0) {
             // show the body of the server's authentication failure response
@@ -96,7 +97,7 @@
     } else {
 
         self.accessToken = auth.userEmail;
-        LogTrace(@"Email: %@", self.accessToken);
+        DDLogVerbose(@"Email: %@", self.accessToken);
         [self.delegate loginCompleted:self didLogin:auth.userEmail];
     }
     

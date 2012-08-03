@@ -25,9 +25,11 @@
 @dynamic beforePhotoUrl;
 @dynamic afterPhotoUrl;
 
+static const int ddLogLevel = LOG_LEVEL_INFO;
+
 -(BOOL)hasBeforePhoto
 {
-    LogTrace(@"Current beforePhoto value is: %@", self.beforePhotoId);
+    DDLogVerbose(@"Current beforePhoto value is: %@", self.beforePhotoId);
     return (self.beforePhotoId != nil) && ([self.beforePhotoId intValue] != -1);
 }
 
@@ -57,7 +59,7 @@
     if ([fileManager fileExistsAtPath:path]) {
         NSError *error;
         if (![fileManager removeItemAtPath:path error:&error]) {
-            LogError(@"Error removing file: %@", error);
+            DDLogError(@"Error removing file: %@", error);
         }
     }
 }
@@ -73,7 +75,7 @@
 
 -(BOOL)isComplete
 {
-//    LogTrace(@"status is: %@", self.status);
+//    DDLogVerbose(@"status is: %@", self.status);
     if([self.status isEqualToString:@"complete"]) {
         return TRUE;
     }
@@ -82,7 +84,7 @@
 
 -(BOOL)isAssigned
 {
-//    LogTrace(@"status is: %@", self.status);
+//    DDLogVerbose(@"status is: %@", self.status);
     if([self.status isEqualToString:@"assigned"]) {
         return TRUE;
     }

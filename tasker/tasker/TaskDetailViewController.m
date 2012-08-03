@@ -35,6 +35,7 @@
 @synthesize objectManager;
 @synthesize delegate;
 
+static const int ddLogLevel = LOG_LEVEL_INFO;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -97,10 +98,10 @@
     {
         
         status = taskToEdit.status;
-        LogTrace(@"Task ID: %@", taskToEdit.taskID);
+        DDLogVerbose(@"Task ID: %@", taskToEdit.taskID);
         completor = taskToEdit.completor;
-        LogTrace(@"Completor: %@", completor);
-        LogTrace(@"Status: %@", status);
+        DDLogVerbose(@"Completor: %@", completor);
+        DDLogVerbose(@"Status: %@", status);
         [self updateNavBar];
     }
     
@@ -197,7 +198,7 @@
 {
     status = [[NSString alloc] initWithFormat:@"assigned"];
     completor = email;
-    LogTrace(@"Completor is %@", completor);
+    DDLogVerbose(@"Completor is %@", completor);
     self.assignCell.textLabel.text = completor;
     [self.assignCell setAccessoryType:UITableViewCellAccessoryNone];
     [self.titleField setEnabled:FALSE];
@@ -217,26 +218,26 @@
 
 - (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
-    LogError(@"Error: %@", [error localizedDescription]);
+    DDLogError(@"Error: %@", [error localizedDescription]);
 }
 
 - (void)request:(RKRequest*)request didLoadResponse:(RKResponse*)response {
-    LogTrace(@"response code: %d", [response statusCode]);
-    LogInfo(@"response is: %@", [response bodyAsString]);
+    DDLogVerbose(@"response code: %d", [response statusCode]);
+    DDLogInfo(@"response is: %@", [response bodyAsString]);
 }
 
 - (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
-    LogTrace(@"objects[%d]", [objects count]);
+    DDLogVerbose(@"objects[%d]", [objects count]);
     
-    LogTrace(@"Completed object load in task detail");
+    DDLogVerbose(@"Completed object load in task detail");
 
 }
 
 -(void)objectLoaderDidFinishLoading:(RKObjectLoader *)objectLoader
 {
     [self.delegate taskDetailCompleted:self];
-    LogTrace(@"Completed loading in task detail");
+    DDLogVerbose(@"Completed loading in task detail");
 }
 
 -(void)updateRemote
@@ -248,14 +249,14 @@
         if(image != nil) {
             if(![taskToEdit hasBeforePhoto]){
                 taskToEdit.beforePhotoId = [NSNumber numberWithInt:[self nextPhotoId]];
-                LogTrace(@"Saving photo with id: %@", taskToEdit.beforePhotoId);
+                DDLogVerbose(@"Saving photo with id: %@", taskToEdit.beforePhotoId);
             }
             
             NSData *data = UIImagePNGRepresentation(image);
             
             NSError *error;
             if (![data writeToFile:[taskToEdit photoPath:taskToEdit.beforePhotoId]   options:NSDataWritingAtomic error:&error]) {
-                LogError(@"Error writing file: %@", error);
+                DDLogError(@"Error writing file: %@", error);
             }
         }
         
@@ -263,11 +264,11 @@
         task.dueDate = dueDate;
         task.completedDate = completedDate;
         
-        LogTrace(@"Contacting server to update %@", task.title);
+        DDLogVerbose(@"Contacting server to update %@", task.title);
         
-        LogTrace(@"Task completor is: %@", task.completor);
+        DDLogVerbose(@"Task completor is: %@", task.completor);
         
-        LogTrace(@"Before ID is %@", taskToEdit.beforePhotoId);
+        DDLogVerbose(@"Before ID is %@", taskToEdit.beforePhotoId);
         
         NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
                                      task.taskID, @"taskID",
@@ -280,7 +281,7 @@
                                      task.completedDate, @"completedDate",
                                      nil];
         NSString *resourcePath = [TASK_PATH stringByAppendingQueryParameters:queryParams];
-        LogInfo(@"%@", resourcePath);
+        DDLogInfo(@"%@", resourcePath);
         [objectManager loadObjectsAtResourcePath:resourcePath usingBlock:^(RKObjectLoader *loader) {
             loader.delegate = self;
             loader.method = RKRequestMethodPOST;
@@ -288,7 +289,7 @@
             
             if((image!=nil) && (task.beforePhotoUrl==nil))
             {
-                LogTrace(@"Trying to send image in post");
+                DDLogVerbose(@"Trying to send image in post");
                 RKParams *params = [RKParams params];
                 NSData *data = UIImagePNGRepresentation(image);
                 [params setData:data MIMEType:@"image/png" forParam:@"beforeimage"];
@@ -305,14 +306,14 @@
             if(image != nil) {
 
                 taskToEdit.beforePhotoId = [NSNumber numberWithInt:[self nextPhotoId]];
-                LogTrace(@"Saving photo with id: %@", taskToEdit.beforePhotoId);
+                DDLogVerbose(@"Saving photo with id: %@", taskToEdit.beforePhotoId);
                 
                 
                 NSData *data = UIImagePNGRepresentation(image);
                 
                 NSError *error;
                 if (![data writeToFile:[taskToEdit photoPath:taskToEdit.beforePhotoId]   options:NSDataWritingAtomic error:&error]) {
-                    LogTrace(@"Error writing file: %@", error);
+                    DDLogVerbose(@"Error writing file: %@", error);
                 }
             }
 
@@ -329,7 +330,7 @@
             task.status = status;
             task.completor = completor;
         
-            LogTrace(@"Contacting server to add %@", task.title);
+            DDLogVerbose(@"Contacting server to add %@", task.title);
             NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
                                          task.title, @"title",
                                          task.creator, @"creator",
@@ -340,7 +341,7 @@
                                          nil];
             
             NSString *resourcePath = [TASK_PATH stringByAppendingQueryParameters:queryParams];
-            LogInfo(@"%@", resourcePath);
+            DDLogInfo(@"%@", resourcePath);
             
             [objectManager loadObjectsAtResourcePath:resourcePath usingBlock:^(RKObjectLoader *loader) {
                 loader.delegate = self;
@@ -348,7 +349,7 @@
                 loader.targetObject = task;
                 if(image!=nil)
                 {
-                    LogTrace(@"Trying to send image in put");
+                    DDLogVerbose(@"Trying to send image in put");
                     RKParams *params = [RKParams params];
                     NSData *data = UIImagePNGRepresentation(image);
                     [params setData:data MIMEType:@"image/png" forParam:@"beforeimage"];

@@ -14,5 +14,6 @@ extern NSString * const HOST;
 extern NSString * const TASK_PATH;
 extern NSString * const DB_NAME;
 extern NSString * const TF_ID;
+extern int GLOBAL_LOG_LEVEL;
 
 @end

@@ -11,6 +11,8 @@
 #import "Task.h"
 #import "MappingProvider.h"
 #import <RestKit/RestKit.h>
+#import "DDASLLogger.h"
+#import "DDTTYLogger.h"
 
 @interface AppDelegate ()
 @property (nonatomic, strong) RKObjectManager *objectManager;
@@ -28,6 +30,7 @@
 {
     [self testFlightSetup];
     [self restKitSetup];
+    [self setupLogging];
     
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
     TasksViewController *taskViewController = (TasksViewController *)[[navigationController viewControllers] objectAtIndex:0];
@@ -105,6 +108,13 @@
     
 }
 
+#pragma mark - Cocoa Lumberjack
+
+-(void)setupLogging
+{
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+}
 
 #pragma mark - AlertView Delegate
 

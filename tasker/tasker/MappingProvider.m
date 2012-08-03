@@ -21,6 +21,8 @@
 
 @synthesize objectStore;
 
+   static const int ddLogLevel = LOG_LEVEL_INFO;
+
 + (id)mappingProviderWithObjectStore:(RKManagedObjectStore *)objectStore {
     return [[self alloc] initWithObjectStore:objectStore];    
 }
@@ -43,7 +45,7 @@
 
 - (RKManagedObjectMapping *)taskObjectMapping
 {
-    LogTrace(@"creating taskMapping");
+    DDLogVerbose(@"creating taskMapping");
     RKManagedObjectMapping *mapping = [RKManagedObjectMapping mappingForClass:[Task class] 
                                                          inManagedObjectStore:self.objectStore];
     mapping.primaryKeyAttribute = @"taskID";
