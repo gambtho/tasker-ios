@@ -17,6 +17,7 @@
 @protocol TaskDetailViewControllerDelegate <NSObject>
 - (void)taskDetailCompleted:(TaskDetailViewController *)taskDetail;
 - (void)taskDetailCancelled:(TaskDetailViewController *)taskDetail;
+- (void)taskDetailCompleted:(TaskDetailViewController *)taskDetail forTask:(Task *)task updateMethod:(RKRequestMethod)method;
 @end
 
 @interface TaskDetailViewController : UITableViewController 
@@ -40,6 +41,8 @@
 @property (strong, nonatomic) IBOutlet UITableViewCell *assignCell;
 
 @property (strong, nonatomic) NSString *userEmail;
+
+@property (assign, nonatomic) BOOL taskEdit;
 
 @property (weak, nonatomic) id <TaskDetailViewControllerDelegate> delegate;
 

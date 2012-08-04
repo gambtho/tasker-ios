@@ -52,6 +52,7 @@
 		E2DEFDCD1586DA2800D3D572 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DEFDCC1586DA2800D3D572 /* main.m */; };
 		E2DEFDD11586DA2800D3D572 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DEFDD01586DA2800D3D572 /* AppDelegate.m */; settings = {COMPILER_FLAGS = "-Wno-deprecated-declarations"; }; };
 		E2DEFDD41586DA2800D3D572 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2DEFDD21586DA2800D3D572 /* MainStoryboard.storyboard */; };
+		E2F06C3215CCA18000324825 /* UITableViewController+DateString.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F06C3115CCA18000324825 /* UITableViewController+DateString.m */; };
 		E2F8FBD81596A26E00317F84 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E2F8FBD61596A26E00317F84 /* DataModel.xcdatamodeld */; };
 		E2F8FBDD1596A2F500317F84 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F8FBDC1596A2F500317F84 /* CoreData.framework */; };
 		E2F8FBE01596A3B400317F84 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F8FBDF1596A3B400317F84 /* Task.m */; };
@@ -205,6 +206,8 @@
 		E2DEFDCF1586DA2800D3D572 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E2DEFDD01586DA2800D3D572 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E2DEFDD31586DA2800D3D572 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		E2F06C3015CCA18000324825 /* UITableViewController+DateString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewController+DateString.h"; sourceTree = "<group>"; };
+		E2F06C3115CCA18000324825 /* UITableViewController+DateString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewController+DateString.m"; sourceTree = "<group>"; };
 		E2F8FBD71596A26E00317F84 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		E2F8FBDC1596A2F500317F84 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		E2F8FBDE1596A3B400317F84 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
@@ -406,6 +409,8 @@
 				E2F8FBE61597897C00317F84 /* UIImage+Resize.m */,
 				E221CA2D15CB509100EFE792 /* UITableViewController+NextPhotoId.h */,
 				E221CA2E15CB509200EFE792 /* UITableViewController+NextPhotoId.m */,
+				E2F06C3015CCA18000324825 /* UITableViewController+DateString.h */,
+				E2F06C3115CCA18000324825 /* UITableViewController+DateString.m */,
 				E260BFC215A90B810048694E /* LoginViewController.h */,
 				E260BFC315A90B810048694E /* LoginViewController.m */,
 				E221CA3015CB5C9400EFE792 /* Constants.h */,
@@ -603,6 +608,7 @@
 				E221CA4815CB678D00EFE792 /* DDTTYLogger.m in Sources */,
 				E221CA4915CB678D00EFE792 /* ContextFilterLogFormatter.m in Sources */,
 				E221CA4A15CB678D00EFE792 /* DispatchQueueLogFormatter.m in Sources */,
+				E2F06C3215CCA18000324825 /* UITableViewController+DateString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -698,6 +704,7 @@
 					"\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**",
 					"”$(OBJROOT)/UninstalledProducts/include”/**",
 					"”$(TARGET_BUILD_DIR)/usr/local/lib/include”/**",
+					"\"$(PROJECT_TEMP_DIR)/../UninstalledProducts/include\"/**",
 				);
 				INFOPLIST_FILE = "tasker/tasker-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -722,6 +729,7 @@
 					"\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**",
 					"”$(OBJROOT)/UninstalledProducts/include”/**",
 					"”$(TARGET_BUILD_DIR)/usr/local/lib/include”/**",
+					"\"$(PROJECT_TEMP_DIR)/../UninstalledProducts/include\"/**",
 				);
 				INFOPLIST_FILE = "tasker/tasker-Info.plist";
 				LIBRARY_SEARCH_PATHS = (

@@ -11,13 +11,11 @@
 #import "Task.h"
 #import "UIImage+Resize.h"
 #import "UITableViewController+NextPhotoId.h"
-#import <SDWebImage/SDWebImageManager.h>
+#import "UITableViewController+DateString.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
+
 @interface TasksViewController ()
-{
-    BOOL needRefresh;
-}
 
 @end
 
@@ -26,10 +24,11 @@
 }
 
 @synthesize managedObjectContext;
+@synthesize objectManager;
 @synthesize userEmail;
 @synthesize addButton;
 @synthesize loginButton;
-@synthesize objectManager;
+
 
   static const int ddLogLevel = LOG_LEVEL_INFO;
 
@@ -42,106 +41,19 @@
     return self;
 }
 
--(NSFetchedResultsController *)fetchedResultsController
-{
-    DDLogVerbose(@"Getting fetched results controller");
-    if (fetchedResultsController == nil) {
-                
-        NSFetchRequest *fetchRequest = [[[RKObjectManager sharedManager] 
-                                         mappingProvider] fetchRequestForResourcePath:TASK_PATH];
-        
-        [NSFetchedResultsController deleteCacheWithName:@"Tasks"]; 
-    
-/*        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:managedObjectContext];
-        [fetchRequest setEntity:entity];
-
-        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"dueDate" ascending:YES];
-        [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-*/      
-        [fetchRequest setFetchBatchSize:20];
-        
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"completor == %@", self.userEmail];   
-        [fetchRequest setPredicate:predicate];
-        
-        fetchedResultsController = [[NSFetchedResultsController alloc]
-                                    initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:@"Tasks"];
-        
-        fetchedResultsController.delegate = self;
-    }
-    return fetchedResultsController;
-}
-
-
--(void)getTasks
-{
-    DDLogVerbose(@"Getting tasks");
-    if(userEmail!=nil)
-    {
-        NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:self.userEmail, @"user", nil];
-        NSString *resourcePath = [TASK_PATH stringByAppendingQueryParameters:queryParams];
-        DDLogVerbose(@"%@", resourcePath);
-        [objectManager loadObjectsAtResourcePath:resourcePath delegate:self]; 
-    }
-}
-
--(void)performFetch
-{
-    DDLogVerbose(@"Performing fetch");
-    NSError *error;
-    if(![self.fetchedResultsController performFetch:&error]) 
-    {
-        FATAL_CORE_DATA_ERROR(error);
-        return;
-    }
-    else{
-        DDLogVerbose(@"Fetch succesful");
-        id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:0];
-        DDLogInfo(@"Number objects fetched: %d", [sectionInfo numberOfObjects]);
-    }
-}
-
-- (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
-{
-    DDLogError(@"Error: %@", [error localizedDescription]);
-}
-
-- (void)request:(RKRequest*)request didLoadResponse:(RKResponse*)response {
-    DDLogVerbose(@"response code: %d", [response statusCode]);
-    DDLogVerbose(@"response is: %@", [response bodyAsString]);
-}
-
-- (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
-{
-    DDLogInfo(@"Objectloader loaded objects[%d]", [objects count]);
-}
-
-/*
--(void)objectLoaderDidFinishLoading:(RKObjectLoader *)objectLoader{
-
-}
-*/
-
 - (void)viewDidLoad
 {
     DDLogVerbose(@"View did load");
     
-    self.userEmail = [[NSUserDefaults standardUserDefaults] valueForKey:@"UserEmail"];
-
-    needRefresh = FALSE;
+    [self getUserInfo];
     
     [self getTasks];
     
     [super viewDidLoad];
-    
-    if(self.userEmail == nil) {
-        addButton.enabled = FALSE;
-    }
-    else {
-        self.addButton.enabled = TRUE;
-        self.loginButton.title = @"Logout"; 
-    }
+    [self configureUI];
     
     [self performFetch];
+    
 }
 
 - (void)viewDidUnload
@@ -191,11 +103,9 @@
         return 0;
     
     } else {
-    
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
     DDLogVerbose(@"Number of objects is: %d", [sectionInfo numberOfObjects]);
     return [sectionInfo numberOfObjects];
-    
     }
 }
 
@@ -204,67 +114,12 @@
     DDLogVerbose(@"Configuring cell");
     TaskCell *taskCell = (TaskCell *)cell;
     Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    if([task.title length] > 0)
-    {
-        taskCell.title.text = task.title;
-    } else {
-        taskCell.title.text = @"No title";
-    }
-    
-    if(task.dueDate!=nil)
-    {
-        taskCell.dueDate.text = [NSDateFormatter localizedStringFromDate:task.dueDate 
-                                                  dateStyle:NSDateFormatterShortStyle 
-                                                  timeStyle:NSDateFormatterNoStyle];
-    } else {
-        taskCell.dueDate.text = @" ";
-    }
-    
-    UIImage *image = nil;
-    if([task hasBeforePhoto]) {
-        image = [task photoImage:task.beforePhotoId];
-        if(image!=nil) {
-            image = [image resizedImageWithBounds:CGSizeMake(60, 60)];
-            taskCell.imageView.image = image;
-        }
-        else if(task.beforePhotoUrl==nil && task.beforePhotoId == 0)
-        {
-            DDLogVerbose(@"Resetting photoID as no photoURL was found");
-            task.beforePhotoId = [NSNumber numberWithInt:-1];
-            
-        } else if ([task.beforePhotoId intValue] != -1) {
-            #ifdef DEBUG
-                NSString *tempString = [NSString stringWithFormat:@"%@%@", HOST, task.beforePhotoUrl.path];
-                DDLogVerbose(@"%@", tempString);
-                NSURL *url = [[NSURL alloc] initWithString:tempString];
-            #else
-                NSURL *url = task.beforePhotoUrl;
-            #endif
-             task.beforePhotoId = [NSNumber numberWithInt:-1];
-            [taskCell.imageView setImageWithURL:url success:^(UIImage *newImage) {
-                
-                NSData *data = UIImagePNGRepresentation(newImage);
-                taskCell.imageView.image = [taskCell.imageView.image resizedImageWithBounds:CGSizeMake(60, 60)];
-               
-                task.beforePhotoId = [NSNumber numberWithInt:[self nextPhotoId]];
-                DDLogVerbose(@"Succesfull image download for photoID: %@", task.beforePhotoId);
-                NSError *error;
-                if (![data writeToFile:[task photoPath:task.beforePhotoId]   options:NSDataWritingAtomic error:&error]) {
-                     DDLogError(@"Error writing file: %@", error);
-                }
 
-            } failure:^(NSError *error) {
-                    DDLogError(@"Error downloading image: %@", [error localizedDescription]);
-            }
-            
-            ];
-            
-        }
-    }
-    else{
-        taskCell.imageView.image = nil;
-    }
+    taskCell.title.text = task.title;
+    
+    taskCell.dueDate.text = [self getDateString:task.dueDate];
+
+    [self getCellImage:taskCell:task];
     
     if([task isComplete]) {
         taskCell.completeCheck.hidden = NO;
@@ -294,18 +149,6 @@
 }
 */
 
--(void)deleteRemote:(Task *)task {
-    DDLogVerbose(@"Contacting server to delete %@", task.title);
-    NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 task.taskID, @"taskID",
-                                 nil];
-    NSString *resourcePath = [TASK_PATH stringByAppendingQueryParameters:queryParams];
-    
-    [objectManager loadObjectsAtResourcePath:resourcePath usingBlock:^(RKObjectLoader *loader) {
-        loader.delegate = self;
-        loader.method = RKRequestMethodDELETE;
-    }];
-}
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -352,19 +195,9 @@
         controller.objectManager = objectManager;
         controller.delegate = self;
         controller.userEmail = self.userEmail;
+        controller.taskEdit = FALSE;
     }
-     
-    if([segue.identifier isEqualToString:@"Login"]) {
-        self.userEmail = nil;
-        self.loginButton.title = @"Login";
-        [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"UserEmail"];
-        UINavigationController *navigationController = segue.destinationViewController;
-        LoginViewController *controller = (LoginViewController *)navigationController.topViewController;
-        controller.managedObjectContext = self.managedObjectContext;
-        
-        controller.delegate = self;
-    }
-    
+         
     if([segue.identifier isEqualToString:@"EditTask"]) {
         UINavigationController *navigationController = segue.destinationViewController;
         TaskDetailViewController *controller = (TaskDetailViewController *)navigationController.topViewController;
@@ -376,9 +209,19 @@
         controller.userEmail = self.userEmail;
         controller.objectManager = objectManager;
         controller.delegate = self;
+        controller.taskEdit = TRUE;
     }
-
-    // Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    if([segue.identifier isEqualToString:@"Login"]) {
+        self.userEmail = nil;
+        self.loginButton.title = @"Login";
+        [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"UserEmail"];
+        UINavigationController *navigationController = segue.destinationViewController;
+        LoginViewController *controller = (LoginViewController *)navigationController.topViewController;
+        controller.managedObjectContext = self.managedObjectContext;
+        
+        controller.delegate = self;
+    }
 }
 
 #pragma mark - Table view delegate
@@ -502,8 +345,6 @@
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"completor == %@", self.userEmail];
     [self.fetchedResultsController.fetchRequest setPredicate:predicate];
-
-//    [self performFetch];
     
     [self.tableView reloadData];
     
@@ -517,11 +358,219 @@
    [self dismissModalViewControllerAnimated:NO];
 }
 
+-(void)sendTask:(Task *)task withMethod:(RKRequestMethod)method {
+    
+    NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 task.title, @"title",
+                                 task.creator, @"creator",
+                                 task.status, @"status",
+                                 task.completor, @"completor",
+                                 task.taskID, @"taskID",
+                                 task.taskDescription, @"taskDescription",
+                                 task.dueDate, @"dueDate",
+                                 task.completedDate, @"completedDate",
+                                 nil];
+    NSString *resourcePath = [TASK_PATH stringByAppendingQueryParameters:queryParams];
+    DDLogInfo(@"%@", resourcePath);
+    [objectManager loadObjectsAtResourcePath:resourcePath usingBlock:^(RKObjectLoader *loader) {
+        loader.delegate = self;
+        loader.method = method;
+        loader.targetObject = task;
+        
+        if(([task hasBeforePhoto]) && (task.beforePhotoUrl==nil))
+        {
+            DDLogInfo(@"Trying to send image");
+            RKParams *params = [RKParams params];
+            NSData *data = UIImagePNGRepresentation([task photoImage:task.beforePhotoId]);
+            [params setData:data MIMEType:@"image/png" forParam:@"beforeimage"];
+            loader.params = params;
+        }
+    }];
+    
+}
+
+-(void)taskDetailCompleted:(TaskDetailViewController *)taskDetail forTask:(Task *)task updateMethod:(RKRequestMethod)method
+{
+    DDLogVerbose(@"Task detail completed with update");
+    [self dismissModalViewControllerAnimated:NO];
+    [self sendTask:task withMethod:method];
+}
+
 -(void)taskDetailCompleted:(TaskDetailViewController *)taskDetail
 {
     DDLogVerbose(@"Task detail completed");
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
     [self dismissModalViewControllerAnimated:NO];
 }
+
+#pragma utility functions
+
+-(void)getCellImage:(TaskCell *)taskCell:(Task *)task
+{
+    UIImage *image = nil;
+    if([task hasBeforePhoto]) {
+        image = [task photoImage:task.beforePhotoId];
+        if(image!=nil) {
+            image = [image resizedImageWithBounds:CGSizeMake(60, 60)];
+            taskCell.imageView.image = image;
+        }
+        else if(task.beforePhotoUrl==nil && task.beforePhotoId == 0)
+        {
+            DDLogWarn(@"Resetting photoID as no photoURL was found");
+            task.beforePhotoId = [NSNumber numberWithInt:-1];
+            
+        } else if ([task.beforePhotoId intValue] != -1) {
+            #if DEBUG
+            NSString *tempString = [NSString stringWithFormat:@"%@%@", HOST, task.beforePhotoUrl.path];
+            DDLogVerbose(@"%@", tempString);
+            NSURL *url = [[NSURL alloc] initWithString:tempString];
+            #else
+            NSURL *url = task.beforePhotoUrl;
+            #endif
+            
+            task.beforePhotoId = [NSNumber numberWithInt:-1];
+            [taskCell.imageView setImageWithURL:url success:^(UIImage *newImage) {
+                
+                NSData *data = UIImagePNGRepresentation(newImage);
+                taskCell.imageView.image = [taskCell.imageView.image resizedImageWithBounds:CGSizeMake(60, 60)];
+                
+                task.beforePhotoId = [NSNumber numberWithInt:[self nextPhotoId]];
+                DDLogInfo(@"Succesfull image download for photoID: %@", task.beforePhotoId);
+                NSError *error;
+                if (![data writeToFile:[task photoPath:task.beforePhotoId]   options:NSDataWritingAtomic error:&error]) {
+                    DDLogError(@"Error writing file: %@", error);
+                    if([task photoPath:task.beforePhotoId]==nil)
+                    {
+                        DDLogWarn(@"Resetting photoID due to error");
+                        task.beforePhotoId = [NSNumber numberWithInt:-1];
+                    }
+                }
+                
+            } failure:^(NSError *error) {
+                DDLogError(@"Error downloading image: %@", [error localizedDescription]);
+            }
+             
+             ];
+            
+        }
+    }
+    else{
+        taskCell.imageView.image = nil;
+    }
+    
+}
+
+-(void)getUserInfo
+{
+    self.userEmail = [[NSUserDefaults standardUserDefaults] valueForKey:@"UserEmail"];
+}
+
+-(void)configureUI
+{
+    if(self.userEmail == nil) {
+        addButton.enabled = FALSE;
+    }
+    else {
+        self.addButton.enabled = TRUE;
+        self.loginButton.title = @"Logout";
+    }
+}
+
+#pragma Data Access 
+
+-(NSPredicate *)currentPredicate
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"completor == %@", self.userEmail];
+    return predicate;
+    
+}
+
+-(NSFetchedResultsController *)fetchedResultsController
+{
+    DDLogVerbose(@"Getting fetched results controller");
+    if (fetchedResultsController == nil) {
+        
+        NSFetchRequest *fetchRequest = [[[RKObjectManager sharedManager]
+                                         mappingProvider] fetchRequestForResourcePath:TASK_PATH];
+        
+        [NSFetchedResultsController deleteCacheWithName:@"Tasks"];
+        
+        [fetchRequest setFetchBatchSize:20];
+        
+        [fetchRequest setPredicate:[self currentPredicate]];
+        
+        fetchedResultsController = [[NSFetchedResultsController alloc]
+                                    initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:@"Tasks"];
+        
+        fetchedResultsController.delegate = self;
+    }
+    return fetchedResultsController;
+}
+
+
+-(void)getTasks
+{
+    DDLogVerbose(@"Getting tasks");
+    DDLogInfo(@"Host name is %@", HOST);
+    if(userEmail!=nil)
+    {
+        NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:self.userEmail, @"user", nil];
+        NSString *resourcePath = [TASK_PATH stringByAppendingQueryParameters:queryParams];
+        DDLogVerbose(@"%@", resourcePath);
+        [objectManager loadObjectsAtResourcePath:resourcePath delegate:self];
+    }
+}
+
+-(void)performFetch
+{
+    DDLogVerbose(@"Performing fetch");
+    NSError *error;
+    if(![self.fetchedResultsController performFetch:&error])
+    {
+        FATAL_CORE_DATA_ERROR(error);
+        return;
+    }
+    else{
+#if DEBUG
+        DDLogVerbose(@"Fetch succesful");
+        id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:0];
+        DDLogInfo(@"Number objects fetched: %d", [sectionInfo numberOfObjects]);
+#endif
+    }
+}
+
+- (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
+{
+    DDLogError(@"Error: %@", [error localizedDescription]);
+}
+
+- (void)request:(RKRequest*)request didLoadResponse:(RKResponse*)response {
+    DDLogVerbose(@"response code: %d", [response statusCode]);
+    DDLogVerbose(@"response is: %@", [response bodyAsString]);
+}
+
+- (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
+{
+    DDLogInfo(@"Objectloader loaded objects[%d]", [objects count]);
+}
+
+-(void)deleteRemote:(Task *)task {
+    DDLogVerbose(@"Contacting server to delete %@", task.title);
+    NSDictionary *queryParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 task.taskID, @"taskID",
+                                 nil];
+    NSString *resourcePath = [TASK_PATH stringByAppendingQueryParameters:queryParams];
+    
+    [objectManager loadObjectsAtResourcePath:resourcePath usingBlock:^(RKObjectLoader *loader) {
+        loader.delegate = self;
+        loader.method = RKRequestMethodDELETE;
+    }];
+}
+
+/*
+ -(void)objectLoaderDidFinishLoading:(RKObjectLoader *)objectLoader{
+ 
+ }
+ */
 
 @end

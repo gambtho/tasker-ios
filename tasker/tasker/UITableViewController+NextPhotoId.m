@@ -10,7 +10,7 @@
 
 @implementation UITableViewController (NextPhotoId)
 
-static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+static const int ddLogLevel = LOG_LEVEL_INFO;
 
 - (int) nextPhotoId {
     int photoId = [[NSUserDefaults standardUserDefaults] integerForKey:@"PhotoID"];

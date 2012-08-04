@@ -10,10 +10,10 @@
 
 @implementation Constants
 
-#ifdef DEBUG
-    NSString * const HOST = @"http://localhost:8888";
+#if DEBUG
+    NSString * const HOST = @"http://10.0.1.18:8888";
 #else
-    NSString * const HOST @"http://ymtasker.appspot.com";
+    NSString * const HOST = @"http://ymtasker.appspot.com";
 #endif
 
 NSString * const TASK_PATH = @"/tasker/task";

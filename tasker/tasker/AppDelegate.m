@@ -22,6 +22,8 @@
 
 @implementation AppDelegate
 
+static const int ddLogLevel = LOG_LEVEL_INFO;
+
 @synthesize window = _window;
 @synthesize objectManager, objectStore, objectContext;
 
@@ -83,7 +85,7 @@
 
 -(void)testFlightSetup
 {
-    #ifdef DEBUG
+    #if DEBUG
         [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
         [TestFlight passCheckpoint:@"SET DEVICE IDENTIFIER"];
     #endif
@@ -95,10 +97,9 @@
 
 -(void)restKitSetup
 {
-
-    // RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
-
     
+    //RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
+
     self.objectManager = [RKObjectManager managerWithBaseURLString:HOST];
     self.objectManager.client.requestQueue.showsNetworkActivityIndicatorWhenBusy = YES;
     self.objectStore = [RKManagedObjectStore objectStoreWithStoreFilename:DB_NAME];

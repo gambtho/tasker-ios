@@ -6,10 +6,8 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "RKObjectMappingProvider.h"
 #import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
-
 
 @interface MappingProvider : RKObjectMappingProvider
 

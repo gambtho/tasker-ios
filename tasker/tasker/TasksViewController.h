@@ -10,11 +10,10 @@
 #import "TaskDetailViewController.h"
 #import "LoginViewController.h"
 #import <RestKit/Restkit.h>
-#import <SDWebImage/SDWebImageManagerDelegate.h>
 
 
 @interface TasksViewController : UITableViewController <NSFetchedResultsControllerDelegate, LoginViewControllerDelegate, RKObjectLoaderDelegate,
-    TaskDetailViewControllerDelegate, SDWebImageManagerDelegate>;
+    TaskDetailViewControllerDelegate>;
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) RKObjectManager *objectManager;
